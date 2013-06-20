@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <style type="text/css">
+        body {
+            background: #222;
+            font-family: "HelveticaNeue", Helvetica, sans-serif;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+            padding: 8px;
+            color: white;
+            margin: 8px;
+            display: inline-block;
+            background: gray;
+            -webkit-border-radius: 8px;
+            font-family: Helvetica, sans-serif;
+        }
+    </style>
+
+
+    <script type="text/javascript">
+
+        var JSONData = {
+            timestamp: new Date().getTime()
+        }
+        var uniqueId = 0;
+        var action = 'state';
+        var id = 666;
+        $(document).ready(function () {
+            $("#btn").click(function () {
+                var url = 'hybridge://' + action +'/' + id + '/' + new Date().getTime();
+                xhr = $.ajax({
+                       url: url,
+                       type: 'HEAD',
+                       beforeSend: function (xhr) {
+                             xhr.setRequestHeader('id', ++uniqueId);
+                             xhr.setRequestHeader('data', "{\"timestamp\": " + new Date().getTime() + "}");
+                       },
+                       error: function () { console.error('error', arguments) }, 
+                       success: function (data) {
+                        console.log(data);
+                        var time = new Date(data.timestamp);
+                        console.log("Son las " + time.getHours() + " y " + time.getMinutes());
+                    }
+                });
+                console.log(url);
+                return false;
+            });
+
+        });
+
+    </script>
+</head>
+
+<body>
+
+<a id="btn" href="#">Native Bridge</a>
+
+</body>
+</html>
