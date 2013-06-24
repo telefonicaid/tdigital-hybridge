@@ -1,0 +1,2 @@
+platform :ios
+pod 'SBJson',       '~> 3.2'
