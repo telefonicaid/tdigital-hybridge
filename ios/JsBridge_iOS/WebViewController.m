@@ -8,7 +8,7 @@
 
 #import "WebViewController.h"
 #import "NSURLProtocolBridge.h"
-
+#import "BridgeSubscriptor.h"
 
 @implementation WebViewController
 
@@ -25,6 +25,20 @@
     [super viewDidLoad];
     
     [NSURLProtocol registerClass:[NSURLProtocolBridge class]];
+    
+    // ***************
+    // Example of subscription to an action named "action1"
+    
+    BridgeSubscriptor *subscriptor = [BridgeSubscriptor sharedInstance];
+    // Block to handle request to action1
+    BridgeHandlerBlock_t handler = ^(NSString *action, NSArray *pathComponents, NSString *data) {
+        NSLog(@"Ha llegado la petición: %@", action);
+        NSLog(@"Componentes: %@", [pathComponents componentsJoinedByString:@","]);
+        NSLog(@"Data: %@", data);
+    };
+    // Subscribe to action named "action1"
+    [subscriptor subscribeAction:@"action1" withHandler:handler];
+    // ***************
     
     self.theWeb = [[UIWebView alloc] initWithFrame:self.view.bounds];
     self.theWeb.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
