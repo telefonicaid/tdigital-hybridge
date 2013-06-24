@@ -8,7 +8,8 @@
 
 #import "NSURLProtocolBridge.h"
 #import "NativeAction.h"
-#import <SBJson/SBJson.h>
+#import "SBJson.h"
+#import "BridgeSubscriptor.h"
 
 @implementation NSURLProtocolBridge
 
@@ -46,32 +47,42 @@ NSString *bridgePrefix = @"hybridge";
     NSString *_data = [headers objectForKey:@"data"];
     NSDictionary *params = [parser objectWithString:_data];
     
-    /** TODO: Connect to internal service to take required actions:
-        Download file, fetch local file info, play video
-     */
-    // Crear un objeto NativeAction para transportar la petición al manejador nativo
-    //NativeAction *nativeAction = [[NativeAction alloc] initWithAction:_action params:params];
-    //NSError *error = nil;
-    //NSMutableDictionary *result = [[self.delegate handleAction:nativeAction error:&error] mutableCopy];
+    // Look for a handler subscribed for this action
+    BridgeHandlerBlock_t handler =  [[BridgeSubscriptor sharedInstance] handlerForAction:_action];
     
-    /** Create JSON response */
-    NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
-    NSString *ts = [json objectForKey:@"timestamp"];
-    [json setValue:ts  forKey:@"data"];
-    [json setValue:@"application/json; charset=utf-8" forKey:@"Content-Type"];
-    [json setValue:@"*" forKey:@"Access-Control-Allow-Origin"];
-    [json setValue:@"Content-Type" forKey:@"Access-Control-Allow-Headers"];
+    if (handler != nil) {
+        
+        handler(_action, [self.request.URL pathComponents], _data);
+        
+    } else {
     
-    NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL statusCode:200 HTTPVersion:@"1.1" headerFields:json];
+        /** TODO: Connect to internal service to take required actions:
+            Download file, fetch local file info, play video
+         */
+        // Crear un objeto NativeAction para transportar la petición al manejador nativo
+        //NativeAction *nativeAction = [[NativeAction alloc] initWithAction:_action params:params];
+        //NSError *error = nil;
+        //NSMutableDictionary *result = [[self.delegate handleAction:nativeAction error:&error] mutableCopy];
+        
+        /** Create JSON response */
+        NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
+        NSString *ts = [json objectForKey:@"timestamp"];
+        [json setValue:ts  forKey:@"data"];
+        [json setValue:@"application/json; charset=utf-8" forKey:@"Content-Type"];
+        [json setValue:@"*" forKey:@"Access-Control-Allow-Origin"];
+        [json setValue:@"Content-Type" forKey:@"Access-Control-Allow-Headers"];
+        
+        NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL statusCode:200 HTTPVersion:@"1.1" headerFields:json];
 
-   
-    NSString *jsonString = [writer stringWithObject:params];
-    NSData *jsonBody = [jsonString dataUsingEncoding:NSUTF8StringEncoding];    
-    
-    id client = [self client];    
-    [client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-    [client URLProtocol:self didLoadData:jsonBody];
-    [client URLProtocolDidFinishLoading:self];
+        NSString *jsonString = [writer stringWithObject:params];
+        NSData *jsonBody = [jsonString dataUsingEncoding:NSUTF8StringEncoding];    
+        
+        id client = [self client];    
+        [client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+        [client URLProtocol:self didLoadData:jsonBody];
+        [client URLProtocolDidFinishLoading:self];
+        
+    }
 }
 
 - (void)stopLoading
