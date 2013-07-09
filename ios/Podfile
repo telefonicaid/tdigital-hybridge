@@ -1,2 +1,2 @@
 platform :ios
-pod 'SBJson',       '~> 3.2'
+pod 'SBJson', '~> 3.2'

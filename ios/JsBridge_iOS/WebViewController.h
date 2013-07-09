@@ -8,8 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+@class SBJsonParser;
+@class SBJsonWriter;
+
 @interface WebViewController : UIViewController <UIWebViewDelegate>
+{
+
+@private
+    SBJsonParser *_parser;
+    SBJsonWriter *_writer;
+}
 
 @property (strong) UIWebView *theWeb;
 
+- (NSString *)runJsInWebview:(NSString *)js;
+
 @end
+

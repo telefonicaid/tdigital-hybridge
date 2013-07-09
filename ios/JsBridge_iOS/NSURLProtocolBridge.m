@@ -51,8 +51,8 @@ NSString *bridgePrefix = @"hybridge";
     BridgeHandlerBlock_t handler =  [[BridgeSubscriptor sharedInstance] handlerForAction:_action];
     
     if (handler != nil) {
-        
-        handler(_action, [self.request.URL pathComponents], _data);
+        //[_data setValue:self forKey:@"url"];
+        handler(_action, self, _data);
         
     } else {
     

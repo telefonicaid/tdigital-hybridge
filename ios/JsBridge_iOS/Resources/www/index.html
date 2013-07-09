@@ -26,6 +26,19 @@
 
     <script type="text/javascript">
 
+        JsBridge = {};
+        JsBridge.events = [];
+        // Crear eventos bridge
+        JsBridge.events['JsBridgeReady'] = new Event('JsBridgeReady');
+        JsBridge.events['JsBridgeMessage'] = new Event('JsBridgeMessage');
+        //JsBridge.events.initEvent('JsBridgeReady');
+        //JsBridge.events.initEvent('JsBridgeMessage');
+        
+        JsBridge.dispatchEvent = function(type, data) {
+            JsBridge.events[type].data = data;
+            document.dispatchEvent(JsBridge.events[type]);
+        }
+        
         var JSONData = {
             timestamp: new Date().getTime()
         }
@@ -33,6 +46,8 @@
         var action = 'state';
         var id = 666;
         $(document).ready(function () {
+        
+                          
             $("#btn").click(function () {
                 var url = 'hybridge://' + action +'/' + id + '/' + new Date().getTime();
                 xhr = $.ajax({
@@ -53,6 +68,17 @@
                 return false;
             });
 
+            document.addEventListener("JsBridgeReady", function (ev) {
+              alert("JsBridge cargado");
+              console.log("JsBridge cargado", ev);
+            }, false);
+            document.addEventListener("JsBridgeMessage", function (ev) {
+              console.log("JsBridge dice... primer callback", ev.data.timestamp);
+            }, false);
+                          
+            document.addEventListener("JsBridgeMessage", function (ev) {
+              console.log("JsBridge dice... segundo callback", ev.data.timestamp);
+            }, false);
         });
 
     </script>
