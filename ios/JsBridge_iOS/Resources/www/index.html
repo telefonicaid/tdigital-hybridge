@@ -4,6 +4,9 @@
     <title>Test</title>
     <script type="text/javascript" src="jquery.min.js"></script>
     <style type="text/css">
+        * {
+          box-sizing: border-box;
+        }
         body {
             background: #222;
             font-family: "HelveticaNeue", Helvetica, sans-serif;
@@ -11,7 +14,7 @@
             text-align: center;
         }
 
-        a {
+        #botonaco {
             text-decoration: none;
             padding: 8px;
             color: white;
@@ -21,63 +24,92 @@
             -webkit-border-radius: 8px;
             font-family: Helvetica, sans-serif;
         }
+
+        #logger {
+          background-color: #AAA;
+          border: 1px dashed white;
+          width: 100%;
+          height: 430px;
+          overflow: scroll;
+          padding: 5% 1%;
+        }
+        #logger > div {
+          border-bottom: 1px solid gray;
+          text-align: left;
+          font-size: 60%;
+        }
+
     </style>
 
 
     <script type="text/javascript">
+        var uniqueId = 0;
+        var action = 'state';
+        var id = 666;
+        var JSONData = {
+            timestamp: new Date().getTime()
+        }
 
         JsBridge = {};
         JsBridge.events = [];
+        
         // Crear eventos bridge
         JsBridge.events['JsBridgeReady'] = new Event('JsBridgeReady');
         JsBridge.events['JsBridgeMessage'] = new Event('JsBridgeMessage');
-        //JsBridge.events.initEvent('JsBridgeReady');
-        //JsBridge.events.initEvent('JsBridgeMessage');
         
         JsBridge.dispatchEvent = function(type, data) {
             JsBridge.events[type].data = data;
             document.dispatchEvent(JsBridge.events[type]);
         }
         
-        var JSONData = {
-            timestamp: new Date().getTime()
-        }
-        var uniqueId = 0;
-        var action = 'state';
-        var id = 666;
+        var getNativeData = function(params) {
+          var url = 'hybridge://' + action +'/' + id + '/' + new Date().getTime();
+          var xhr = $.ajax({
+            url: url,
+            type: 'HEAD',
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader('id', ++uniqueId);
+              xhr.setRequestHeader('data', JSON.stringify(params));
+            },
+            error: function () { console.error('error', arguments) },
+            success: function (data) {
+              var time = new Date(data.timestamp);
+              console.log("Son las " + time.getHours() + " y " + time.getMinutes(), data);
+            }
+          });
+          return xhr;
+        };
+
         $(document).ready(function () {
-        
-                          
-            $("#btn").click(function () {
-                var url = 'hybridge://' + action +'/' + id + '/' + new Date().getTime();
-                xhr = $.ajax({
-                       url: url,
-                       type: 'HEAD',
-                       beforeSend: function (xhr) {
-                             xhr.setRequestHeader('id', ++uniqueId);
-                             xhr.setRequestHeader('data', "{\"timestamp\": " + new Date().getTime() + "}");
-                       },
-                       error: function () { console.error('error', arguments) }, 
-                       success: function (data) {
-                        console.log(data);
-                        var time = new Date(data.timestamp);
-                        console.log("Son las " + time.getHours() + " y " + time.getMinutes());
-                    }
-                });
-                console.log(url);
+            var logger = console.log;
+            console.log = function () {
+                $('#logger').append('<div>' + (typeof arguments[0] == 'object'? JSON.stringify(arguments[0]) : arguments[0]) + '</div>');
+                logger.apply(console, arguments);
+            };      
+                   
+            $("#botonaco").click(function () {
+              var params = {"timestamp": new Date().getTime()};
+              $.when(getNativeData(params))
+                .done(function(data) {
+                  console.log(data);
+                  var time = new Date(data.timestamp);
+                  console.log("Son las " + time.getHours() + " y " + time.getMinutes());
+                })
+                .fail(function () { console.error('error', arguments) });
                 return false;
             });
 
-            document.addEventListener("JsBridgeReady", function (ev) {
+            /*document.addEventListener("JsBridgeReady", function (ev) {
               alert("JsBridge cargado");
               console.log("JsBridge cargado", ev);
-            }, false);
+            }, false);*/
+                          
             document.addEventListener("JsBridgeMessage", function (ev) {
-              console.log("JsBridge dice... primer callback", ev.data.timestamp);
+              console.log("Evento JsBridge dice... primer callback", ev.data.timestamp);
             }, false);
                           
             document.addEventListener("JsBridgeMessage", function (ev) {
-              console.log("JsBridge dice... segundo callback", ev.data.timestamp);
+              console.log("Evento JsBridge dice... segundo callback", ev.data.timestamp);
             }, false);
         });
 
@@ -86,7 +118,7 @@
 
 <body>
 
-<a id="btn" href="#">Native Bridge</a>
-
+<a id="botonaco" href="#">Native Bridge</a>
+<div id="logger"></div>
 </body>
 </html>

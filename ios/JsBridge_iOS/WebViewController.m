@@ -60,10 +60,7 @@
         [client URLProtocol:url didLoadData:jsonBody];
         [client URLProtocolDidFinishLoading:url];
         
-        //NSMutableString* ms = [[NSMutableString alloc] initWithString:@"alert('Llamada desde nativo '"];
-        //[ms appendString:@"timestamp"];
-        //[ms appendString:@")"];
-        //NSString *js = @"document.dispatchEvent(JsBridge.events.JsBridgeMessage);";
+        // Dispatch Event to WebView
         NSMutableString* ms = [[NSMutableString alloc] initWithString:@"JsBridge.dispatchEvent(\"JsBridgeMessage\","];
         [ms appendString:jsonString];
         [ms appendString:@")"];
