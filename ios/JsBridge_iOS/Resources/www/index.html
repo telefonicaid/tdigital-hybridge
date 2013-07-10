@@ -63,6 +63,7 @@
         }
         
         var getNativeData = function(params) {
+          var def = $.Deferred();
           var url = 'hybridge://' + action +'/' + id + '/' + new Date().getTime();
           var xhr = $.ajax({
             url: url,
@@ -71,13 +72,16 @@
               xhr.setRequestHeader('id', ++uniqueId);
               xhr.setRequestHeader('data', JSON.stringify(params));
             },
-            error: function () { console.error('error', arguments) },
-            success: function (data) {
-              var time = new Date(data.timestamp);
-              console.log("Son las " + time.getHours() + " y " + time.getMinutes(), data);
+            complete: function() {
+              if(xhr.status === 200){
+                def.resolve(JSON.parse(xhr.responseText));
+              }
+              else{
+                def.reject("HTTP error: " + xhr.status);
+              }
             }
           });
-          return xhr;
+          return def.promise();
         };
 
         $(document).ready(function () {
@@ -89,7 +93,7 @@
                    
             $("#botonaco").click(function () {
               var params = {"timestamp": new Date().getTime()};
-              $.when(getNativeData(params))
+              getNativeData(params)
                 .done(function(data) {
                   console.log(data);
                   var time = new Date(data.timestamp);
