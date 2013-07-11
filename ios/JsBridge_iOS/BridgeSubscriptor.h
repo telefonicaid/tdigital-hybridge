@@ -1,12 +1,15 @@
 //
 //  BridgeSubscriptor.h
-//  JsBridge_iOS
+//  Hybridge_iOS
 //
 //  Created by Jaime on 21/06/13.
 //  Copyright (c) 2013 tid.es. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+
+
+#import "HybridgeLog.h"
 
 /** This singleton class manages a list of subscriptions for received requests in the bridge.
  Each single subscription has an action name associated to and a handler to be called

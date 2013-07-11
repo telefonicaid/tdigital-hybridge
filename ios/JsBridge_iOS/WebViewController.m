@@ -38,9 +38,9 @@
     // Example handler, just parses data to JSON from ajax header in order to process it
     // and writes back JSON in a response header
     BridgeHandlerBlock_t timeHandler = ^(NSString *action, NSURLProtocol *url, NSString *data) {
-        NSLog(@"Ha llegado la petición: %@", action);
-        NSLog(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
-        NSLog(@"Data: %@", data);
+        DDLogInfo(@"Ha llegado la petición: %@", action);
+        DDLogInfo(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
+        DDLogInfo(@"Data: %@", data);
         
         NSDictionary *params = [_parser objectWithString:data];
         NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
@@ -61,7 +61,7 @@
         [client URLProtocolDidFinishLoading:url];
         
         // Dispatch Event to WebView
-        NSMutableString* ms = [[NSMutableString alloc] initWithString:@"JsBridge.dispatchEvent(\"JsBridgeMessage\","];
+        NSMutableString* ms = [[NSMutableString alloc] initWithString:@"Hybridge.dispatchEvent(\"HybridgeMessage\","];
         [ms appendString:jsonString];
         [ms appendString:@")"];
         NSString *js = ms;
@@ -85,16 +85,16 @@
 
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSString *js = @"document.dispatchEvent(JsBridge.event.JsBridgeReady);";
+    NSString *js = @"document.dispatchEvent(Hybridge.event.HybridgeReady);";
     [self performSelectorOnMainThread:@selector(runJsInWebview:) withObject:js waitUntilDone:NO];
     return YES;
 }
 
 - (NSString *)runJsInWebview:(NSString *)js
 {
-    NSLog(@"runJsInWebview: %@",js);
+    DDLogInfo(@"runJsInWebview: %@",js);
     NSString *jsResponse = [self.theWeb stringByEvaluatingJavaScriptFromString:js];
-    NSLog(@"runJsInWebview response: %@",jsResponse);
+    DDLogInfo(@"runJsInWebview response: %@",jsResponse);
     return jsResponse;
 }
 

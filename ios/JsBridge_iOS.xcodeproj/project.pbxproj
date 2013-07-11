@@ -29,6 +29,8 @@
 		6F3609A91774642900F2B0FE /* BridgeSubscriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeSubscriptor.h; sourceTree = "<group>"; };
 		6F3609AA1774642900F2B0FE /* BridgeSubscriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeSubscriptor.m; sourceTree = "<group>"; };
 		8809BE557D4F48DAB4C1050E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E474B8DC178EE6AF003755B0 /* HybridgeLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HybridgeLog.h; sourceTree = "<group>"; };
+		E474B8DD178EE72A003755B0 /* MyLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLog.h; sourceTree = "<group>"; };
 		E4CDBE981767C60B00243905 /* JsBridge_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JsBridge_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4CDBE9B1767C60B00243905 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E4CDBE9D1767C60B00243905 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -68,6 +70,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E474B8DA178EE630003755B0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E474B8DB178EE65F003755B0 /* Logging */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		E474B8DB178EE65F003755B0 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				E474B8DC178EE6AF003755B0 /* HybridgeLog.h */,
+				E474B8DD178EE72A003755B0 /* MyLog.h */,
+			);
+			name = Logging;
+			sourceTree = "<group>";
+		};
 		E4CDBE8F1767C60B00243905 = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +119,7 @@
 		E4CDBEA11767C60B00243905 /* JsBridge_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				E474B8DA178EE630003755B0 /* Utils */,
 				E4CDBED41767DE1A00243905 /* Resources */,
 				E4CDBEC91767CB4B00243905 /* ViewControllers */,
 				E4D02030176B2C290055949C /* JsBridgeAppDelegate.h */,

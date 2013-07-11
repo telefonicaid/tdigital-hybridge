@@ -1,6 +1,6 @@
 //
 //  NSURLProtocolBridge.m
-//  JsBridge_iOS
+//  Hybridge_iOS
 //
 //  Created by David Garcia on 12/06/13.
 //  Copyright (c) 2013 tid.es. All rights reserved.
@@ -40,7 +40,7 @@ NSString *bridgePrefix = @"hybridge";
     if ([[self.request.URL pathComponents] count] > 1) {
         _id = [[self.request.URL pathComponents] objectAtIndex:1];
     }
-    NSLog(@"%@ / %@", _action, _id);
+    DDLogInfo(@"%@ / %@", _action, _id);
     
     /** Get header data (JSON) */
     NSDictionary *headers = [self.request allHTTPHeaderFields];
