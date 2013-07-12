@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "HybridgeLog.h"
+
 @class SBJsonParser;
 @class SBJsonWriter;
 

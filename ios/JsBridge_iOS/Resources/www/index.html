@@ -50,21 +50,22 @@
             timestamp: new Date().getTime()
         }
 
-        JsBridge = {};
-        JsBridge.events = [];
+        Hybridge = {};
+        Hybridge.events = [];
         
         // Crear eventos bridge
-        JsBridge.events['JsBridgeReady'] = new Event('JsBridgeReady');
-        JsBridge.events['JsBridgeMessage'] = new Event('JsBridgeMessage');
+        Hybridge.events['HybridgeReady'] = new Event('HybridgeReady');
+        Hybridge.events['HybridgeMessage'] = new Event('HybridgeMessage');
         
-        JsBridge.dispatchEvent = function(type, data) {
-            JsBridge.events[type].data = data;
-            document.dispatchEvent(JsBridge.events[type]);
+        Hybridge.dispatchEvent = function(type, data) {
+            Hybridge.events[type].data = data;
+            document.dispatchEvent(Hybridge.events[type]);
         }
         
         var getNativeData = function(params) {
           var def = $.Deferred();
           var url = 'hybridge://' + action +'/' + id + '/' + new Date().getTime();
+          console.log('URL: ' + url);
           var xhr = $.ajax({
             url: url,
             type: 'HEAD',
@@ -103,17 +104,17 @@
                 return false;
             });
 
-            /*document.addEventListener("JsBridgeReady", function (ev) {
-              alert("JsBridge cargado");
-              console.log("JsBridge cargado", ev);
+            /*document.addEventListener("HybridgeReady", function (ev) {
+              alert("Hybridge cargado");
+              console.log("Hybridge cargado", ev);
             }, false);*/
                           
-            document.addEventListener("JsBridgeMessage", function (ev) {
-              console.log("Evento JsBridge dice... primer callback", ev.data.timestamp);
+            document.addEventListener("HybridgeMessage", function (ev) {
+              console.log("Evento Hybridge dice... primer callback", ev.data.timestamp);
             }, false);
                           
-            document.addEventListener("JsBridgeMessage", function (ev) {
-              console.log("Evento JsBridge dice... segundo callback", ev.data.timestamp);
+            document.addEventListener("HybridgeMessage", function (ev) {
+              console.log("Evento Hybridge dice... segundo callback", ev.data.timestamp);
             }, false);
         });
 
