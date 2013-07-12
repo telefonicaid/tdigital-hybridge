@@ -38,8 +38,8 @@
     // Example handler, just parses data to JSON from ajax header in order to process it
     // and writes back JSON in a response header
     BridgeHandlerBlock_t timeHandler = ^(NSString *action, NSURLProtocol *url, NSString *data) {
-        DDLogInfo(@"Ha llegado la petición: %@", action);
-        DDLogInfo(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
+        DDLogDebug(@"Ha llegado la petición: %@", action);
+        DDLogError(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
         DDLogInfo(@"Data: %@", data);
         
         NSDictionary *params = [_parser objectWithString:data];

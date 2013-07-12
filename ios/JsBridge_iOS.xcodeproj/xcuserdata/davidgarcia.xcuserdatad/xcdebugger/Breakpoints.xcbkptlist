@@ -34,12 +34,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JsBridge_iOS/JsBridgeAppDelegate.m"
-         timestampString = "395242286.022562"
+         timestampString = "395303070.417403"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "55"
-         endingLineNumber = "55"
-         landmarkName = "-applicationWillTerminate:"
+         startingLineNumber = "61"
+         endingLineNumber = "61"
+         landmarkName = "-handleAction:error:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

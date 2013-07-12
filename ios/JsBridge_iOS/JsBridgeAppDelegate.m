@@ -14,12 +14,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    setenv("XcodeColors", "YES", 1);
     // Configure CocoaLumberjack
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     // Enable Colors
+    //Define green color for info level
     [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
-    
+    UIColor *greenColor = [UIColor colorWithRed:(0/255.0) green:(158/255.0) blue:(71/255.0) alpha:1.0];
+    [[DDTTYLogger sharedInstance] setForegroundColor:greenColor backgroundColor:nil forFlag:LOG_FLAG_INFO];    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
