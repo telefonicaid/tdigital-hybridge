@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+  
     [NSURLProtocol registerClass:[NSURLProtocolBridge class]];
     // ***************
     // Example of subscription to an action named "currentTime"
@@ -38,8 +38,8 @@
     // Example handler, just parses data to JSON from ajax header in order to process it
     // and writes back JSON in a response header
     BridgeHandlerBlock_t timeHandler = ^(NSString *action, NSURLProtocol *url, NSString *data) {
-        DDLogDebug(@"Ha llegado la petición: %@", action);
-        DDLogError(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
+        DDLogInfo(@"Ha llegado la petición: %@", action);
+        DDLogInfo(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
         DDLogInfo(@"Data: %@", data);
         
         NSDictionary *params = [_parser objectWithString:data];
@@ -61,11 +61,7 @@
         [client URLProtocolDidFinishLoading:url];
         
         // Dispatch Event to WebView
-        NSMutableString* ms = [[NSMutableString alloc] initWithString:@"Hybridge.dispatchEvent(\"HybridgeMessage\","];
-        [ms appendString:jsonString];
-        [ms appendString:@")"];
-        NSString *js = ms;
-        [self performSelectorOnMainThread:@selector(runJsInWebview:) withObject:js waitUntilDone:NO];
+        [self fireEventInWebView: (NSString*) @"HybridgeMessage" data:(NSString*) jsonString];
     };
     
     // Subscribe to action named "currentTime"
@@ -83,10 +79,10 @@
     [self.theWeb loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
--(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSString *js = @"document.dispatchEvent(Hybridge.event.HybridgeReady);";
-    [self performSelectorOnMainThread:@selector(runJsInWebview:) withObject:js waitUntilDone:NO];
+  [self fireEventInWebView: (NSString*) @"HybridgeReady" data:(NSString*) @"{}"];
+
     return YES;
 }
 
@@ -98,5 +94,16 @@
     return jsResponse;
 }
 
+- (void)fireEventInWebView:(NSString *)eventName data:(NSString *)jsonString
+{
+  DDLogInfo(@"Enviando evento a Webview: %@", eventName);
+  NSMutableString* ms = [[NSMutableString alloc] initWithString:@"Hybridge.fireEvent(\""];
+  [ms appendString:eventName];
+  [ms appendString:@"\","];
+  [ms appendString:jsonString];
+  [ms appendString:@")"];
+  NSString *js = ms;
+  [self performSelectorOnMainThread:@selector(runJsInWebview:) withObject:js waitUntilDone:NO];
+}
 
 @end
