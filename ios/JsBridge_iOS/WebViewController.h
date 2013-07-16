@@ -23,7 +23,9 @@
 
 @property (strong) UIWebView *theWeb;
 
-- (NSString *)runJsInWebview:(NSString *)js;
+- (NSString *) runJsInWebview:(NSString *)js;
+
+- (void) fireEventInWebView:(NSString *)eventName data:(NSString *)jsonString;
 
 @end
 
