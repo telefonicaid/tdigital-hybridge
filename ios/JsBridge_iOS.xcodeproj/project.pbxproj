@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6F3609AB1774642900F2B0FE /* BridgeSubscriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3609AA1774642900F2B0FE /* BridgeSubscriptor.m */; };
 		D442D27ED8684DC2A8FF399F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8809BE557D4F48DAB4C1050E /* libPods.a */; };
 		E4CDBE9C1767C60B00243905 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CDBE9B1767C60B00243905 /* UIKit.framework */; };
 		E4CDBE9E1767C60B00243905 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CDBE9D1767C60B00243905 /* Foundation.framework */; };
@@ -25,11 +24,10 @@
 		E4D5E9AB17AA68680099ED40 /* NativeAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A417AA68680099ED40 /* NativeAction.m */; };
 		E4D5E9AC17AA68680099ED40 /* NSURLProtocolBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */; };
 		E4D5E9AD17AA68680099ED40 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A817AA68680099ED40 /* WebViewController.m */; };
+		E4D5E9B017AA75BB0099ED40 /* BridgeSubscriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9AF17AA75BB0099ED40 /* BridgeSubscriptor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6F3609A91774642900F2B0FE /* BridgeSubscriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeSubscriptor.h; sourceTree = "<group>"; };
-		6F3609AA1774642900F2B0FE /* BridgeSubscriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeSubscriptor.m; sourceTree = "<group>"; };
 		8809BE557D4F48DAB4C1050E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E474B8DC178EE6AF003755B0 /* HybridgeLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HybridgeLog.h; sourceTree = "<group>"; };
 		E474B8DD178EE72A003755B0 /* MyLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLog.h; sourceTree = "<group>"; };
@@ -58,6 +56,8 @@
 		E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSURLProtocolBridge.m; path = modules/NSURLProtocolBridge.m; sourceTree = "<group>"; };
 		E4D5E9A717AA68680099ED40 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = modules/WebViewController.h; sourceTree = "<group>"; };
 		E4D5E9A817AA68680099ED40 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = modules/WebViewController.m; sourceTree = "<group>"; };
+		E4D5E9AE17AA75BB0099ED40 /* BridgeSubscriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BridgeSubscriptor.h; path = modules/BridgeSubscriptor.h; sourceTree = "<group>"; };
+		E4D5E9AF17AA75BB0099ED40 /* BridgeSubscriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BridgeSubscriptor.m; path = modules/BridgeSubscriptor.m; sourceTree = "<group>"; };
 		F18F8E49584440AAB6845348 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -131,8 +131,6 @@
 				E4CDBEC91767CB4B00243905 /* ViewControllers */,
 				E4D02030176B2C290055949C /* JsBridgeAppDelegate.h */,
 				E4D02031176B2C290055949C /* JsBridgeAppDelegate.m */,
-				6F3609A91774642900F2B0FE /* BridgeSubscriptor.h */,
-				6F3609AA1774642900F2B0FE /* BridgeSubscriptor.m */,
 				E4CDBEA21767C60B00243905 /* Supporting Files */,
 			);
 			path = JsBridge_iOS;
@@ -171,6 +169,8 @@
 		E4D5E99E17AA68500099ED40 /* modules */ = {
 			isa = PBXGroup;
 			children = (
+				E4D5E9AE17AA75BB0099ED40 /* BridgeSubscriptor.h */,
+				E4D5E9AF17AA75BB0099ED40 /* BridgeSubscriptor.m */,
 				E4D5E99F17AA68680099ED40 /* JsBridgeURLInterceptor.h */,
 				E4D5E9A017AA68680099ED40 /* JsBridgeURLInterceptor.m */,
 				E4D5E9A117AA68680099ED40 /* JsBridgeViewController.h */,
@@ -288,12 +288,12 @@
 			files = (
 				E4CDBEA81767C60B00243905 /* main.m in Sources */,
 				E4D02032176B2C290055949C /* JsBridgeAppDelegate.m in Sources */,
-				6F3609AB1774642900F2B0FE /* BridgeSubscriptor.m in Sources */,
 				E4D5E9A917AA68680099ED40 /* JsBridgeURLInterceptor.m in Sources */,
 				E4D5E9AA17AA68680099ED40 /* JsBridgeViewController.m in Sources */,
 				E4D5E9AB17AA68680099ED40 /* NativeAction.m in Sources */,
 				E4D5E9AC17AA68680099ED40 /* NSURLProtocolBridge.m in Sources */,
 				E4D5E9AD17AA68680099ED40 /* WebViewController.m in Sources */,
+				E4D5E9B017AA75BB0099ED40 /* BridgeSubscriptor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
