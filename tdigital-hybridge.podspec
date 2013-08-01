@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.platform          = :ios
   s.ios.deployment_target   = '6.0'
   
-  s.source_files      = 'tdigital-hybridge/ios/JsBridge_iOS/modules/*.{h,m}'
+  s.source_files      = 'ios/JsBridge_iOS/modules/*.{h,m}'
   
   s.xcconfig          =  { 'LIBRARY_SEARCH_PATHS' => '"$(SRCROOT)/Pods/tdigital-hybridge"'}
   
