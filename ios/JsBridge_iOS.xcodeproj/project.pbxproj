@@ -17,12 +17,14 @@
 		E4CDBEAE1767C60B00243905 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CDBEAD1767C60B00243905 /* Default.png */; };
 		E4CDBEB01767C60B00243905 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CDBEAF1767C60B00243905 /* Default@2x.png */; };
 		E4CDBEB21767C60B00243905 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CDBEB11767C60B00243905 /* Default-568h@2x.png */; };
-		E4CDBECC1767CB8700243905 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CDBECB1767CB8700243905 /* WebViewController.m */; };
-		E4CDBED21767CEC500243905 /* NativeAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CDBED11767CEC500243905 /* NativeAction.m */; };
 		E4D01FDD1767E0280055949C /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = E4CDBED61767DE1A00243905 /* index.html */; };
 		E4D01FDE1767E0280055949C /* jquery.min.js in Resources */ = {isa = PBXBuildFile; fileRef = E4CDBED71767DE1A00243905 /* jquery.min.js */; };
-		E4D01FE117685BD60055949C /* NSURLProtocolBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D01FE017685BD60055949C /* NSURLProtocolBridge.m */; };
 		E4D02032176B2C290055949C /* JsBridgeAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D02031176B2C290055949C /* JsBridgeAppDelegate.m */; };
+		E4D5E9A917AA68680099ED40 /* JsBridgeURLInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A017AA68680099ED40 /* JsBridgeURLInterceptor.m */; };
+		E4D5E9AA17AA68680099ED40 /* JsBridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A217AA68680099ED40 /* JsBridgeViewController.m */; };
+		E4D5E9AB17AA68680099ED40 /* NativeAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A417AA68680099ED40 /* NativeAction.m */; };
+		E4D5E9AC17AA68680099ED40 /* NSURLProtocolBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */; };
+		E4D5E9AD17AA68680099ED40 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A817AA68680099ED40 /* WebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,16 +44,20 @@
 		E4CDBEAD1767C60B00243905 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		E4CDBEAF1767C60B00243905 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		E4CDBEB11767C60B00243905 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		E4CDBECA1767CB8700243905 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
-		E4CDBECB1767CB8700243905 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
-		E4CDBED01767CEC500243905 /* NativeAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeAction.h; sourceTree = "<group>"; };
-		E4CDBED11767CEC500243905 /* NativeAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NativeAction.m; sourceTree = "<group>"; };
 		E4CDBED61767DE1A00243905 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = www/index.html; sourceTree = "<group>"; };
 		E4CDBED71767DE1A00243905 /* jquery.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jquery.min.js; path = www/jquery.min.js; sourceTree = "<group>"; };
-		E4D01FDF17685AF60055949C /* NSURLProtocolBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSURLProtocolBridge.h; sourceTree = "<group>"; };
-		E4D01FE017685BD60055949C /* NSURLProtocolBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLProtocolBridge.m; sourceTree = "<group>"; };
 		E4D02030176B2C290055949C /* JsBridgeAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsBridgeAppDelegate.h; sourceTree = "<group>"; };
 		E4D02031176B2C290055949C /* JsBridgeAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsBridgeAppDelegate.m; sourceTree = "<group>"; };
+		E4D5E99F17AA68680099ED40 /* JsBridgeURLInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsBridgeURLInterceptor.h; path = modules/JsBridgeURLInterceptor.h; sourceTree = "<group>"; };
+		E4D5E9A017AA68680099ED40 /* JsBridgeURLInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JsBridgeURLInterceptor.m; path = modules/JsBridgeURLInterceptor.m; sourceTree = "<group>"; };
+		E4D5E9A117AA68680099ED40 /* JsBridgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsBridgeViewController.h; path = modules/JsBridgeViewController.h; sourceTree = "<group>"; };
+		E4D5E9A217AA68680099ED40 /* JsBridgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JsBridgeViewController.m; path = modules/JsBridgeViewController.m; sourceTree = "<group>"; };
+		E4D5E9A317AA68680099ED40 /* NativeAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeAction.h; path = modules/NativeAction.h; sourceTree = "<group>"; };
+		E4D5E9A417AA68680099ED40 /* NativeAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NativeAction.m; path = modules/NativeAction.m; sourceTree = "<group>"; };
+		E4D5E9A517AA68680099ED40 /* NSURLProtocolBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSURLProtocolBridge.h; path = modules/NSURLProtocolBridge.h; sourceTree = "<group>"; };
+		E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSURLProtocolBridge.m; path = modules/NSURLProtocolBridge.m; sourceTree = "<group>"; };
+		E4D5E9A717AA68680099ED40 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = modules/WebViewController.h; sourceTree = "<group>"; };
+		E4D5E9A817AA68680099ED40 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = modules/WebViewController.m; sourceTree = "<group>"; };
 		F18F8E49584440AAB6845348 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -119,15 +125,12 @@
 		E4CDBEA11767C60B00243905 /* JsBridge_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				E4D5E99E17AA68500099ED40 /* modules */,
 				E474B8DA178EE630003755B0 /* Utils */,
 				E4CDBED41767DE1A00243905 /* Resources */,
 				E4CDBEC91767CB4B00243905 /* ViewControllers */,
 				E4D02030176B2C290055949C /* JsBridgeAppDelegate.h */,
 				E4D02031176B2C290055949C /* JsBridgeAppDelegate.m */,
-				E4D01FDF17685AF60055949C /* NSURLProtocolBridge.h */,
-				E4D01FE017685BD60055949C /* NSURLProtocolBridge.m */,
-				E4CDBED01767CEC500243905 /* NativeAction.h */,
-				E4CDBED11767CEC500243905 /* NativeAction.m */,
 				6F3609A91774642900F2B0FE /* BridgeSubscriptor.h */,
 				6F3609AA1774642900F2B0FE /* BridgeSubscriptor.m */,
 				E4CDBEA21767C60B00243905 /* Supporting Files */,
@@ -152,8 +155,6 @@
 		E4CDBEC91767CB4B00243905 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				E4CDBECA1767CB8700243905 /* WebViewController.h */,
-				E4CDBECB1767CB8700243905 /* WebViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -165,6 +166,23 @@
 				E4CDBED71767DE1A00243905 /* jquery.min.js */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		E4D5E99E17AA68500099ED40 /* modules */ = {
+			isa = PBXGroup;
+			children = (
+				E4D5E99F17AA68680099ED40 /* JsBridgeURLInterceptor.h */,
+				E4D5E9A017AA68680099ED40 /* JsBridgeURLInterceptor.m */,
+				E4D5E9A117AA68680099ED40 /* JsBridgeViewController.h */,
+				E4D5E9A217AA68680099ED40 /* JsBridgeViewController.m */,
+				E4D5E9A317AA68680099ED40 /* NativeAction.h */,
+				E4D5E9A417AA68680099ED40 /* NativeAction.m */,
+				E4D5E9A517AA68680099ED40 /* NSURLProtocolBridge.h */,
+				E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */,
+				E4D5E9A717AA68680099ED40 /* WebViewController.h */,
+				E4D5E9A817AA68680099ED40 /* WebViewController.m */,
+			);
+			name = modules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,11 +287,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4CDBEA81767C60B00243905 /* main.m in Sources */,
-				E4CDBECC1767CB8700243905 /* WebViewController.m in Sources */,
-				E4CDBED21767CEC500243905 /* NativeAction.m in Sources */,
-				E4D01FE117685BD60055949C /* NSURLProtocolBridge.m in Sources */,
 				E4D02032176B2C290055949C /* JsBridgeAppDelegate.m in Sources */,
 				6F3609AB1774642900F2B0FE /* BridgeSubscriptor.m in Sources */,
+				E4D5E9A917AA68680099ED40 /* JsBridgeURLInterceptor.m in Sources */,
+				E4D5E9AA17AA68680099ED40 /* JsBridgeViewController.m in Sources */,
+				E4D5E9AB17AA68680099ED40 /* NativeAction.m in Sources */,
+				E4D5E9AC17AA68680099ED40 /* NSURLProtocolBridge.m in Sources */,
+				E4D5E9AD17AA68680099ED40 /* WebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

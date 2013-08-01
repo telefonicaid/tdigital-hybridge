@@ -30,9 +30,10 @@ const NSString *commPrefix = @"bridge";
         }
         
         // Crear un objeto NativeAction para transportar la petición al manejador nativo
-        NativeAction *nativeAction = [[NativeAction alloc] initWithAction:action method:method params:params];
+//        NativeAction *nativeAction = [[NativeAction alloc] initWithAction:action method:method params:params];
         NSError *error = nil;
-        NSMutableDictionary *result = [[self.delegate handleAction:nativeAction error:&error] mutableCopy];
+        NSMutableDictionary *result = nil;
+//        NSMutableDictionary *result = [[self.delegate handleAction:nativeAction error:&error] mutableCopy];
         
         // Error
         if (error) {
