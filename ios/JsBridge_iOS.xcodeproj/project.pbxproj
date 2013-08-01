@@ -23,14 +23,12 @@
 		E4D5E9AA17AA68680099ED40 /* JsBridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A217AA68680099ED40 /* JsBridgeViewController.m */; };
 		E4D5E9AB17AA68680099ED40 /* NativeAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A417AA68680099ED40 /* NativeAction.m */; };
 		E4D5E9AC17AA68680099ED40 /* NSURLProtocolBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */; };
-		E4D5E9AD17AA68680099ED40 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A817AA68680099ED40 /* WebViewController.m */; };
 		E4D5E9B317AA79E60099ED40 /* BridgeSubscriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9B217AA79E60099ED40 /* BridgeSubscriptor.m */; };
+		E4D5E9BA17AA82170099ED40 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9B917AA82170099ED40 /* WebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8809BE557D4F48DAB4C1050E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E474B8DC178EE6AF003755B0 /* HybridgeLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HybridgeLog.h; sourceTree = "<group>"; };
-		E474B8DD178EE72A003755B0 /* MyLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLog.h; sourceTree = "<group>"; };
 		E4CDBE981767C60B00243905 /* JsBridge_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JsBridge_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4CDBE9B1767C60B00243905 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E4CDBE9D1767C60B00243905 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -54,10 +52,12 @@
 		E4D5E9A417AA68680099ED40 /* NativeAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NativeAction.m; path = modules/NativeAction.m; sourceTree = "<group>"; };
 		E4D5E9A517AA68680099ED40 /* NSURLProtocolBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSURLProtocolBridge.h; path = modules/NSURLProtocolBridge.h; sourceTree = "<group>"; };
 		E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSURLProtocolBridge.m; path = modules/NSURLProtocolBridge.m; sourceTree = "<group>"; };
-		E4D5E9A717AA68680099ED40 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = modules/WebViewController.h; sourceTree = "<group>"; };
-		E4D5E9A817AA68680099ED40 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = modules/WebViewController.m; sourceTree = "<group>"; };
 		E4D5E9B117AA79E60099ED40 /* BridgeSubscriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BridgeSubscriptor.h; path = modules/BridgeSubscriptor.h; sourceTree = "<group>"; };
 		E4D5E9B217AA79E60099ED40 /* BridgeSubscriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BridgeSubscriptor.m; path = modules/BridgeSubscriptor.m; sourceTree = "<group>"; };
+		E4D5E9B617AA81950099ED40 /* HybridgeLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HybridgeLog.h; path = Utils/Logging/HybridgeLog.h; sourceTree = "<group>"; };
+		E4D5E9B717AA81950099ED40 /* MyLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyLog.h; path = Utils/Logging/MyLog.h; sourceTree = "<group>"; };
+		E4D5E9B817AA82170099ED40 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		E4D5E9B917AA82170099ED40 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		F18F8E49584440AAB6845348 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -76,23 +76,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E474B8DA178EE630003755B0 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				E474B8DB178EE65F003755B0 /* Logging */,
-			);
-			name = Utils;
-			sourceTree = "<group>";
-		};
-		E474B8DB178EE65F003755B0 /* Logging */ = {
-			isa = PBXGroup;
-			children = (
-				E474B8DC178EE6AF003755B0 /* HybridgeLog.h */,
-				E474B8DD178EE72A003755B0 /* MyLog.h */,
-			);
-			name = Logging;
-			sourceTree = "<group>";
-		};
 		E4CDBE8F1767C60B00243905 = {
 			isa = PBXGroup;
 			children = (
@@ -125,8 +108,8 @@
 		E4CDBEA11767C60B00243905 /* JsBridge_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				E4D5E9B417AA815F0099ED40 /* Utils */,
 				E4D5E99E17AA68500099ED40 /* modules */,
-				E474B8DA178EE630003755B0 /* Utils */,
 				E4CDBED41767DE1A00243905 /* Resources */,
 				E4CDBEC91767CB4B00243905 /* ViewControllers */,
 				E4D02030176B2C290055949C /* JsBridgeAppDelegate.h */,
@@ -153,6 +136,8 @@
 		E4CDBEC91767CB4B00243905 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E4D5E9B817AA82170099ED40 /* WebViewController.h */,
+				E4D5E9B917AA82170099ED40 /* WebViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -179,10 +164,25 @@
 				E4D5E9A417AA68680099ED40 /* NativeAction.m */,
 				E4D5E9A517AA68680099ED40 /* NSURLProtocolBridge.h */,
 				E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */,
-				E4D5E9A717AA68680099ED40 /* WebViewController.h */,
-				E4D5E9A817AA68680099ED40 /* WebViewController.m */,
 			);
 			name = modules;
+			sourceTree = "<group>";
+		};
+		E4D5E9B417AA815F0099ED40 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E4D5E9B517AA817C0099ED40 /* Logging */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		E4D5E9B517AA817C0099ED40 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				E4D5E9B617AA81950099ED40 /* HybridgeLog.h */,
+				E4D5E9B717AA81950099ED40 /* MyLog.h */,
+			);
+			name = Logging;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,8 +292,8 @@
 				E4D5E9AA17AA68680099ED40 /* JsBridgeViewController.m in Sources */,
 				E4D5E9AB17AA68680099ED40 /* NativeAction.m in Sources */,
 				E4D5E9AC17AA68680099ED40 /* NSURLProtocolBridge.m in Sources */,
-				E4D5E9AD17AA68680099ED40 /* WebViewController.m in Sources */,
 				E4D5E9B317AA79E60099ED40 /* BridgeSubscriptor.m in Sources */,
+				E4D5E9BA17AA82170099ED40 /* WebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
