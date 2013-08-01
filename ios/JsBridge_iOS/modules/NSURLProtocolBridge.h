@@ -11,7 +11,7 @@
 @class SBJsonParser;
 @class SBJsonWriter;
 
-@interface NSURLProtocolBridge :  NSURLProtocol
+@interface NSURLProtocolBridge : NSURLProtocol
 {
     
 @private

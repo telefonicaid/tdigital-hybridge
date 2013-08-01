@@ -63,9 +63,54 @@
         // Dispatch Event to WebView
         [self fireEventInWebView: (NSString*) @"HybridgeMessage" data:(NSString*) jsonString];
     };
+  
+    BridgeHandlerBlock_t preflightHandler = ^(NSString *action, NSURLProtocol *url, NSString *data) {
+        
+        NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
+        
+        [json setValue:@"application/json; charset=utf-8" forKey:@"Content-Type"];
+        [json setValue:@"*" forKey:@"Access-Control-Allow-Origin"];
+        [json setValue:@"Content-Type, data" forKey:@"Access-Control-Allow-Headers"];
+        
+        NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:url.request.URL statusCode:200 HTTPVersion:@"1.1" headerFields:json];
+        
+        id client = [url client];
+        [client URLProtocol:url didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+        [client URLProtocolDidFinishLoading:url];
+    };
     
-    // Subscribe to action named "currentTime"
-    //[subscriptor subscribeAction:@"currentTime" withHandler:handler];
+    BridgeHandlerBlock_t productHandler = ^(NSString *action, NSURLProtocol *url, NSString *data) {
+      DDLogInfo(@"Ha llegado la petición: %@", action);
+      DDLogInfo(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
+      DDLogInfo(@"Data: %@", data);
+      
+      //NSDictionary *params = [_parser objectWithString:data];
+      NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
+      //NSString *ts = [json objectForKey:@"timestamp"];
+      //[json setValue:ts  forKey:@"data"];
+      [json setValue:@"application/json; charset=utf-8" forKey:@"Content-Type"];
+      [json setValue:@"*" forKey:@"Access-Control-Allow-Origin"];
+      [json setValue:@"Content-Type, data" forKey:@"Access-Control-Allow-Headers"];
+      
+      NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:url.request.URL statusCode:200 HTTPVersion:@"1.1" headerFields:json];
+      
+        NSMutableDictionary *product = [[NSMutableDictionary alloc] init];
+        // Get product info
+        [product setValue:[NSNumber numberWithInt:100] forKey:@"downloaded"];
+      NSString *jsonString = [_writer stringWithObject:product];
+      NSData *jsonBody = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+      
+      id client = [url client];
+      [client URLProtocol:url didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+      [client URLProtocol:url didLoadData:jsonBody];
+      [client URLProtocolDidFinishLoading:url];
+      
+      // Dispatch Event to WebView
+      [self fireEventInWebView: (NSString*) @"HybridgeMessage" data:(NSString*) jsonString];
+    };
+  
+    [subscriptor subscribeAction:@"preflight" withHandler:preflightHandler];
+    [subscriptor subscribeAction:@"product" withHandler:productHandler];
     [subscriptor subscribeAction:@"state" withHandler:timeHandler];
     // ***************
     
@@ -74,8 +119,12 @@
     [self.view addSubview:self.theWeb];
     
     // Carga HTML local
-    NSString *filePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"index" ofType:@"html"];
-    NSURL *url = [NSURL fileURLWithPath:filePath];
+    //NSString *filePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"index" ofType:@"html"];
+    //NSURL *url = [NSURL fileURLWithPath:filePath];
+  
+    // Carga de aplicacion web
+    NSURL*url = [NSURL URLWithString:@"http://127.0.0.1/#movies/507/Obama9"];
+  
     [self.theWeb loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
@@ -100,7 +149,7 @@
   NSMutableString* ms = [[NSMutableString alloc] initWithString:@"Hybridge.fireEvent(\""];
   [ms appendString:eventName];
   [ms appendString:@"\","];
-  [ms appendString:jsonString];
+    [ms appendString:(jsonString?jsonString:@"{}")];
   [ms appendString:@")"];
   NSString *js = ms;
   [self performSelectorOnMainThread:@selector(runJsInWebview:) withObject:js waitUntilDone:NO];
