@@ -24,7 +24,7 @@
 		E4D5E9AB17AA68680099ED40 /* NativeAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A417AA68680099ED40 /* NativeAction.m */; };
 		E4D5E9AC17AA68680099ED40 /* NSURLProtocolBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */; };
 		E4D5E9AD17AA68680099ED40 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A817AA68680099ED40 /* WebViewController.m */; };
-		E4D5E9B017AA75BB0099ED40 /* BridgeSubscriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9AF17AA75BB0099ED40 /* BridgeSubscriptor.m */; };
+		E4D5E9B317AA79E60099ED40 /* BridgeSubscriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9B217AA79E60099ED40 /* BridgeSubscriptor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,8 +56,8 @@
 		E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSURLProtocolBridge.m; path = modules/NSURLProtocolBridge.m; sourceTree = "<group>"; };
 		E4D5E9A717AA68680099ED40 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = modules/WebViewController.h; sourceTree = "<group>"; };
 		E4D5E9A817AA68680099ED40 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = modules/WebViewController.m; sourceTree = "<group>"; };
-		E4D5E9AE17AA75BB0099ED40 /* BridgeSubscriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BridgeSubscriptor.h; path = modules/BridgeSubscriptor.h; sourceTree = "<group>"; };
-		E4D5E9AF17AA75BB0099ED40 /* BridgeSubscriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BridgeSubscriptor.m; path = modules/BridgeSubscriptor.m; sourceTree = "<group>"; };
+		E4D5E9B117AA79E60099ED40 /* BridgeSubscriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BridgeSubscriptor.h; path = modules/BridgeSubscriptor.h; sourceTree = "<group>"; };
+		E4D5E9B217AA79E60099ED40 /* BridgeSubscriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BridgeSubscriptor.m; path = modules/BridgeSubscriptor.m; sourceTree = "<group>"; };
 		F18F8E49584440AAB6845348 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -169,8 +169,8 @@
 		E4D5E99E17AA68500099ED40 /* modules */ = {
 			isa = PBXGroup;
 			children = (
-				E4D5E9AE17AA75BB0099ED40 /* BridgeSubscriptor.h */,
-				E4D5E9AF17AA75BB0099ED40 /* BridgeSubscriptor.m */,
+				E4D5E9B117AA79E60099ED40 /* BridgeSubscriptor.h */,
+				E4D5E9B217AA79E60099ED40 /* BridgeSubscriptor.m */,
 				E4D5E99F17AA68680099ED40 /* JsBridgeURLInterceptor.h */,
 				E4D5E9A017AA68680099ED40 /* JsBridgeURLInterceptor.m */,
 				E4D5E9A117AA68680099ED40 /* JsBridgeViewController.h */,
@@ -293,7 +293,7 @@
 				E4D5E9AB17AA68680099ED40 /* NativeAction.m in Sources */,
 				E4D5E9AC17AA68680099ED40 /* NSURLProtocolBridge.m in Sources */,
 				E4D5E9AD17AA68680099ED40 /* WebViewController.m in Sources */,
-				E4D5E9B017AA75BB0099ED40 /* BridgeSubscriptor.m in Sources */,
+				E4D5E9B317AA79E60099ED40 /* BridgeSubscriptor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
