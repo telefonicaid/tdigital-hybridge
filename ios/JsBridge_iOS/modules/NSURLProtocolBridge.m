@@ -37,7 +37,7 @@ NSString *bridgePrefix = @"hybridge";
     {
         DDLogInfo(@"Response OPTIONS prefight request");
         BridgeHandlerBlock_t handler = [[BridgeSubscriptor sharedInstance] handlerForAction:@"preflight"];
-        handler(nil, self, nil);
+        handler(self, nil);
         return;
     }
     parser = [[SBJsonParser alloc] init];
@@ -61,7 +61,7 @@ NSString *bridgePrefix = @"hybridge";
     BridgeHandlerBlock_t handler = [[BridgeSubscriptor sharedInstance] handlerForAction:_action];
     
     if (handler != nil) {
-        handler(_action, self, _data);
+        handler(self, _data);
         
     } else {
     

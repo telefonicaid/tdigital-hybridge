@@ -37,8 +37,8 @@
     
     // Example handler, just parses data to JSON from ajax header in order to process it
     // and writes back JSON in a response header
-    BridgeHandlerBlock_t timeHandler = ^(NSString *action, NSURLProtocol *url, NSString *data) {
-        DDLogInfo(@"Ha llegado la petición: %@", action);
+    BridgeHandlerBlock_t timeHandler = ^(NSURLProtocol *url, NSString *data) {
+        DDLogInfo(@"Ha llegado la petición time");
         DDLogInfo(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
         DDLogInfo(@"Data: %@", data);
         
@@ -73,7 +73,7 @@
      *
      *	@return	void
      */
-    BridgeHandlerBlock_t preflightHandler = ^(NSString *action, NSURLProtocol *url, NSString *data) {
+    BridgeHandlerBlock_t preflightHandler = ^(NSURLProtocol *url, NSString *data) {
         
         NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
         
@@ -97,61 +97,59 @@
      *
      *	@return	void
      */
-    BridgeHandlerBlock_t productHandler = ^(NSString *action, NSURLProtocol *url, NSString *data) {
-      DDLogInfo(@"Ha llegado la petición: %@", action);
-      DDLogInfo(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
-      DDLogInfo(@"Data: %@", data);
+    BridgeHandlerBlock_t productHandler = ^(NSURLProtocol *url, NSString *data) {
+        DDLogInfo(@"Ha llegado la petición product info");
+        DDLogInfo(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
+        DDLogInfo(@"Data: %@", data);
       
-      //NSDictionary *params = [_parser objectWithString:data];
-      NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
-      //NSString *ts = [json objectForKey:@"timestamp"];
-      //[json setValue:ts  forKey:@"data"];
-      [json setValue:@"application/json; charset=utf-8" forKey:@"Content-Type"];
-      [json setValue:@"*" forKey:@"Access-Control-Allow-Origin"];
-      [json setValue:@"Content-Type, data" forKey:@"Access-Control-Allow-Headers"];
+        //NSDictionary *params = [_parser objectWithString:data];
+        NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
+        //NSString *ts = [json objectForKey:@"timestamp"];
+        //[json setValue:ts  forKey:@"data"];
+        [json setValue:@"application/json; charset=utf-8" forKey:@"Content-Type"];
+        [json setValue:@"*" forKey:@"Access-Control-Allow-Origin"];
+        [json setValue:@"Content-Type, data" forKey:@"Access-Control-Allow-Headers"];
       
-      NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:url.request.URL statusCode:200 HTTPVersion:@"1.1" headerFields:json];
+        NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:url.request.URL statusCode:200 HTTPVersion:@"1.1" headerFields:json];
       
         NSMutableDictionary *product = [[NSMutableDictionary alloc] init];
         // Get product info
         [product setValue:[NSNumber numberWithInt:100] forKey:@"downloaded"];
-      NSString *jsonString = [_writer stringWithObject:product];
-      NSData *jsonBody = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *jsonString = [_writer stringWithObject:product];
+        NSData *jsonBody = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
       
-      id client = [url client];
-      [client URLProtocol:url didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-      [client URLProtocol:url didLoadData:jsonBody];
-      [client URLProtocolDidFinishLoading:url];
+        id client = [url client];
+        [client URLProtocol:url didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+        [client URLProtocol:url didLoadData:jsonBody];
+        [client URLProtocolDidFinishLoading:url];
       
-      // Dispatch Event to WebView
-      [self fireEventInWebView: (NSString*) @"HybridgeMessage" data:(NSString*) jsonString];
+        // Dispatch Event to WebView
+        [self fireEventInWebView: (NSString*) @"HybridgeMessage" data:(NSString*) jsonString];
     };
   
     /**
      *	Bloque para manejar la navegación de WebView a DownloadManager
      *
-     *	@param	action	Acción identificativa
      *	@param	url	Objeto URL
      *	@param	data	String conteniendo el JSON enviado en la pertición
      *
      *	@return	void
      */
-    BridgeHandlerBlock_t downloadHandler = ^(NSString *action, NSURLProtocol *url, NSString *data) {
-        DDLogInfo(@"Ha llegado la petición: %@", action);
+    BridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data) {
+        DDLogInfo(@"Ha llegado la petición download");
         
     };
     
     /**
      *	Bloque para manejar la navegación de WebView al Player
      *
-     *	@param	action	Acción identificativa
      *	@param	url	Objeto URL
      *	@param	data	String conteniendo el JSON enviado en la pertición
      *
      *	@return	void
      */
-    BridgeHandlerBlock_t playHandler = ^(NSString *action, NSURLProtocol *url, NSString *data) {
-        DDLogInfo(@"Ha llegado la petición: %@", action);
+    BridgeHandlerBlock_t playHandler = ^(NSURLProtocol *url, NSString *data) {
+        DDLogInfo(@"Ha llegado la petición: play");
         
     };
     
@@ -192,14 +190,14 @@
 
 - (void)fireEventInWebView:(NSString *)eventName data:(NSString *)jsonString
 {
-  DDLogInfo(@"Enviando evento a Webview: %@", eventName);
-  NSMutableString* ms = [[NSMutableString alloc] initWithString:@"Hybridge.fireEvent(\""];
-  [ms appendString:eventName];
-  [ms appendString:@"\","];
+    DDLogInfo(@"Enviando evento a Webview: %@", eventName);
+    NSMutableString* ms = [[NSMutableString alloc] initWithString:@"Hybridge.fireEvent(\""];
+    [ms appendString:eventName];
+    [ms appendString:@"\","];
     [ms appendString:(jsonString?jsonString:@"{}")];
-  [ms appendString:@")"];
-  NSString *js = ms;
-  [self performSelectorOnMainThread:@selector(runJsInWebview:) withObject:js waitUntilDone:NO];
+    [ms appendString:@")"];
+    NSString *js = ms;
+    [self performSelectorOnMainThread:@selector(runJsInWebview:) withObject:js waitUntilDone:NO];
 }
 
 @end

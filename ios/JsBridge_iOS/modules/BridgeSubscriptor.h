@@ -20,7 +20,7 @@
     - name of action
     - list of path components in
     - data */
-typedef void (^BridgeHandlerBlock_t)(NSString*, NSURLProtocol*, NSString*);
+typedef void (^BridgeHandlerBlock_t)(NSURLProtocol*, NSString*);
 
 /** Singleton constructor */ 
 + (BridgeSubscriptor *)sharedInstance;
