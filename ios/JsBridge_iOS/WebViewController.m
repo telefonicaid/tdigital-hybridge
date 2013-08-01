@@ -64,6 +64,15 @@
         [self fireEventInWebView: (NSString*) @"HybridgeMessage" data:(NSString*) jsonString];
     };
   
+    /**
+     *	Bloque para manejar las peticiones OPTION (CORS preflight)
+     *
+     *	@param	action	Acción identificativa
+     *	@param	url	Objeto URL
+     *	@param	data	String conteniendo el JSON enviado en la pertición
+     *
+     *	@return	void
+     */
     BridgeHandlerBlock_t preflightHandler = ^(NSString *action, NSURLProtocol *url, NSString *data) {
         
         NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
@@ -79,6 +88,15 @@
         [client URLProtocolDidFinishLoading:url];
     };
     
+    /**
+     *	Bloque para manejar las peticiones de infrmación de producto
+     *
+     *	@param	action	Acción identificativa
+     *	@param	url	Objeto URL
+     *	@param	data	String conteniendo el JSON enviado en la pertición
+     *
+     *	@return	void
+     */
     BridgeHandlerBlock_t productHandler = ^(NSString *action, NSURLProtocol *url, NSString *data) {
       DDLogInfo(@"Ha llegado la petición: %@", action);
       DDLogInfo(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
@@ -109,11 +127,25 @@
       [self fireEventInWebView: (NSString*) @"HybridgeMessage" data:(NSString*) jsonString];
     };
   
+    /**
+     *	Bloque para manejar la navegación de WebView a DownloadManager
+     *
+     *	@param	action	Acción identificativa
+     *	@param	url	Objeto URL
+     *	@param	data	String conteniendo el JSON enviado en la pertición
+     *
+     *	@return	void
+     */
+    BridgeHandlerBlock_t downloadHandler = ^(NSString *action, NSURLProtocol *url, NSString *data) {
+        DDLogInfo(@"Ha llegado la petición: %@", action);
+        
+    };
+    
     [subscriptor subscribeAction:@"preflight" withHandler:preflightHandler];
     [subscriptor subscribeAction:@"product" withHandler:productHandler];
+    [subscriptor subscribeAction:@"download" withHandler:downloadHandler];
     [subscriptor subscribeAction:@"state" withHandler:timeHandler];
-    // ***************
-    
+
     self.theWeb = [[UIWebView alloc] initWithFrame:self.view.bounds];
     self.theWeb.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.theWeb];

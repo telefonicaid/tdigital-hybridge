@@ -17,10 +17,9 @@ NSString *bridgePrefix = @"hybridge";
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)_request
 {
-    if (//[[_request HTTPMethod] caseInsensitiveCompare:@"OPTIONS"] == NSOrderedSame ||
+    if ([[_request HTTPMethod] caseInsensitiveCompare:@"OPTIONS"] == NSOrderedSame ||
         [_request.URL.host caseInsensitiveCompare:bridgePrefix] == NSOrderedSame)
     {
-        //[json setValue:@"Content-Type" forKey:@"Access-Control-Allow-Headers"];
         return YES;
     }
     return NO;
@@ -34,18 +33,18 @@ NSString *bridgePrefix = @"hybridge";
 - (void)startLoading
 {
     
-    /*if([[self.request HTTPMethod] caseInsensitiveCompare:@"OPTIONS"] == NSOrderedSame)
+    if([[self.request HTTPMethod] caseInsensitiveCompare:@"OPTIONS"] == NSOrderedSame)
     {
         DDLogInfo(@"Response OPTIONS prefight request");
         BridgeHandlerBlock_t handler = [[BridgeSubscriptor sharedInstance] handlerForAction:@"preflight"];
         handler(nil, self, nil);
         return;
-    }*/
+    }
     parser = [[SBJsonParser alloc] init];
     writer = [[SBJsonWriter alloc] init];
     
-    /** Decode REST URL ( hybridge://action/id ) */
-    NSString *_action = nil;//self.request.URL.host;
+    /** Decode REST URL ( http://hybridge/action/id ) */
+    NSString *_action = nil;
     NSString *_id = nil;
     if ([[self.request.URL pathComponents] count] > 1) {
         _action = [[self.request.URL pathComponents] objectAtIndex:1];
@@ -62,7 +61,6 @@ NSString *bridgePrefix = @"hybridge";
     BridgeHandlerBlock_t handler = [[BridgeSubscriptor sharedInstance] handlerForAction:_action];
     
     if (handler != nil) {
-        //[_data setValue:self forKey:@"url"];
         handler(_action, self, _data);
         
     } else {
