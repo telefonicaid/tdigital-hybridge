@@ -141,9 +141,24 @@
         
     };
     
+    /**
+     *	Bloque para manejar la navegación de WebView al Player
+     *
+     *	@param	action	Acción identificativa
+     *	@param	url	Objeto URL
+     *	@param	data	String conteniendo el JSON enviado en la pertición
+     *
+     *	@return	void
+     */
+    BridgeHandlerBlock_t playHandler = ^(NSString *action, NSURLProtocol *url, NSString *data) {
+        DDLogInfo(@"Ha llegado la petición: %@", action);
+        
+    };
+    
     [subscriptor subscribeAction:@"preflight" withHandler:preflightHandler];
     [subscriptor subscribeAction:@"product" withHandler:productHandler];
     [subscriptor subscribeAction:@"download" withHandler:downloadHandler];
+    [subscriptor subscribeAction:@"play" withHandler:playHandler];
     [subscriptor subscribeAction:@"state" withHandler:timeHandler];
 
     self.theWeb = [[UIWebView alloc] initWithFrame:self.view.bounds];
