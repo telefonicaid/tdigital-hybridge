@@ -16,11 +16,11 @@
 
 #ifdef DEBUG
 // Log levels: off, error, warn, info, verbose
-static const int ddLogLevel = LOG_LEVEL_DEBUG;
+static const int ddLogLevelDef = LOG_LEVEL_DEBUG;
 
 #else
 
-static const int ddLogLevel = LOG_LEVEL_DEBUG;
+static const int ddLogLevelDef = LOG_LEVEL_DEBUG;
 
 #endif
 
