@@ -55,7 +55,7 @@
 		E4D5E9B117AA79E60099ED40 /* BridgeSubscriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BridgeSubscriptor.h; path = modules/BridgeSubscriptor.h; sourceTree = "<group>"; };
 		E4D5E9B217AA79E60099ED40 /* BridgeSubscriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BridgeSubscriptor.m; path = modules/BridgeSubscriptor.m; sourceTree = "<group>"; };
 		E4D5E9B617AA81950099ED40 /* HybridgeLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HybridgeLog.h; path = Utils/Logging/HybridgeLog.h; sourceTree = "<group>"; };
-		E4D5E9B717AA81950099ED40 /* MyLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyLog.h; path = Utils/Logging/MyLog.h; sourceTree = "<group>"; };
+		E4D5E9B717AA81950099ED40 /* DefLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DefLog.h; path = Utils/Logging/DefLog.h; sourceTree = "<group>"; };
 		E4D5E9B817AA82170099ED40 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		E4D5E9B917AA82170099ED40 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		F18F8E49584440AAB6845348 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -180,7 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				E4D5E9B617AA81950099ED40 /* HybridgeLog.h */,
-				E4D5E9B717AA81950099ED40 /* MyLog.h */,
+				E4D5E9B717AA81950099ED40 /* DefLog.h */,
 			);
 			name = Logging;
 			sourceTree = "<group>";

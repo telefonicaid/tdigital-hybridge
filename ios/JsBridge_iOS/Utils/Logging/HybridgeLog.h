@@ -9,7 +9,7 @@
 #import "DDTTYLogger.h"
 #import "DDFileLogger.h"
 #import "DDASLLogger.h"
-#import "MYLog.h"
+#import "DefLog.h"
 
 #ifndef HybridgeLog_h
 #define HibridgeLog_h
