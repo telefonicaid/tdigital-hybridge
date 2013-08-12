@@ -22,7 +22,7 @@ const NSString *commPrefix = @"bridge";
             action = [[url pathComponents] objectAtIndex:1];
         }
         NSString *method = [request HTTPMethod];
-        NSDictionary *params = nil;
+        //NSDictionary *params = nil;
         
         if ([method isEqualToString:@"HEAD"]) {
             NSLog(@"Petición ajax HEAD interceptada");

@@ -18,5 +18,5 @@
     SBJsonParser *parser;
     SBJsonWriter *writer;
 }
-    
+
 @end

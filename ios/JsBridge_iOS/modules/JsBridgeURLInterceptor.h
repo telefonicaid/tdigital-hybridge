@@ -3,7 +3,7 @@
 @class NativeAction;
 @protocol JsBridgeDelegate;
 
-@interface JsBridgeURLInterceptor : NSURLCache{
+@interface JsBridgeURLInterceptor : NSURLCache {
     id <JsBridgeDelegate> __weak mDelegate;
 }
 

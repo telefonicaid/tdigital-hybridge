@@ -28,8 +28,6 @@
     [super viewDidLoad];
   
     [NSURLProtocol registerClass:[NSURLProtocolBridge class]];
-    // ***************
-    // Example of subscription to an action named "currentTime"
     
     BridgeSubscriptor *subscriptor = [BridgeSubscriptor sharedInstance];
 
@@ -37,20 +35,12 @@
     
     // Example handler, just parses data to JSON from ajax header in order to process it
     // and writes back JSON in a response header
-    BridgeHandlerBlock_t timeHandler = ^(NSURLProtocol *url, NSString *data) {
+    BridgeHandlerBlock_t timeHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
         DDLogInfo(@"Ha llegado la petición time");
         DDLogInfo(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
         DDLogInfo(@"Data: %@", data);
         
         NSDictionary *params = [_parser objectWithString:data];
-        NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
-        //NSString *ts = [json objectForKey:@"timestamp"];
-        //[json setValue:ts  forKey:@"data"];
-        [json setValue:@"application/json; charset=utf-8" forKey:@"Content-Type"];
-        [json setValue:@"*" forKey:@"Access-Control-Allow-Origin"];
-        [json setValue:@"Content-Type" forKey:@"Access-Control-Allow-Headers"];
-        
-        NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:url.request.URL statusCode:200 HTTPVersion:@"1.1" headerFields:json];
         
         NSString *jsonString = [_writer stringWithObject:params];
         NSData *jsonBody = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
@@ -73,16 +63,7 @@
      *
      *	@return	void
      */
-    BridgeHandlerBlock_t preflightHandler = ^(NSURLProtocol *url, NSString *data) {
-        
-        NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
-        
-        [json setValue:@"application/json; charset=utf-8" forKey:@"Content-Type"];
-        [json setValue:@"*" forKey:@"Access-Control-Allow-Origin"];
-        [json setValue:@"Content-Type, data" forKey:@"Access-Control-Allow-Headers"];
-        
-        NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:url.request.URL statusCode:200 HTTPVersion:@"1.1" headerFields:json];
-        
+    BridgeHandlerBlock_t preflightHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
         id client = [url client];
         [client URLProtocol:url didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
         [client URLProtocolDidFinishLoading:url];
@@ -97,24 +78,14 @@
      *
      *	@return	void
      */
-    BridgeHandlerBlock_t productHandler = ^(NSURLProtocol *url, NSString *data) {
+    BridgeHandlerBlock_t productHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
         DDLogInfo(@"Ha llegado la petición product info");
         DDLogInfo(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
         DDLogInfo(@"Data: %@", data);
       
-        //NSDictionary *params = [_parser objectWithString:data];
-        NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
-        //NSString *ts = [json objectForKey:@"timestamp"];
-        //[json setValue:ts  forKey:@"data"];
-        [json setValue:@"application/json; charset=utf-8" forKey:@"Content-Type"];
-        [json setValue:@"*" forKey:@"Access-Control-Allow-Origin"];
-        [json setValue:@"Content-Type, data" forKey:@"Access-Control-Allow-Headers"];
-      
-        NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:url.request.URL statusCode:200 HTTPVersion:@"1.1" headerFields:json];
-      
         NSMutableDictionary *product = [[NSMutableDictionary alloc] init];
         // Get product info
-        [product setValue:[NSNumber numberWithInt:100] forKey:@"downloaded"];
+        [product setValue:[NSNumber numberWithInt:0] forKey:@"downloaded"];
         NSString *jsonString = [_writer stringWithObject:product];
         NSData *jsonBody = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
       
@@ -135,7 +106,7 @@
      *
      *	@return	void
      */
-    BridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data) {
+    BridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
         DDLogInfo(@"Ha llegado la petición download");
         
     };
@@ -148,7 +119,7 @@
      *
      *	@return	void
      */
-    BridgeHandlerBlock_t playHandler = ^(NSURLProtocol *url, NSString *data) {
+    BridgeHandlerBlock_t playHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
         DDLogInfo(@"Ha llegado la petición: play");
         
     };

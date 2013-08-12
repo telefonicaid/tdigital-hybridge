@@ -37,7 +37,7 @@ NSString *bridgePrefix = @"hybridge";
     {
         DDLogInfo(@"Response OPTIONS prefight request");
         BridgeHandlerBlock_t handler = [[BridgeSubscriptor sharedInstance] handlerForAction:@"preflight"];
-        handler(self, nil);
+        handler(self, nil, [self createRequest]);
         return;
     }
     parser = [[SBJsonParser alloc] init];
@@ -61,36 +61,7 @@ NSString *bridgePrefix = @"hybridge";
     BridgeHandlerBlock_t handler = [[BridgeSubscriptor sharedInstance] handlerForAction:_action];
     
     if (handler != nil) {
-        handler(self, _data);
-        
-    } else {
-    
-        /** TODO: Connect to internal service to take required actions:
-            Download file, fetch local file info, play video
-         */
-        // Crear un objeto NativeAction para transportar la petición al manejador nativo
-        //NativeAction *nativeAction = [[NativeAction alloc] initWithAction:_action params:params];
-        //NSError *error = nil;
-        //NSMutableDictionary *result = [[self.delegate handleAction:nativeAction error:&error] mutableCopy];
-        
-        /** Create JSON response */
-        NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
-        NSString *ts = [json objectForKey:@"timestamp"];
-        [json setValue:ts  forKey:@"data"];
-        [json setValue:@"application/json; charset=utf-8" forKey:@"Content-Type"];
-        [json setValue:@"*" forKey:@"Access-Control-Allow-Origin"];
-        [json setValue:@"Content-Type" forKey:@"Access-Control-Allow-Headers"];
-        
-        NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL statusCode:200 HTTPVersion:@"1.1" headerFields:json];
-
-        NSString *jsonString = [writer stringWithObject:params];
-        NSData *jsonBody = [jsonString dataUsingEncoding:NSUTF8StringEncoding];    
-        
-        id client = [self client];    
-        [client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-        [client URLProtocol:self didLoadData:jsonBody];
-        [client URLProtocolDidFinishLoading:self];
-        
+        handler(self, _data, [self createRequest]);
     }
 }
 
@@ -98,4 +69,14 @@ NSString *bridgePrefix = @"hybridge";
 {
 }
 
+- (NSHTTPURLResponse*)createRequest
+{
+    NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
+    [json setValue:@"application/json; charset=utf-8" forKey:@"Content-Type"];
+    [json setValue:@"*" forKey:@"Access-Control-Allow-Origin"];
+    [json setValue:@"Content-Type, data" forKey:@"Access-Control-Allow-Headers"];
+    
+    NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL statusCode:200 HTTPVersion:@"1.1" headerFields:json];
+    return response;
+}
 @end
