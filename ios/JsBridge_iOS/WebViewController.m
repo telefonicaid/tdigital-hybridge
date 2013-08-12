@@ -109,7 +109,6 @@
         
     };
     
-    [subscriptor subscribeAction:@"preflight" withHandler:preflightHandler];
     [subscriptor subscribeAction:@"product" withHandler:productHandler];
     [subscriptor subscribeAction:@"download" withHandler:downloadHandler];
     [subscriptor subscribeAction:@"play" withHandler:playHandler];
