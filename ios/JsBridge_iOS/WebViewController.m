@@ -10,6 +10,7 @@
 #import "NSURLProtocolBridge.h"
 #import "BridgeSubscriptor.h"
 #import "SBJson.h"
+#import "Hybridge.h"
 
 @implementation WebViewController
 
@@ -27,9 +28,8 @@
 {
     [super viewDidLoad];
   
-    [NSURLProtocol registerClass:[NSURLProtocolBridge class]];
-    
-    BridgeSubscriptor *subscriptor = [BridgeSubscriptor sharedInstance];
+    // Hybridge binding
+    _hybridge = [Hybridge sharedInstance];
 
     // Handlers
     
@@ -51,7 +51,8 @@
         [client URLProtocolDidFinishLoading:url];
         
         // Dispatch Event to WebView
-        [self fireEventInWebView: (NSString*) @"HybridgeMessage" data:(NSString*) jsonString];
+        [_hybridge fireEventInWebView:@"HybridgeMessage" data:jsonString web:self.theWeb];
+        //[self fireEventInWebView: (NSString*) @"HybridgeMessage" data:(NSString*) jsonString];
     };
     
     /**
@@ -80,7 +81,8 @@
         [client URLProtocolDidFinishLoading:url];
       
         // Dispatch Event to WebView
-        [self fireEventInWebView: (NSString*) @"HybridgeMessage" data:(NSString*) jsonString];
+        [_hybridge fireEventInWebView:@"HybridgeMessage" data:jsonString web:self.theWeb];
+        //[self fireEventInWebView: (NSString*) @"HybridgeMessage" data:(NSString*) jsonString];
     };
   
     /**
@@ -109,11 +111,11 @@
         
     };
     
-    [subscriptor subscribeAction:@"product" withHandler:productHandler];
-    [subscriptor subscribeAction:@"download" withHandler:downloadHandler];
-    [subscriptor subscribeAction:@"play" withHandler:playHandler];
-    [subscriptor subscribeAction:@"state" withHandler:timeHandler];
-
+    [_hybridge subscribeAction:@"product" withHandler:productHandler];
+    [_hybridge subscribeAction:@"download" withHandler:downloadHandler];
+    [_hybridge subscribeAction:@"play" withHandler:playHandler];
+    [_hybridge subscribeAction:@"state" withHandler:timeHandler];
+    
     self.theWeb = [[UIWebView alloc] initWithFrame:self.view.bounds];
     self.theWeb.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.theWeb];
@@ -130,29 +132,13 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-  [self fireEventInWebView: (NSString*) @"HybridgeReady" data:(NSString*) @"{}"];
-
+    [_hybridge fireEventInWebView:@"HybridgeReady" data:@"{}" web:self.theWeb];
     return YES;
 }
 
-- (NSString *)runJsInWebview:(NSString *)js
+- (void) fireJavascriptEvent:(NSString *)eventName data:(NSString *)jsonString
 {
-    DDLogInfo(@"runJsInWebview: %@",js);
-    NSString *jsResponse = [self.theWeb stringByEvaluatingJavaScriptFromString:js];
-    DDLogInfo(@"runJsInWebview response: %@",jsResponse);
-    return jsResponse;
-}
-
-- (void)fireEventInWebView:(NSString *)eventName data:(NSString *)jsonString
-{
-    DDLogInfo(@"Enviando evento a Webview: %@", eventName);
-    NSMutableString* ms = [[NSMutableString alloc] initWithString:@"Hybridge.fireEvent(\""];
-    [ms appendString:eventName];
-    [ms appendString:@"\","];
-    [ms appendString:(jsonString?jsonString:@"{}")];
-    [ms appendString:@")"];
-    NSString *js = ms;
-    [self performSelectorOnMainThread:@selector(runJsInWebview:) withObject:js waitUntilDone:NO];
+    [_hybridge fireEventInWebView:eventName data:jsonString web:self.theWeb];
 }
 
 @end

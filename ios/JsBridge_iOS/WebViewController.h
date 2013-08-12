@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "HybridgeLog.h"
+#import "Hybridge.h"
 
 @class SBJsonParser;
 @class SBJsonWriter;
@@ -19,13 +20,12 @@
 @private
     SBJsonParser *_parser;
     SBJsonWriter *_writer;
+    Hybridge *_hybridge;
 }
 
 @property (strong) UIWebView *theWeb;
 
-- (NSString *) runJsInWebview:(NSString *)js;
-
-- (void) fireEventInWebView:(NSString *)eventName data:(NSString *)jsonString;
+- (void) fireJavascriptEvent:(NSString *)eventName data:(NSString *)jsonString;
 
 @end
 

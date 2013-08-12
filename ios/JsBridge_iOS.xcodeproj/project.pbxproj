@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D442D27ED8684DC2A8FF399F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8809BE557D4F48DAB4C1050E /* libPods.a */; };
+		E43C043C17B930AE00F3CC67 /* Hybridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E43C043B17B930AD00F3CC67 /* Hybridge.m */; };
 		E4CDBE9C1767C60B00243905 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CDBE9B1767C60B00243905 /* UIKit.framework */; };
 		E4CDBE9E1767C60B00243905 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CDBE9D1767C60B00243905 /* Foundation.framework */; };
 		E4CDBEA01767C60B00243905 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CDBE9F1767C60B00243905 /* CoreGraphics.framework */; };
@@ -29,6 +30,8 @@
 
 /* Begin PBXFileReference section */
 		8809BE557D4F48DAB4C1050E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E43C043A17B930AC00F3CC67 /* Hybridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hybridge.h; path = modules/Hybridge.h; sourceTree = "<group>"; };
+		E43C043B17B930AD00F3CC67 /* Hybridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hybridge.m; path = modules/Hybridge.m; sourceTree = "<group>"; };
 		E4CDBE981767C60B00243905 /* JsBridge_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JsBridge_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4CDBE9B1767C60B00243905 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E4CDBE9D1767C60B00243905 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -164,6 +167,8 @@
 				E4D5E9A417AA68680099ED40 /* NativeAction.m */,
 				E4D5E9A517AA68680099ED40 /* NSURLProtocolBridge.h */,
 				E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */,
+				E43C043A17B930AC00F3CC67 /* Hybridge.h */,
+				E43C043B17B930AD00F3CC67 /* Hybridge.m */,
 			);
 			name = modules;
 			sourceTree = "<group>";
@@ -294,6 +299,7 @@
 				E4D5E9AC17AA68680099ED40 /* NSURLProtocolBridge.m in Sources */,
 				E4D5E9B317AA79E60099ED40 /* BridgeSubscriptor.m in Sources */,
 				E4D5E9BA17AA82170099ED40 /* WebViewController.m in Sources */,
+				E43C043C17B930AE00F3CC67 /* Hybridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
