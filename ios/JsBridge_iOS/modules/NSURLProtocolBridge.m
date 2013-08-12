@@ -35,9 +35,14 @@ NSString *bridgePrefix = @"hybridge";
     
     if([[self.request HTTPMethod] caseInsensitiveCompare:@"OPTIONS"] == NSOrderedSame)
     {
+        // Manejar las peticiones OPTION (CORS preflight)
         DDLogInfo(@"Response OPTIONS prefight request");
-        BridgeHandlerBlock_t handler = [[BridgeSubscriptor sharedInstance] handlerForAction:@"preflight"];
-        handler(self, nil, [self createRequest]);
+        //BridgeHandlerBlock_t handler = [[BridgeSubscriptor sharedInstance] handlerForAction:@"preflight"];
+        //handler(self, nil, [self createResponse]);
+        
+        id client = [self client];
+        [client URLProtocol:self didReceiveResponse:[self createResponse] cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+        [client URLProtocolDidFinishLoading:self];
         return;
     }
     parser = [[SBJsonParser alloc] init];
@@ -61,7 +66,7 @@ NSString *bridgePrefix = @"hybridge";
     BridgeHandlerBlock_t handler = [[BridgeSubscriptor sharedInstance] handlerForAction:_action];
     
     if (handler != nil) {
-        handler(self, _data, [self createRequest]);
+        handler(self, _data, [self createResponse]);
     }
 }
 
@@ -69,7 +74,7 @@ NSString *bridgePrefix = @"hybridge";
 {
 }
 
-- (NSHTTPURLResponse*)createRequest
+- (NSHTTPURLResponse*)createResponse
 {
     NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
     [json setValue:@"application/json; charset=utf-8" forKey:@"Content-Type"];

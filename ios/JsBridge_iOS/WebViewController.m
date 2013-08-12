@@ -53,21 +53,6 @@
         // Dispatch Event to WebView
         [self fireEventInWebView: (NSString*) @"HybridgeMessage" data:(NSString*) jsonString];
     };
-  
-    /**
-     *	Bloque para manejar las peticiones OPTION (CORS preflight)
-     *
-     *	@param	action	Acción identificativa
-     *	@param	url	Objeto URL
-     *	@param	data	String conteniendo el JSON enviado en la pertición
-     *
-     *	@return	void
-     */
-    BridgeHandlerBlock_t preflightHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
-        id client = [url client];
-        [client URLProtocol:url didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-        [client URLProtocolDidFinishLoading:url];
-    };
     
     /**
      *	Bloque para manejar las peticiones de infrmación de producto
