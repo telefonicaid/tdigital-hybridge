@@ -12,14 +12,13 @@
 
 @implementation Hybridge
 
+static NSString version = "1.0.0";
 static Hybridge *sharedInstance = nil;
-
 
 + (Hybridge *)sharedInstance {
     if (sharedInstance == nil) {
         sharedInstance = [[super allocWithZone:NULL] init];
-    }
-    
+    }    
     return sharedInstance;
 }
 

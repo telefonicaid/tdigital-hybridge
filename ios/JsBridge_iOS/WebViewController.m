@@ -52,7 +52,6 @@
         
         // Dispatch Event to WebView
         [_hybridge fireEventInWebView:@"HybridgeMessage" data:jsonString web:self.theWeb];
-        //[self fireEventInWebView: (NSString*) @"HybridgeMessage" data:(NSString*) jsonString];
     };
     
     /**
@@ -82,7 +81,6 @@
       
         // Dispatch Event to WebView
         [_hybridge fireEventInWebView:@"HybridgeMessage" data:jsonString web:self.theWeb];
-        //[self fireEventInWebView: (NSString*) @"HybridgeMessage" data:(NSString*) jsonString];
     };
   
     /**
