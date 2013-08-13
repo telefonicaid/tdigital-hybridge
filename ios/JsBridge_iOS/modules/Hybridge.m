@@ -12,7 +12,7 @@
 
 @implementation Hybridge
 
-static NSString *version = @"1.0.0";
+version = 1;
 static Hybridge *sharedInstance = nil;
 
 + (Hybridge *)sharedInstance {
