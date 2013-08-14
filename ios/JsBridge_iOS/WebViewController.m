@@ -134,6 +134,14 @@
     return YES;
 }
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    DDLogInfo(@"WebView: webViewDidFinishLoad");
+    int version = [Hybridge version];
+    NSString *js = [NSString stringWithFormat:@"HybridgeGlobal={isReady:true,version:%d}", version];
+    [_hybridge runJsInWebview:js web:self.theWeb];
+}
+
 - (void) fireJavascriptEvent:(NSString *)eventName data:(NSString *)jsonString
 {
     [_hybridge fireEventInWebView:eventName data:jsonString web:self.theWeb];

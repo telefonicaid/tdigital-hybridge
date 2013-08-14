@@ -54,7 +54,7 @@ static Hybridge *sharedInstance = nil;
 - (void)fireEventInWebView:(NSString *)eventName data:(NSString *)jsonString web:(UIWebView*) webview
 {
     DDLogInfo(@"Enviando evento a Webview: %@", eventName);
-    NSMutableString* ms = [[NSMutableString alloc] initWithString:@"Hybridge.fireEvent(\""];
+    NSMutableString* ms = [[NSMutableString alloc] initWithString:@"HybridgeGlobal.fireEvent(\""];
     [ms appendString:eventName];
     [ms appendString:@"\","];
     [ms appendString:(jsonString?jsonString:@"{}")];
