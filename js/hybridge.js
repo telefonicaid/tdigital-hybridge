@@ -14,12 +14,6 @@ define([
 
   var logger = TID.Logger.getLogger(TID.Logger.Facility.DEFAULT, 'Hybridge');
 
-  var mockData = {};
-
-  var init = function (msgHandler) {
-    logger.info('init Hybridge');
-  }
-
   function send(data) {
     if(has('ios_native') || has('android')) {
       logger.info('Hybridge.send()', data);
@@ -28,6 +22,7 @@ define([
     }
     else {
       logger.warn('Hybridge: Attempting to use bridge on a non native environment.');
+      return $.Deferred().reject('No native environment').promise();
     }
   }
 
@@ -50,11 +45,9 @@ define([
     if (xhr && xhr.readyState != 4) {
         xhr = null;
     }
-    mockData['callbackId'] = callbackId;
     var action = data.action;
     var id = data.id;
     xhr = $.ajax({
-      //url: '/js', // URL for testing
       url: 'http://hybridge/' + action +'/' + id + '/' + new Date().getTime(),
       type: 'HEAD',
       headers: { 'data': strJSON || '{}' },
@@ -123,7 +116,6 @@ define([
   };
 
   var Hybridge = {
-    init: init,
     send: send,
     events: events
    // ,_handleMsgFromNative: _handleMsgFromNative
