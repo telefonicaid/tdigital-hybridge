@@ -38,10 +38,14 @@ public class MainActivity extends BaseActivity {
         mWebView.clearFormData();
         mWebView.setWebViewClient(webViewClient);
         mWebView.setWebChromeClient(webChromeClient);
-		mWebView.loadUrl("http://192.168.1.34/#movies/18/tintin"); // file:///android_asset/www/index.html
+		mWebView.loadUrl("http://play.tid.es/M5/feature/10981/dev4/");
 		// Jenkins:
 		// http://ci-enjoymobile/release/feature/10981/dev4/
 		// http://play.tid.es/M5/feature/10981/dev4/ 
+		// Direct D2P movie example:
+		// http://192.168.1.34/#movies/18/tintin
+		// Local:
+		// file:///android_asset/www/index.html
 	}
 	
     /**
