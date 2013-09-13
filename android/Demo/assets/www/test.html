@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Test</title>
-    <script src="http://jsconsole.com/remote.js?hybridge"></script>
     <script type="text/javascript" src="jquery.min.js"></script>
     <style type="text/css">
         * {
@@ -44,12 +43,12 @@
 
 
     <script type="text/javascript">
-    window.onerror = function() {
-      console.log(arguments[0], arguments[1], arguments[2]);
-      alert(arguments[0]);
+    window.onerror=function() {
+      alert()arguments[0];
     }
 
 
+     alert($);
         var uniqueId = 0;
         var action = 'state';
         var id = 666;
@@ -57,34 +56,19 @@
             timestamp: new Date().getTime()
         }
 
-        var _createEvent = function (name) {
-          var ev = null;
-          if(typeof CustomEvent != 'undefined') {
-            ev = new CustomEvent(name);
-          }
-          else {
-            ev = document.createEvent('Event');
-            ev.initEvent(name, true, true);
-          }
-          return ev;
-        };
-
-        if (typeof HybridgeGlobal == 'undefined') {
-          HybridgeGlobal = {};
-        }
-        HybridgeGlobal.fireEvent = function(type, data) {
-            Hybridge.events[type].data = data;
-            return document.dispatchEvent(Hybridge.events[type]);
-        }
-
         Hybridge = {};
         Hybridge.events = [];
 
-        // Crear eventos bridge // USAR SHIM
-        Hybridge.events['HybridgeReady'] = _createEvent('HybridgeReady');
-        Hybridge.events['HybridgeMessage'] = _createEvent('HybridgeMessage');
-        Hybridge.events['HybridgePause'] = _createEvent('HybridgePause');
-        Hybridge.events['HybridgeResume'] = _createEvent('HybridgeResume');
+        // Crear eventos bridge
+        Hybridge.events['HybridgeReady'] = new Event('HybridgeReady');
+        Hybridge.events['HybridgeMessage'] = new Event('HybridgeMessage');
+        Hybridge.events['HybridgePause'] = new Event('HybridgePause');
+        Hybridge.events['HybridgeResume'] = new Event('HybridgeResume');
+
+        Hybridge.fireEvent = function(type, data) {
+            Hybridge.events[type].data = data;
+            return document.dispatchEvent(Hybridge.events[type]);
+        }
 
         var getNativeData = function(params) {
           var def = $.Deferred();
@@ -109,7 +93,7 @@
           return def.promise();
         };
 
-        $(document).ready(function () {
+        $(document).ready(function () {console.log("##############################")
             var logger = console.log;
             console.log = function () {
               $('#logger').append('<div>' + (typeof arguments[0] == 'object'? JSON.stringify(arguments[0]) : arguments[0]) + '</div>');
@@ -129,7 +113,7 @@
             function resetCounter() {
               clearInterval(c);
             }
-            //initCounter();
+            initCounter();
 
 
             $("#botonaco").click(function () {
@@ -140,7 +124,7 @@
                   var time = new Date(data.timestamp);
                   console.log("Son las " + time.getHours() + " y " + time.getMinutes());
                 })
-                .fail(function () { console.error('error: ' + arguments[0], arguments) });
+                .fail(function () { console.error('error', arguments) });
                 return false;
             });
 
