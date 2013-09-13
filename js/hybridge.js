@@ -11,31 +11,57 @@ define([
   var uniqueId = 1;
   var responseCallbacks = {};
   var xhr = null;
+  var method = null;
 
   var logger = TID.Logger.getLogger(TID.Logger.Facility.DEFAULT, 'Hybridge');
 
-  function send(data) {
+  function send (data) {
     if(has('ios_native') || has('android')) {
       logger.info('Hybridge.send()', data);
-      //return _service(data);
-      return _serviceTmp(data);
+      return _service(data);
     }
     else {
-      logger.warn('Hybridge: Attempting to use bridge on a non native environment.');
+      logger.warn('Hybridge: Attempting to use Hybridge on a non native environment');
       return $.Deferred().reject('No native environment').promise();
     }
   }
 
-  function _serviceTmp (data) {
+  function _service (data) {
     if (data.url) {
       window.location = data.url;
     }
-    else if (HybridgeGlobal && HybridgeGlobal.isReady && data.action) {
-      return _service(data);
+    else if (window.HybridgeGlobal && HybridgeGlobal.isReady) {
+      if (data.action) {
+        return method(data);
+      }
+      else {
+        logger.warn('Hybridge: wrong params.');
+      }
+    }
+    else {
+      logger.warn('Hybridge: No native implementation present, using location URL fallback');
     }
   }
 
-  function _service (data) {
+  function _servicePrompt (data) {
+    var def = $.Deferred();
+    var strJSON = JSON.stringify(data);
+    var action = data.action;
+    var result = null;
+    setTimeout(function() {
+      try {
+        result = JSON.parse(prompt(action, strJSON) || '{}');
+        def.resolve(result);
+      }
+      catch (e) {
+        logger.error('Hybridge: Error on prompt processing');
+        def.reject(e.message);
+      }
+    });
+    return def.promise();
+  }
+
+  function _serviceXHR (data) {
     if (data.callback) {
       var callbackId = 'cb_' + (uniqueId++) + '_' + new Date().getTime();
       responseCallbacks[callbackId] = callback;
@@ -51,7 +77,7 @@ define([
       url: 'http://hybridge/' + action +'/' + id + '/' + new Date().getTime(),
       type: 'HEAD',
       headers: { 'data': strJSON || '{}' },
-      done: function() {alert('done');
+      done: function() {
         if(xhr.status === 200) {
           //xhr.responseText = '{"downloaded":100}'; // Faked response (% downloaded)
           logger.info('Hybridge: ' + xhr.statusText);
@@ -63,7 +89,7 @@ define([
           xhr.reject("HTTP error: " + xhr.status);
         }
       },
-      error: function() {
+      error: function(xhr, text, textError) {
         logger.error('Error on bridge to native. Non native environment?');
       }
     });
@@ -122,9 +148,9 @@ define([
   };
 
   // Fix platform
-  if (has('ios')) {
-    logger.info('Fixing bridge for iOS');
-
+  if (has('ios_native')) {
+    logger.info('Fixing bridge for iOS, XHR method used');
+    method = _serviceXHR;
     /*
     window.deviceready = document.createEvent('Events');
     deviceready.initEvent('HybridgeReady');
@@ -133,14 +159,14 @@ define([
     */
   }
   else if (has('android')) {
-    logger.info('Fixing bridge for Android');
+    logger.info('Fixing bridge for Android, prompt method used');
+    method = _servicePrompt;
   }
-
-  if (typeof HybridgeGlobal == 'undefined') {
-    HybridgeGlobal = {};
+HybridgeGlobal = {};
+  if (typeof HybridgeGlobal !== 'undefined') {
+    HybridgeGlobal.fireEvent = _fireEvent;
+    //HybridgeGlobal.isReady = true; // for desktop debug
   }
-
-  HybridgeGlobal.fireEvent = _fireEvent;   
 
   return Hybridge;
 });
