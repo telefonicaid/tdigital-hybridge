@@ -78,7 +78,7 @@ define([
    * @param  {Function} fallbackFn
    * @return {Promise}
    */
-  function _send (data, fallbackFn) {debugger;
+  function _send (data, fallbackFn) {
     var error;
     // Is a native environment
     if(_isNative()) {
@@ -268,7 +268,7 @@ define([
     method = _sendPrompt;
   }
 
-  HybridgeGlobal = {isReady:true, actions:['product']}; // for desktop debug
+  //HybridgeGlobal = {isReady:true, actions:['product']}; // for desktop debug
 
   /**
    * Since HybridgeGlobal is set from native just add the client methods

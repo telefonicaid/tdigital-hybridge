@@ -1,8 +1,5 @@
 package com.pdi.hybridgedemo;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.webkit.ConsoleMessage;
@@ -13,7 +10,6 @@ import com.pdi.enjoy.activities.BaseActivity;
 import com.pdi.enjoy.util.Log;
 import com.pdi.hybridge.HybridgeWebChromeClient;
 import com.pdi.hybridge.HybridgeWebViewClient;
-import com.pdi.hybridge.JsAction;
 
 public class MainActivity extends BaseActivity {
 
@@ -56,19 +52,12 @@ public class MainActivity extends BaseActivity {
     /**
      * Private webChromeClient implementation
      */
-    private final HybridgeWebChromeClient webChromeClient = new HybridgeWebChromeClient() {
+    private final HybridgeWebChromeClient webChromeClient = new HybridgeWebChromeClient(JsActionImpl.values()) {
         @Override
         public boolean onConsoleMessage(ConsoleMessage cm) {
             Log.v(mTag, cm.message());
             return true;
-        }
-
-		@SuppressLint("DefaultLocale")
-		@Override
-		protected JsAction getAction(String action) {
-			JsAction type = JsActionImpl.valueOf(action.toUpperCase());
-			return type;
-		}    
+        }  
     };
     
     private final HybridgeWebViewClient webViewClient = new HybridgeWebViewClient(JsActionImpl.values()) {

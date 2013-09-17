@@ -1,5 +1,7 @@
 package com.pdi.hybridge;
 
+import java.util.HashMap;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,11 +13,21 @@ import android.webkit.WebView;
 
 import com.pdi.enjoy.lib.utils.Log;
 
-public abstract class HybridgeWebChromeClient extends WebChromeClient {
+public class HybridgeWebChromeClient extends WebChromeClient {
 
     protected String mTag = "HybridgeWebChromeClient";
  
-    protected abstract JsAction getAction(String action);
+    @SuppressWarnings("rawtypes")
+	protected HashMap<String, Class> actions;
+    
+	@SuppressWarnings("rawtypes")
+	@SuppressLint("DefaultLocale")
+	public HybridgeWebChromeClient(JsAction[] actions) {	
+		this.actions = new HashMap<String, Class>(actions.length);
+		for (JsAction action : actions) {
+			this.actions.put(action.toString().toLowerCase(), action.getTask());
+		}
+	}
     
 	@Override
 	public final boolean onJsPrompt (WebView view, String url, String msg, String defValue, JsPromptResult result) {
@@ -36,9 +48,7 @@ public abstract class HybridgeWebChromeClient extends WebChromeClient {
 	@SuppressLint("DefaultLocale")
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void executeJSONTask(String action, JSONObject json, JsPromptResult result) {
-		//JsAction type = JsAction.valueOf(action.toUpperCase());
-		JsAction type = getAction(action.toUpperCase());
-    	Class clazz = (Class) type.getTask();
+		Class clazz = this.actions.get(action);
     	AsyncTask task = null;
 		try {
 			task = ((AsyncTask<JSONObject, Void, JSONObject>) clazz.newInstance());
@@ -47,6 +57,7 @@ public abstract class HybridgeWebChromeClient extends WebChromeClient {
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
+		Log.v(mTag, "Execute action " + action);
     	task.execute(json, result);
     }
 }
