@@ -12,7 +12,6 @@ build/*
 !default.xcworkspace
 xcuserdata
 profile
-*.orig
 *.moved-aside
 *.DS_Store
 Pods

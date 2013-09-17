@@ -15,7 +15,7 @@
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
  * for more details.
  * You should have received a copy of the GNU Affero General Public License along
- * with  tdigital-hybridge. If not, see http://www.gnu.org/licenses/.
+ * with tdigital-hybridge. If not, see http://www.gnu.org/licenses/.
  *
  * For those usages not covered by the GNU Affero General Public License
  * please contact with contacto@tid.es
@@ -69,7 +69,7 @@ define([
    * @return {Boolean}
    */
   function _isActionImplemented (action) {
-    return !!(window.HybridgeGlobal && HybridgeGlobal.actions && HybridgeGlobal.actions[action]);
+    return !!(window.HybridgeGlobal && HybridgeGlobal.actions && $.inArray(action, HybridgeGlobal.actions)!=-1 );
   }
 
   /**
@@ -78,7 +78,7 @@ define([
    * @param  {Function} fallbackFn
    * @return {Promise}
    */
-  function _send (data, fallbackFn) {
+  function _send (data, fallbackFn) {debugger;
     var error;
     // Is a native environment
     if(_isNative()) {
@@ -268,7 +268,7 @@ define([
     method = _sendPrompt;
   }
 
-  HybridgeGlobal = {isReady:true}; // for desktop debug
+  HybridgeGlobal = {isReady:true, actions:['product']}; // for desktop debug
 
   /**
    * Since HybridgeGlobal is set from native just add the client methods
