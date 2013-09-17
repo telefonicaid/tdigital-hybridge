@@ -49,6 +49,8 @@ public class MainActivity extends BaseActivity {
 		// http://192.168.1.34/#movies/18/tintin
 		// Local:
 		// file:///android_asset/www/index.html
+		// Cert:
+		// http://ci-enjoymobile/release/feature/10981/homolog-cert/
 	}
 	
     /**
