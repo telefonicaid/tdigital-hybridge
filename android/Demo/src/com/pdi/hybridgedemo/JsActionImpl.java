@@ -14,7 +14,8 @@ public enum JsActionImpl implements JsAction {
 
 	PRODUCT(ProductTask.class),
 	DOWNLOAD(DownloadTask.class),
-	PLAY(PlayTask.class);
+	PLAY(PlayTask.class),
+	BROWSER(BrowserTask.class);
 	
 	private Class task;
 	
@@ -100,5 +101,27 @@ public enum JsActionImpl implements JsAction {
         	result.confirm(json.toString());
         }
     }
+	
+	public static class BrowserTask extends AsyncTask <Object, Void, JSONObject> {
+    	private JsPromptResult result;
+    	
+    	public BrowserTask() {}
+    	
+        protected JSONObject doInBackground(Object... params) {
+        	result = (JsPromptResult) params[1];
+        	JSONObject json = (JSONObject) params[0];
+        	return json;
+        }
+
+        protected void onPreExecute() {
+        }
+        
+        protected void onProgressUpdate(Void... progress) {
+        }
+
+        protected void onPostExecute(JSONObject json) {
+        	result.confirm(json.toString());
+        }
+    }	
 	
 }

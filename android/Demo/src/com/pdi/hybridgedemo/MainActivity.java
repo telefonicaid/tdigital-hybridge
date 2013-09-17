@@ -1,5 +1,8 @@
 package com.pdi.hybridgedemo;
 
+import java.util.ArrayList;
+import java.util.EnumSet;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.webkit.ConsoleMessage;
@@ -38,7 +41,7 @@ public class MainActivity extends BaseActivity {
         mWebView.clearFormData();
         mWebView.setWebViewClient(webViewClient);
         mWebView.setWebChromeClient(webChromeClient);
-		mWebView.loadUrl("http://play.tid.es/M5/feature/10981/dev4/");
+		mWebView.loadUrl("http://192.168.1.34/#movies/18/tintin");
 		// Jenkins:
 		// http://ci-enjoymobile/release/feature/10981/dev4/
 		// http://play.tid.es/M5/feature/10981/dev4/ 
@@ -66,7 +69,7 @@ public class MainActivity extends BaseActivity {
 		}    
     };
     
-    private final HybridgeWebViewClient webViewClient = new HybridgeWebViewClient() {
+    private final HybridgeWebViewClient webViewClient = new HybridgeWebViewClient(JsActionImpl.values()) {
 
     };
 
