@@ -1,1 +1,15 @@
 .DS_Store
+
+*/gen/
+*/bin/
+
+.project
+*.orig
+.picasa.ini
+.idea
+.externalToolBuilders/
+
+*/local.properties
+EnjoyMobile/lint.xml
+*/.classpath
+*/.settings
