@@ -27,6 +27,7 @@ define([
   'tid'
 ], function ($, has, TID) {
 
+  var version = 1;
   var xhr = null;
   var method = null;
   var logger = TID.Logger.getLogger(TID.Logger.Facility.DEFAULT, 'Hybridge');
@@ -246,6 +247,7 @@ define([
    * @type {Object}
    */
   var Hybridge = {
+    version: version,
     isNative: _isNative,
     isEnabled: _isEnabled,
     send: _send,

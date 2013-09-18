@@ -37,7 +37,7 @@ public class MainActivity extends BaseActivity {
         mWebView.clearFormData();
         mWebView.setWebViewClient(webViewClient);
         mWebView.setWebChromeClient(webChromeClient);
-		mWebView.loadUrl("http://192.168.1.34/#movies/18/tintin");
+		mWebView.loadUrl("http://10.95.197.79");
 		// Jenkins:
 		// http://ci-enjoymobile/release/feature/10981/dev4/
 		// http://play.tid.es/M5/feature/10981/dev4/ 
