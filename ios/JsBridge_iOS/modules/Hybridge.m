@@ -7,13 +7,16 @@
 //
 
 #import "Hybridge.h"
+#import "Constants.h"
+#import "SBJson.h"
 #import "BridgeSubscriptor.h"
 #import "NSURLProtocolBridge.h"
 
 @implementation Hybridge
 
-version = 1;
 static Hybridge *sharedInstance = nil;
+
+const int VERSION = HybridgeVersion;
 
 + (Hybridge *)sharedInstance {
     if (sharedInstance == nil) {
@@ -29,15 +32,20 @@ static Hybridge *sharedInstance = nil;
     if (self) {
         [NSURLProtocol registerClass:[NSURLProtocolBridge class]];
         _subscriptor = [BridgeSubscriptor sharedInstance];
+        _actions = [[NSMutableArray alloc] init];
+        _writer = [[SBJsonWriter alloc] init];
     }
     
     return self;
 }
 
-- (void)subscribeAction:(NSString *)action withHandler:(BridgeHandlerBlock_t)handlerBlock {
+- (void)subscribeAction:(NSString *)action withHandler:(BridgeHandlerBlock_t)handlerBlock
+{
     
     @try {
-        [_subscriptor subscribeAction:action withHandler:handlerBlock];    }
+        [_subscriptor subscribeAction:action withHandler:handlerBlock];
+        [_actions addObject:action];
+    }
     @catch (NSException * e) {
         DDLogError(@"Exception: %@", e);
     }
@@ -63,6 +71,23 @@ static Hybridge *sharedInstance = nil;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self runJsInWebview:js web:webview];
     });
+}
+
+- (NSArray *)getActions
+{
+    return [NSArray arrayWithArray:_actions];
+}
+
+- (void)initJavascript:(UIWebView*) webview
+{
+    NSString *actionsStr = [_writer stringWithObject:_actions];
+    NSMutableString* js = [[NSMutableString alloc] initWithString:@"HybridgeGlobal={isReady:true,version:"];
+    [js appendString:[NSString stringWithFormat:@"%d", VERSION]];
+    [js appendString:@",actions:"];
+    [js appendString:(actionsStr ? actionsStr : @"[]")];
+    [js appendString:@"}"];
+    
+    [self runJsInWebview:js web:webview];
 }
 
 @end

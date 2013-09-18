@@ -17,9 +17,10 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    _parser = [[SBJsonParser alloc] init];
-    _writer = [[SBJsonWriter alloc] init];
-    if (self) {
+    if (self) {        
+        _parser = [[SBJsonParser alloc] init];
+        _writer = [[SBJsonWriter alloc] init];
+
     }
     return self;
 }
@@ -115,6 +116,7 @@
     [_hybridge subscribeAction:@"state" withHandler:timeHandler];
     
     self.theWeb = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    self.theWeb.delegate = self;
     self.theWeb.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.theWeb];
     
@@ -137,9 +139,7 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     DDLogInfo(@"WebView: webViewDidFinishLoad");
-    int version = [Hybridge version];
-    NSString *js = [NSString stringWithFormat:@"HybridgeGlobal={isReady:true,version:%d}", version];
-    [_hybridge runJsInWebview:js web:self.theWeb];
+    [_hybridge initJavascript:self.theWeb];
 }
 
 - (void) fireJavascriptEvent:(NSString *)eventName data:(NSString *)jsonString

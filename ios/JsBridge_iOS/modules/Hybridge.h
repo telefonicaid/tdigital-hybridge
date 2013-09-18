@@ -9,21 +9,32 @@
 #import <Foundation/Foundation.h>
 #import "BridgeSubscriptor.h"
 
+@class SBJsonWriter;
+
 @interface Hybridge : NSObject
 {
     @private BridgeSubscriptor *_subscriptor;
+    @private NSMutableArray *_actions;
+    @private SBJsonWriter *_writer;
 }
+
+extern const int VERSION;
 
 /**
  *	Singleton consructor
  *
  *	@return	Hibridge instance
  */
-+ (Hybridge *)sharedInstance;
++ (Hybridge *) sharedInstance;
+
+- (NSDictionary *) getActions;
 
 - (NSString *) runJsInWebview:(NSString *)js web:(UIWebView*) webview;
 
 - (void) fireEventInWebView:(NSString *)eventName data:(NSString *)jsonString web:(UIWebView*) webview;
 
-- (void)subscribeAction:(NSString *)action withHandler:(BridgeHandlerBlock_t)handlerBlock;
+- (void) subscribeAction:(NSString *)action withHandler:(BridgeHandlerBlock_t)handlerBlock;
+
+- (void) initJavascript:(UIWebView*) webview;
+
 @end

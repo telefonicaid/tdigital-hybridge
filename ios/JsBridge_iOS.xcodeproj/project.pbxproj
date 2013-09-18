@@ -32,6 +32,7 @@
 		8809BE557D4F48DAB4C1050E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E43C043A17B930AC00F3CC67 /* Hybridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hybridge.h; path = modules/Hybridge.h; sourceTree = "<group>"; };
 		E43C043B17B930AD00F3CC67 /* Hybridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hybridge.m; path = modules/Hybridge.m; sourceTree = "<group>"; };
+		E4B2025E17E98B7E005024FC /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = modules/Constants.h; sourceTree = "<group>"; };
 		E4CDBE981767C60B00243905 /* JsBridge_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JsBridge_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4CDBE9B1767C60B00243905 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E4CDBE9D1767C60B00243905 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -169,6 +170,7 @@
 				E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */,
 				E43C043A17B930AC00F3CC67 /* Hybridge.h */,
 				E43C043B17B930AD00F3CC67 /* Hybridge.m */,
+				E4B2025E17E98B7E005024FC /* Constants.h */,
 			);
 			name = modules;
 			sourceTree = "<group>";
