@@ -1,17 +1,16 @@
 package com.pdi.hybridgedemo;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.pdi.enjoy.activities.BaseActivity;
-import com.pdi.enjoy.util.Log;
 import com.pdi.hybridge.HybridgeWebChromeClient;
 import com.pdi.hybridge.HybridgeWebViewClient;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends Activity {
 
 	protected String mTag = "MainActivity";
 	private WebView mWebView;
@@ -37,7 +36,7 @@ public class MainActivity extends BaseActivity {
         mWebView.clearFormData();
         mWebView.setWebViewClient(webViewClient);
         mWebView.setWebChromeClient(webChromeClient);
-		mWebView.loadUrl("http://10.95.197.79");
+		mWebView.loadUrl("http://play.tid.es/M5/feature/10981/dev4/");
 		// Jenkins:
 		// http://ci-enjoymobile/release/feature/10981/dev4/
 		// http://play.tid.es/M5/feature/10981/dev4/ 
@@ -55,7 +54,7 @@ public class MainActivity extends BaseActivity {
     private final HybridgeWebChromeClient webChromeClient = new HybridgeWebChromeClient(JsActionImpl.values()) {
         @Override
         public boolean onConsoleMessage(ConsoleMessage cm) {
-            Log.v(mTag, cm.message());
+        	android.util.Log.v(mTag, cm.message());
             return true;
         }  
     };

@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import com.pdi.hybridge.JsAction;
 
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.webkit.JsPromptResult;
 
@@ -122,6 +123,12 @@ public enum JsActionImpl implements JsAction {
         protected void onPostExecute(JSONObject json) {
         	result.confirm(json.toString());
         }
-    }	
+    }
+
+	@Override
+	public void setContext(Context context) {
+		// TODO Auto-generated method stub
+		
+	}	
 	
 }
