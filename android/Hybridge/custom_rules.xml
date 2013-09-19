@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project>
-<project name="custom" default="release" basedir=".">
-    <echo level="info">Start custom_rules.xml...</echo>
+<project name="custom_hybridge" default="release" basedir=".">
+    <echo level="info">Start custom_rules.xml for Hybridge...</echo>
     <property name="2x-lib-path" value="../../../mca-mobile-android-2x/EnjoyLib"/>
     <target name="-2x-release" if="build.is.mode.release">
         <ant antfile="${2x-lib-path}/build.xml" target="release" inheritAll="false"/>
