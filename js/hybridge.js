@@ -22,15 +22,44 @@
  */
 
 define([
-  'jquery',
-  'init-has',
-  'tid'
-], function ($, has, TID) {
+  'jquery'
+], function ($) {
 
-  var version = 1;
-  var xhr = null;
-  var method = null;
-  var logger = TID.Logger.getLogger(TID.Logger.Facility.DEFAULT, 'Hybridge');
+  var version = 1, xhr, method, logger, environment;
+
+  /**
+   * Sets init configuration (native environment, logger)
+   * @param {Object} ( environment: ios | android )
+   */
+  function _init (conf) {
+    environment = conf.environment || '';
+    logger = conf.logger || null;
+    /**
+     * Sets up the bridge in iOS environment
+     */
+    if (_isIos()) {
+      _getLogger().info('Fixing bridge for iOS, XHR method used');
+      method = _sendXHR;
+    }
+    /**
+    * Sets up the bridge in Android environment
+    */
+    else if (_isAndroid()) {
+      _getLogger().info('Fixing bridge for Android, prompt method used');
+      method = _sendPrompt;
+    }
+  }
+
+  /**
+   * Returns the logger object
+   * @return {Object}
+   */
+  function _getLogger () {
+    if(!logger) {
+      logger = window.console;
+    }
+    return logger;
+  }
 
   /**
    * Checks if the current native environment is native
@@ -45,7 +74,7 @@ define([
    * @return {Boolean}
    */
   function _isIos () {
-    return has('ios_native');
+    return environment == 'ios';
   }
 
   /**
@@ -53,7 +82,7 @@ define([
    * @return {Boolean}
    */
   function _isAndroid () {
-    return has('android');
+    return environment == 'android';
   }
 
   /**
@@ -70,7 +99,9 @@ define([
    * @return {Boolean}
    */
   function _isActionImplemented (action) {
-    return !!(window.HybridgeGlobal && HybridgeGlobal.actions && $.inArray(action, HybridgeGlobal.actions)!=-1 );
+    return !!(window.HybridgeGlobal
+     && HybridgeGlobal.actions
+     && $.inArray(action, HybridgeGlobal.actions)!=-1 );
   }
 
   /**
@@ -131,7 +162,7 @@ define([
         def.resolve(result);
       }
       catch (e) {
-        logger.error('Hybridge: Error on prompt processing');
+        _getLogger().error('Hybridge: Error on prompt processing');
         def.reject({'error' : e.message});
       }
     });
@@ -157,17 +188,17 @@ define([
       done: function() {
         if(xhr.status === 200) {
           //xhr.responseText = '{"downloaded":100}'; // Faked response (% downloaded)
-          logger.info('Hybridge: ' + xhr.statusText);
+          _getLogger().info('Hybridge: ' + xhr.statusText);
           xhr.resolve(JSON.parse(xhr.responseText || '{}'));
           //_handleMsgFromNative();
         }
         else {
-          logger.error('Hybridge: ' + xhr.statusText);
+          _getLogger().error('Hybridge: ' + xhr.statusText);
           xhr.reject({'error' : 'HTTP error: ' + xhr.status});
         }
       },
       error: function(xhr, text, textError) {
-        logger.error('Error on bridge to native. Non native environment?');
+        _getLogger().error('Error on bridge to native. Non native environment?');
       }
     });
     return xhr.promise();
@@ -238,7 +269,7 @@ define([
       return document.dispatchEvent(_events[type]);
     }
     else {
-      logger.error('Hybridge event not defined: ' + type);
+      _getLogger().error('Hybridge event not defined: ' + type);
     }
   };
 
@@ -247,6 +278,7 @@ define([
    * @type {Object}
    */
   var Hybridge = {
+    init: _init,
     version: version,
     isNative: _isNative,
     isEnabled: _isEnabled,
@@ -255,29 +287,16 @@ define([
     errors: _errors
   };
 
-  /**
-   * Sets up the bridge in iOS environment
-   */
-  if (_isIos()) {
-    logger.info('Fixing bridge for iOS, XHR method used');
-    method = _sendXHR;
-  }
-  /**
-   * Sets up the bridge in Android environment
-   */
-  else if (_isAndroid()) {
-    logger.info('Fixing bridge for Android, prompt method used');
-    method = _sendPrompt;
-  }
-
   //HybridgeGlobal = {isReady:true, actions:['product']}; // for desktop debug
 
   /**
    * Since HybridgeGlobal is set from native just add the client methods
    */
-  if (typeof HybridgeGlobal !== 'undefined') {
-    HybridgeGlobal.fireEvent = _fireEvent;
-  }
+  setTimeout(function() {
+    if (typeof HybridgeGlobal !== 'undefined') {
+      HybridgeGlobal.fireEvent = _fireEvent;
+    }
+  }, 200);
 
   return Hybridge;
 });
