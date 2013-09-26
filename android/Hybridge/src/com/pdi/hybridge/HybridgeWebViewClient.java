@@ -31,7 +31,8 @@ public class HybridgeWebViewClient extends WebViewClient {
 	                "isReady : true" +
 	                ", version : " + HybridgeConst.VERSION +
 	                ", actions : " + this.actions.toString() +
-                "}" +  
-                "})()");  
+                "}" + 
+	            ";window.$&&$('#hybridgeTrigger').toggleClass('switch');" +
+        		"})()");  
     } 
 }

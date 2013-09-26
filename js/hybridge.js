@@ -99,9 +99,9 @@ define([
    * @return {Boolean}
    */
   function _isActionImplemented (action) {
-    return !!(window.HybridgeGlobal
-     && HybridgeGlobal.actions
-     && $.inArray(action, HybridgeGlobal.actions)!=-1 );
+    return !!(window.HybridgeGlobal &&
+      HybridgeGlobal.actions &&
+      $.inArray(action, HybridgeGlobal.actions)!=-1 );
   }
 
   /**
@@ -225,6 +225,32 @@ define([
   };
 
   /**
+   * Enables transitionend hack in to trigger callbacks directly from native
+   */
+  var setCSSTrigger = function (callback) {
+    var trigger = document.createElement('div');
+    trigger.id = "hybridgeTrigger";
+    var style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = '#hybridgeTrigger{top:0;transition:top 0.0001s;'+
+      'position:absolute;visibility:hidden}'+
+      '#hybridgeTrigger.switch{top:1px;transition:top 0.0001s;}';
+    document.getElementsByTagName('head')[0].appendChild(style);
+    document.getElementsByTagName('body')[0].appendChild(trigger);
+    $("#hybridgeTrigger").on('transitionend webkitTransitionEnd', function(e) {
+      callback();
+      $("#hybridgeTrigger").off('transitionend webkitTransitionEnd');
+    });
+  };
+
+  /**
+   * Attach methods to global object in order to initialize the Hybridge properly
+   */
+   var attachToGlobal = function () {
+      HybridgeGlobal.fireEvent = _fireEvent;
+   };
+
+  /**
    * Hybridge events triggered from native for client handling
    * @type {Array}
    */
@@ -233,6 +259,19 @@ define([
   _events.HybridgeMessage = _createEvent('HybridgeMessage');
   _events.HybridgePause = _createEvent('HybridgePause');
   _events.HybridgeResume = _createEvent('HybridgeResume');
+
+  /**
+   * Global method used from native to trigger events
+   */
+  var _fireEvent = function (type, data) {
+    if (_events[type]) {
+      _events[type].data = data;
+      return document.dispatchEvent(_events[type]);
+    }
+    else {
+      _getLogger().error('Hybridge event not defined: ' + type);
+    }
+  };
 
   /**
    * Array containing different error types on rejecting requests (promises)
@@ -261,19 +300,6 @@ define([
   _errors.WRONG_PARAMS = 'WRONG_PARAMS';
 
   /**
-   * Global method used from native to trigger events
-   */
-  var _fireEvent = function(type, data) {
-    if (_events[type]) {
-      _events[type].data = data;
-      return document.dispatchEvent(_events[type]);
-    }
-    else {
-      _getLogger().error('Hybridge event not defined: ' + type);
-    }
-  };
-
-  /**
    * Public returned Hybridge object
    * @type {Object}
    */
@@ -287,16 +313,19 @@ define([
     errors: _errors
   };
 
-  //HybridgeGlobal = {isReady:true, actions:['product']}; // for desktop debug
+  //HybridgeGlobal = {isReady:true, actions:['product']}; // uncomment for desktop debug
 
   /**
    * Since HybridgeGlobal is set from native just add the client methods
    */
   setTimeout(function() {
     if (typeof HybridgeGlobal !== 'undefined') {
-      HybridgeGlobal.fireEvent = _fireEvent;
+      attachToGlobal();
     }
-  }, 200);
+    else {
+      setCSSTrigger(attachToGlobal);
+    }
+  }, 400);
 
   return Hybridge;
 });
