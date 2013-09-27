@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-#import "HybridgeLog.h"
+#import "MCALog.h"
 
 /** This singleton class manages a list of subscriptions for received requests in the bridge.
  Each single subscription has an action name associated to and a handler to be called

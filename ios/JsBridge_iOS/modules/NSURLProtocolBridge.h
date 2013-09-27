@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 tid.es. All rights reserved.
 //
 
-#import "HybridgeLog.h"
+#import "MCALog.h"
 
 @class SBJsonParser;
 @class SBJsonWriter;
