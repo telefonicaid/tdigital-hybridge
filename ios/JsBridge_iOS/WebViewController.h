@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "HybridgeLog.h"
+#import "MCALog.h"
 #import "Hybridge.h"
 
 @class SBJsonParser;
