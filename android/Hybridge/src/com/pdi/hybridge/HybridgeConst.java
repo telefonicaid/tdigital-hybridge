@@ -1,5 +1,23 @@
 package com.pdi.hybridge;
 
 public class HybridgeConst {
+	
 	public static final int VERSION = 1;
+	
+	public enum Event {
+		PAUSE("pause"),
+		RESUME("resume"),
+		MESSAGE("message"),
+		READY("ready");
+		
+		private String jsName;
+		
+		private Event (String jsName) {
+			this.jsName = jsName;
+		}
+		
+		public String getJsName() {
+			return this.jsName;
+		}
+	}
 }
