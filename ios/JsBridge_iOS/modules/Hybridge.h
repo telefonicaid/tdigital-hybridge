@@ -13,9 +13,17 @@
 
 @interface Hybridge : NSObject
 {
-    @private BridgeSubscriptor *_subscriptor;
-    @private NSMutableArray *_actions;
-    @private SBJsonWriter *_writer;
+    @private
+    BridgeSubscriptor *_subscriptor;
+    NSMutableArray *_actions;
+    SBJsonWriter *_writer;
+    NSArray *_events;
+    
+    @public
+    NSString *EVENT_PAUSE;
+    NSString *EVENT_RESUME;
+    NSString *EVENT_MESSAGE;
+    NSString *EVENT_READY;
 }
 
 extern const int VERSION;

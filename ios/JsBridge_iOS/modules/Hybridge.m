@@ -17,6 +17,11 @@
 static Hybridge *sharedInstance = nil;
 
 const int VERSION = HybridgeVersion;
+const NSString *EVENT_PAUSE = EV_PAUSE;
+const NSString *EVENT_RESUME = EV_RESUME;
+const NSString *EVENT_MESSAGE = EV_MESSAGE;
+const NSString *EVENT_READY = EV_READY;
+
 
 + (Hybridge *)sharedInstance {
     if (sharedInstance == nil) {
@@ -31,9 +36,11 @@ const int VERSION = HybridgeVersion;
     
     if (self) {
         [NSURLProtocol registerClass:[NSURLProtocolBridge class]];
-        _subscriptor = [BridgeSubscriptor sharedInstance];
+        _subscriptor = [BridgeSubscriptor sharedInstance];  
         _actions = [[NSMutableArray alloc] init];
         _writer = [[SBJsonWriter alloc] init];
+        _events = @[ EVENT_PAUSE, EVENT_RESUME, EVENT_MESSAGE, EVENT_READY ];
+        
     }
     
     return self;
@@ -81,12 +88,15 @@ const int VERSION = HybridgeVersion;
 - (void)initJavascript:(UIWebView*) webview
 {
     NSString *actionsStr = [_writer stringWithObject:_actions];
+    NSString *eventsStr = [_writer stringWithObject:_events];
     NSMutableString* js = [[NSMutableString alloc] initWithString:@"HybridgeGlobal={isReady:true,version:"];
     [js appendString:[NSString stringWithFormat:@"%d", VERSION]];
     [js appendString:@",actions:"];
     [js appendString:(actionsStr ? actionsStr : @"[]")];
+    [js appendString:(eventsStr ? eventsStr : @"[]")];
     [js appendString:@"}"];
     [js appendString:@";window.$&&$('#hybridgeTrigger').toggleClass('switch');"];
+    
     
     [self runJsInWebview:js web:webview];
 }

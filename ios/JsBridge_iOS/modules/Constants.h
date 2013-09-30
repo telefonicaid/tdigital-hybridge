@@ -11,4 +11,10 @@
 
 #define HybridgeVersion 1;
 
+// Event types
+#define EV_PAUSE @"pause";
+#define EV_RESUME @"resume";
+#define EV_MESSAGE @"message";
+#define EV_READY @"ready";
+
 #endif
