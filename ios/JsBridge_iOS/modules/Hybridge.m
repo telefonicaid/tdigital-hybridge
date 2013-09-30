@@ -91,10 +91,10 @@ const int VERSION = HybridgeVersion;
     [js appendString:[NSString stringWithFormat:@"%d", VERSION]];
     [js appendString:@",actions:"];
     [js appendString:(actionsStr ? actionsStr : @"[]")];
+    [js appendString:@",events:"];
     [js appendString:(eventsStr ? eventsStr : @"[]")];
     [js appendString:@"}"];
     [js appendString:@";window.$&&$('#hybridgeTrigger').toggleClass('switch');"];
-    
     
     [self runJsInWebview:js web:webview];
 }
