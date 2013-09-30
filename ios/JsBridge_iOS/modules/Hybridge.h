@@ -17,14 +17,9 @@
     BridgeSubscriptor *_subscriptor;
     NSMutableArray *_actions;
     SBJsonWriter *_writer;
-    NSArray *_events;
-    
-    @public
-    NSString *EVENT_PAUSE;
-    NSString *EVENT_RESUME;
-    NSString *EVENT_MESSAGE;
-    NSString *EVENT_READY;
 }
+
+@property (nonatomic, strong) NSDictionary *events;
 
 extern const int VERSION;
 
