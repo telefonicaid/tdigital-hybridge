@@ -17,11 +17,6 @@
 static Hybridge *sharedInstance = nil;
 
 const int VERSION = HybridgeVersion;
-const NSString *EVENT_PAUSE = EV_PAUSE;
-const NSString *EVENT_RESUME = EV_RESUME;
-const NSString *EVENT_MESSAGE = EV_MESSAGE;
-const NSString *EVENT_READY = EV_READY;
-
 
 + (Hybridge *)sharedInstance {
     if (sharedInstance == nil) {
@@ -39,7 +34,10 @@ const NSString *EVENT_READY = EV_READY;
         _subscriptor = [BridgeSubscriptor sharedInstance];  
         _actions = [[NSMutableArray alloc] init];
         _writer = [[SBJsonWriter alloc] init];
-        _events = @[ EVENT_PAUSE, EVENT_RESUME, EVENT_MESSAGE, EVENT_READY ];
+        _events = [NSDictionary dictionaryWithObjectsAndKeys:@"pause", @"EVENT_PAUSE",
+                   @"resume", @"EVENT_RESUME",
+                   @"message", @"EVENT_MESSAGE",
+                   @"ready", @"EVENT_READY", nil];
         
     }
     
