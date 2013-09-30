@@ -19,7 +19,7 @@
     SBJsonWriter *_writer;
 }
 
-@property (nonatomic, strong) NSDictionary *_events;
+@property (nonatomic, strong) NSDictionary *events;
 
 extern const int VERSION;
 

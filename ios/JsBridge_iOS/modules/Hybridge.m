@@ -86,7 +86,7 @@ const int VERSION = HybridgeVersion;
 - (void)initJavascript:(UIWebView*) webview
 {
     NSString *actionsStr = [_writer stringWithObject:_actions];
-    NSString *eventsStr = [_writer stringWithObject:_events];
+    NSString *eventsStr = [_writer stringWithObject:[self.events allValues]];
     NSMutableString* js = [[NSMutableString alloc] initWithString:@"HybridgeGlobal={isReady:true,version:"];
     [js appendString:[NSString stringWithFormat:@"%d", VERSION]];
     [js appendString:@",actions:"];

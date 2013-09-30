@@ -52,7 +52,7 @@
         [client URLProtocolDidFinishLoading:url];
         
         // Dispatch Event to WebView
-        [_hybridge fireEventInWebView:_hybridge->EVENT_MESSAGE data:jsonString web:self.theWeb];
+        [_hybridge fireEventInWebView:[[_hybridge events] objectForKey:@"EVENT_MESSAGE"] data:jsonString web:self.theWeb];
     };
     
     /**
@@ -81,7 +81,7 @@
         [client URLProtocolDidFinishLoading:url];
       
         // Dispatch Event to WebView
-        [_hybridge fireEventInWebView:_hybridge->EVENT_MESSAGE data:jsonString web:self.theWeb];
+        [_hybridge fireEventInWebView:[[_hybridge events] objectForKey:@"EVENT_MESSAGE"] data:jsonString web:self.theWeb];
     };
   
     /**
@@ -132,7 +132,7 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    [_hybridge fireEventInWebView:_hybridge->EVENT_READY data:@"{}" web:self.theWeb];
+    [_hybridge fireEventInWebView:[[_hybridge events] objectForKey:@"EVENT_READY"] data:@"{}" web:self.theWeb];
     return YES;
 }
 
