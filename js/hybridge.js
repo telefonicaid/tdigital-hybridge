@@ -25,7 +25,8 @@ define([
   'jquery'
 ], function ($) {
 
-  var version = 1, xhr, method, logger, environment;
+  var version = 1, xhr, method, logger, environment, initialized = false,
+   _events, _errors;
 
   /**
    * Sets init configuration (native environment, logger)
@@ -90,7 +91,7 @@ define([
    * @return {Boolean}
    */
   function _isEnabled () {
-    return !!(window.HybridgeGlobal && HybridgeGlobal.isReady);
+    return !!(window.HybridgeGlobal && HybridgeGlobal.isReady && initialized);
   }
 
   /**
@@ -234,31 +235,37 @@ define([
     style.type = 'text/css';
     style.innerHTML = '#hybridgeTrigger{top:0;transition:top 0.0001s;'+
       'position:absolute;visibility:hidden}'+
-      '#hybridgeTrigger.switch{top:1px;transition:top 0.0001s;}';
+      '#hybridgeTrigger.switch{top:1px;}';
     document.getElementsByTagName('head')[0].appendChild(style);
     document.getElementsByTagName('body')[0].appendChild(trigger);
-    $("#hybridgeTrigger").on('transitionend webkitTransitionEnd', function(e) {
+    $("#hybridgeTrigger").one('transitionend webkitTransitionEnd', function(e) {
       callback();
-      $("#hybridgeTrigger").off('transitionend webkitTransitionEnd');
     });
   };
 
   /**
    * Attach methods to global object in order to initialize the Hybridge properly
    */
-   var attachToGlobal = function () {
-      HybridgeGlobal.fireEvent = _fireEvent;
-   };
+  var attachToGlobal = function () {
+    _events = {};
+    HybridgeGlobal.fireEvent = _fireEvent;
+    if (HybridgeGlobal.events) {
+      for (var i = 0; i < HybridgeGlobal.events.length; i++) {
+       _events[HybridgeGlobal.events[i]] = _createEvent(HybridgeGlobal.events[i]);
+     }
+    }
+    initialized = true;
+  };
 
   /**
    * Hybridge events triggered from native for client handling
    * @type {Array}
    */
-  var _events = [];
-  _events.HybridgeReady = _createEvent('HybridgeReady');
-  _events.HybridgeMessage = _createEvent('HybridgeMessage');
-  _events.HybridgePause = _createEvent('HybridgePause');
-  _events.HybridgeResume = _createEvent('HybridgeResume');
+  //_events = [];
+  //_events.HybridgeReady = _createEvent('HybridgeReady');
+  //_events.HybridgeMessage = _createEvent('HybridgeMessage');
+  //_events.HybridgePause = _createEvent('HybridgePause');
+  //_events.HybridgeResume = _createEvent('HybridgeResume');
 
   /**
    * Global method used from native to trigger events
@@ -277,7 +284,7 @@ define([
    * Array containing different error types on rejecting requests (promises)
    * @type {Array}
    */
-  _errors = [];
+  _errors = {};
   /**
    * Environment is not mobile native (ios or android)
    */
@@ -299,6 +306,20 @@ define([
    */
   _errors.WRONG_PARAMS = 'WRONG_PARAMS';
 
+  //HybridgeGlobal = {isReady:true, actions:['login','product','download','play','playoffline'], events:['ready','pause','resume']}; // uncomment for desktop debug
+
+  /**
+   * Since HybridgeGlobal is set from native just add the client methods
+   */
+  // AMD/defer load (requirejs), native bridge already loaded
+  if (typeof window.HybridgeGlobal !== 'undefined') {
+    attachToGlobal();
+  }
+  // Minified/inmediate load, native bridge loads after
+  else {
+    setCSSTrigger(attachToGlobal);
+  }
+
   /**
    * Public returned Hybridge object
    * @type {Object}
@@ -312,20 +333,6 @@ define([
     events: _events,
     errors: _errors
   };
-
-  //HybridgeGlobal = {isReady:true, actions:['product']}; // uncomment for desktop debug
-
-  /**
-   * Since HybridgeGlobal is set from native just add the client methods
-   */
-  setTimeout(function() {
-    if (typeof HybridgeGlobal !== 'undefined') {
-      attachToGlobal();
-    }
-    else {
-      setCSSTrigger(attachToGlobal);
-    }
-  }, 400);
 
   return Hybridge;
 });
