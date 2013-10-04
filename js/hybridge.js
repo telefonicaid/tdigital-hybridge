@@ -25,12 +25,11 @@ define([
   'jquery'
 ], function ($) {
 
-  var version = 1, xhr, method, logger, environment, initialized = false,
-   _events, _errors;
+  var version = 1, xhr, method, logger, environment, _events, _errors, transitionEnd;
 
   /**
    * Sets init configuration (native environment, logger)
-   * @param {Object} ( environment: ios | android )
+   * @param {Object} ( environment: ios | android ).
    */
   function _init (conf) {
     environment = conf.environment || '';
@@ -56,7 +55,7 @@ define([
    * @return {Object}
    */
   function _getLogger () {
-    if(!logger) {
+    if (!logger) {
       logger = window.console;
     }
     return logger;
@@ -75,7 +74,7 @@ define([
    * @return {Boolean}
    */
   function _isIos () {
-    return environment == 'ios';
+    return environment === 'ios';
   }
 
   /**
@@ -83,7 +82,7 @@ define([
    * @return {Boolean}
    */
   function _isAndroid () {
-    return environment == 'android';
+    return environment === 'android';
   }
 
   /**
@@ -91,7 +90,7 @@ define([
    * @return {Boolean}
    */
   function _isEnabled () {
-    return !!(window.HybridgeGlobal && HybridgeGlobal.isReady && initialized);
+    return !!(window.HybridgeGlobal && window.HybridgeGlobal.isReady);
   }
 
   /**
@@ -100,9 +99,8 @@ define([
    * @return {Boolean}
    */
   function _isActionImplemented (action) {
-    return !!(window.HybridgeGlobal &&
-      HybridgeGlobal.actions &&
-      $.inArray(action, HybridgeGlobal.actions)!=-1 );
+    return !!(window.HybridgeGlobal && window.HybridgeGlobal.actions &&
+      $.inArray(action, window.HybridgeGlobal.actions) !== -1 );
   }
 
   /**
@@ -114,7 +112,7 @@ define([
   function _send (data, fallbackFn) {
     var error;
     // Is a native environment
-    if(_isNative()) {
+    if (_isNative()) {
       // Native bridge is enabled
       if (_isEnabled()) {
         if (data.action) {
@@ -159,7 +157,7 @@ define([
     var result = null;
     setTimeout(function() {
       try {
-        result = JSON.parse(prompt(action, strJSON) || '{}');
+        result = JSON.parse(window.prompt(action, strJSON) || '{}');
         def.resolve(result);
       }
       catch (e) {
@@ -177,17 +175,17 @@ define([
    */
   function _sendXHR (data) {
     var strJSON = JSON.stringify(data);
-    if (xhr && xhr.readyState != 4) {
+    if (xhr && xhr.readyState !== 4) {
         xhr = null;
     }
     var action = data.action;
     var id = data.id;
     xhr = $.ajax({
-      url: 'http://hybridge/' + action +'/' + id + '/' + new Date().getTime(),
+      url: 'http://hybridge/' + action + '/' + id + '/' + new Date().getTime(),
       type: 'HEAD',
       headers: { 'data': strJSON || '{}' },
       done: function() {
-        if(xhr.status === 200) {
+        if (xhr.status === 200) {
           //xhr.responseText = '{"downloaded":100}'; // Faked response (% downloaded)
           _getLogger().info('Hybridge: ' + xhr.statusText);
           xhr.resolve(JSON.parse(xhr.responseText || '{}'));
@@ -199,7 +197,8 @@ define([
         }
       },
       error: function(xhr, text, textError) {
-        _getLogger().error('Error on bridge to native. Non native environment?');
+        _getLogger().error('Error on bridge to native. Non native environment?',
+                           xhr, text, textError);
       }
     });
     return xhr.promise();
@@ -212,10 +211,10 @@ define([
    * @return {Event}
    */
   var _createEvent = function (name) {
-    var ev = null;
+    var ev = null, CE = window.CustomEvent;
     // DOM Level 3
-    if(typeof CustomEvent != 'undefined') {
-      ev = new CustomEvent(name);
+    if (typeof CE !== 'undefined') {
+      ev = new CE(name);
     }
     // DOM Level 2
     else {
@@ -229,16 +228,18 @@ define([
    * Enables transitionend hack in to trigger callbacks directly from native
    */
   var setCSSTrigger = function (callback) {
+    transitionEnd = $.support.transition ? $.support.transition.end : 'webkitTransitionEnd';
     var trigger = document.createElement('div');
-    trigger.id = "hybridgeTrigger";
+    trigger.id = 'hybridgeTrigger';
     var style = document.createElement('style');
     style.type = 'text/css';
-    style.innerHTML = '#hybridgeTrigger{top:0;transition:top 0.0001s;'+
-      'position:absolute;visibility:hidden}'+
+    style.innerHTML = '#hybridgeTrigger{top:0;-webkit-transition:top 0.0001s;' +
+      'transition:top 0.0001s;' +
+      'position:absolute;visibility:hidden}' +
       '#hybridgeTrigger.switch{top:1px;}';
     document.getElementsByTagName('head')[0].appendChild(style);
     document.getElementsByTagName('body')[0].appendChild(trigger);
-    $("#hybridgeTrigger").one('transitionend webkitTransitionEnd', function(e) {
+    $('#hybridgeTrigger').one(transitionEnd, function() {
       callback();
     });
   };
@@ -247,25 +248,18 @@ define([
    * Attach methods to global object in order to initialize the Hybridge properly
    */
   var attachToGlobal = function () {
-    _events = {};
-    HybridgeGlobal.fireEvent = _fireEvent;
-    if (HybridgeGlobal.events) {
-      for (var i = 0; i < HybridgeGlobal.events.length; i++) {
-       _events[HybridgeGlobal.events[i]] = _createEvent(HybridgeGlobal.events[i]);
-     }
-    }
-    initialized = true;
+    window.HybridgeGlobal.fireEvent = _fireEvent;
   };
 
   /**
    * Hybridge events triggered from native for client handling
    * @type {Array}
    */
-  //_events = [];
-  //_events.HybridgeReady = _createEvent('HybridgeReady');
-  //_events.HybridgeMessage = _createEvent('HybridgeMessage');
-  //_events.HybridgePause = _createEvent('HybridgePause');
-  //_events.HybridgeResume = _createEvent('HybridgeResume');
+  _events = [];
+  _events.HybridgeReady = _createEvent('HybridgeReady');
+  _events.HybridgeMessage = _createEvent('HybridgeMessage');
+  _events.HybridgePause = _createEvent('HybridgePause');
+  _events.HybridgeResume = _createEvent('HybridgeResume');
 
   /**
    * Global method used from native to trigger events
@@ -284,7 +278,7 @@ define([
    * Array containing different error types on rejecting requests (promises)
    * @type {Array}
    */
-  _errors = {};
+  _errors = [];
   /**
    * Environment is not mobile native (ios or android)
    */
@@ -306,20 +300,6 @@ define([
    */
   _errors.WRONG_PARAMS = 'WRONG_PARAMS';
 
-  //HybridgeGlobal = {isReady:true, actions:['login','product','download','play','playoffline'], events:['ready','pause','resume']}; // uncomment for desktop debug
-
-  /**
-   * Since HybridgeGlobal is set from native just add the client methods
-   */
-  // AMD/defer load (requirejs), native bridge already loaded
-  if (typeof window.HybridgeGlobal !== 'undefined') {
-    attachToGlobal();
-  }
-  // Minified/inmediate load, native bridge loads after
-  else {
-    setCSSTrigger(attachToGlobal);
-  }
-
   /**
    * Public returned Hybridge object
    * @type {Object}
@@ -333,6 +313,20 @@ define([
     events: _events,
     errors: _errors
   };
+
+  //HybridgeGlobal = {isReady:true, actions:['product']}; // uncomment for desktop debug
+
+  /**
+   * Since HybridgeGlobal is set from native just add the client methods
+   */
+  // AMD/defer load (requirejs), native bridge already loaded
+  if (typeof window.HybridgeGlobal !== 'undefined') {
+    attachToGlobal();
+  }
+  // Minified/inmediate load, native bridge loads after
+  else {
+    setCSSTrigger(attachToGlobal);
+  }
 
   return Hybridge;
 });
