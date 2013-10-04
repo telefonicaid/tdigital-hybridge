@@ -25,7 +25,8 @@ define([
   'jquery'
 ], function ($) {
 
-  var version = 1, xhr, method, logger, environment, _events, _errors, transitionEnd;
+  var version = 1, xhr, method, logger, environment, _events, _errors, transitionEnd, debug,
+    mockResponses;
 
   /**
    * Sets init configuration (native environment, logger)
@@ -34,15 +35,23 @@ define([
   function _init (conf) {
     environment = conf.environment || '';
     logger = conf.logger || null;
+    debug = conf.debug || false;
+    mockResponses = conf.mockResponses || null;
     /**
-     * Sets up the bridge in iOS environment
+     * Sets up the bridge for debug mode (only browser)
      */
-    if (_isIos()) {
+    if (debug) {
+      _getLogger().info('Fixing bridge for debug mode');
+    }
+    /**
+     * Sets up the bridge for iOS environment
+     */
+    else if (_isIos()) {
       _getLogger().info('Fixing bridge for iOS, XHR method used');
       method = _sendXHR;
     }
     /**
-    * Sets up the bridge in Android environment
+    * Sets up the bridge for Android environment
     */
     else if (_isAndroid()) {
       _getLogger().info('Fixing bridge for Android, prompt method used');
@@ -90,7 +99,7 @@ define([
    * @return {Boolean}
    */
   function _isEnabled () {
-    return !!(window.HybridgeGlobal && window.HybridgeGlobal.isReady);
+    return !!(debug || (window.HybridgeGlobal && window.HybridgeGlobal.isReady));
   }
 
   /**
@@ -110,9 +119,21 @@ define([
    * @return {Promise}
    */
   function _send (data, fallbackFn) {
-    var error;
+    var error, mock;
+    // Is mode debug on
+    if (debug && mockResponses[data.action]) {
+      mock = $.extend({}, data, mockResponses[data.action]);
+      try {
+        return $.Deferred().resolve(
+          JSON.parse(window.prompt('Hybridge Debug', JSON.stringify(mock)))
+        ).promise();
+      }
+      catch (e) {
+        error = _errors.MALFORMED_JSON;
+      }
+    }
     // Is a native environment
-    if (_isNative()) {
+    else if (_isNative()) {
       // Native bridge is enabled
       if (_isEnabled()) {
         if (data.action) {
@@ -232,6 +253,7 @@ define([
     var trigger = document.createElement('div');
     trigger.id = 'hybridgeTrigger';
     var style = document.createElement('style');
+    style.id = 'triggerStyle';
     style.type = 'text/css';
     style.innerHTML = '#hybridgeTrigger{top:0;-webkit-transition:top 0.0001s;' +
       'transition:top 0.0001s;' +
@@ -241,6 +263,8 @@ define([
     document.getElementsByTagName('body')[0].appendChild(trigger);
     $('#hybridgeTrigger').one(transitionEnd, function() {
       callback();
+      $('#hybridgeTrigger').remove();
+      $('#triggerStyle').remove();
     });
   };
 
@@ -299,6 +323,10 @@ define([
    * Call to hybridge doesn't have required parameters (action)
    */
   _errors.WRONG_PARAMS = 'WRONG_PARAMS';
+  /**
+   * Attempt to parse JSON string resulted on parse error
+   */
+  _errors.MALFORMED_JSON = 'MALFORMED_JSON';
 
   /**
    * Public returned Hybridge object
@@ -313,8 +341,6 @@ define([
     events: _events,
     errors: _errors
   };
-
-  //HybridgeGlobal = {isReady:true, actions:['product']}; // uncomment for desktop debug
 
   /**
    * Since HybridgeGlobal is set from native just add the client methods
