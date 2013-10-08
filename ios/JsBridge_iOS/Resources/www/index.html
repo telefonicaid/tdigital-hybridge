@@ -81,10 +81,10 @@
         Hybridge.events = [];
 
         // Crear eventos bridge // USAR SHIM
-        Hybridge.events['HybridgeReady'] = _createEvent('HybridgeReady');
-        Hybridge.events['HybridgeMessage'] = _createEvent('HybridgeMessage');
-        Hybridge.events['HybridgePause'] = _createEvent('HybridgePause');
-        Hybridge.events['HybridgeResume'] = _createEvent('HybridgeResume');
+        Hybridge.events['ready'] = _createEvent('ready');
+        Hybridge.events['message'] = _createEvent('ressage');
+        Hybridge.events['pause'] = _createEvent('pause');
+        Hybridge.events['resume'] = _createEvent('resume');
 
         var getNativeData = function(params) {
           var def = $.Deferred();
@@ -149,21 +149,21 @@
               console.log("Hybridge cargado", ev);
             }, false);*/
 
-            document.addEventListener("HybridgeMessage", function (ev) {
+            document.addEventListener("message", function (ev) {
               console.log("Evento Hybridge dice... primer callback", ev.data.timestamp);
             }, false);
 
-            document.addEventListener("HybridgeMessage", function (ev) {
+            document.addEventListener("message", function (ev) {
               console.log("Evento Hybridge dice... segundo callback", ev.data.timestamp);
             }, false);
 
-            document.addEventListener("HybridgePause", function (ev) {
+            document.addEventListener("pause", function (ev) {
               console.log("Evento Hybridge dice... app a segundo plano", ev.data.timestamp);
               console.log("Reseteamos el contador");
               resetCounter();
             }, false);
 
-            document.addEventListener("HybridgeResume", function (ev) {
+            document.addEventListener("resume", function (ev) {
               console.log("Evento Hybridge dice... app a primer plano", ev.data.timestamp);
               console.log("Reiniciamos el contador");
               initCounter();

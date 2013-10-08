@@ -16,7 +16,11 @@
 
 static Hybridge *sharedInstance = nil;
 
-const int VERSION = HybridgeVersion;
+int const kVersion = kHybridgeVersion;
+NSString * const kHybridgeEventPause = kEventNamePause;
+NSString * const kHybridgeEventResume = kEventNameResume;
+NSString * const kHybridgeEventMessage = KEventNameMessage;
+NSString * const kHybridgeEventReady = kEventNameReady;
 
 + (Hybridge *)sharedInstance {
     if (sharedInstance == nil) {
@@ -34,11 +38,10 @@ const int VERSION = HybridgeVersion;
         _subscriptor = [BridgeSubscriptor sharedInstance];  
         _actions = [[NSMutableArray alloc] init];
         _writer = [[SBJsonWriter alloc] init];
-        _events = [NSDictionary dictionaryWithObjectsAndKeys:@"pause", @"EVENT_PAUSE",
-                   @"resume", @"EVENT_RESUME",
-                   @"message", @"EVENT_MESSAGE",
-                   @"ready", @"EVENT_READY", nil];
-        
+        _events = @[kHybridgeEventPause,
+                    kHybridgeEventResume,
+                    kHybridgeEventMessage,
+                    kHybridgeEventReady];
     }
     
     return self;
@@ -86,14 +89,14 @@ const int VERSION = HybridgeVersion;
 - (void)initJavascript:(UIWebView*) webview
 {
     NSString *actionsStr = [_writer stringWithObject:_actions];
-    NSString *eventsStr = [_writer stringWithObject:[self.events allValues]];
-    NSMutableString* js = [[NSMutableString alloc] initWithString:@"HybridgeGlobal={isReady:true,version:"];
-    [js appendString:[NSString stringWithFormat:@"%d", VERSION]];
+    NSString *eventsStr = [_writer stringWithObject:_events];
+    NSMutableString* js = [[NSMutableString alloc] initWithString:@"window.HybridgeGlobal||(HybridgeGlobal={isReady:true,version:"];
+    [js appendString:[NSString stringWithFormat:@"%d", kVersion]];
     [js appendString:@",actions:"];
     [js appendString:(actionsStr ? actionsStr : @"[]")];
     [js appendString:@",events:"];
     [js appendString:(eventsStr ? eventsStr : @"[]")];
-    [js appendString:@"}"];
+    [js appendString:@"})"];
     [js appendString:@";window.$&&$('#hybridgeTrigger').toggleClass('switch');"];
     
     [self runJsInWebview:js web:webview];

@@ -17,11 +17,15 @@
     BridgeSubscriptor *_subscriptor;
     NSMutableArray *_actions;
     SBJsonWriter *_writer;
+    NSArray *_events;
 }
 
-@property (nonatomic, strong) NSDictionary *events;
+extern int const kVersion;
 
-extern const int VERSION;
+extern NSString * const kHybridgeEventPause;
+extern NSString * const kHybridgeEventResume;
+extern NSString * const kHybridgeEventMessage;
+extern NSString * const kHybridgeEventReady;
 
 /**
  *	Singleton consructor
