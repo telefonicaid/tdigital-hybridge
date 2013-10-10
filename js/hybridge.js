@@ -25,8 +25,8 @@ define([
   'jquery'
 ], function ($) {
 
-  var version = 1, xhr, method, logger, environment, _events, _errors, transitionEnd, debug,
-    mockResponses;
+  var version = 1, xhr, method, logger, environment, debug, mockResponses, initialized = false,
+    _events = {}, _errors;
 
   /**
    * Sets init configuration (native environment, logger)
@@ -41,17 +41,17 @@ define([
      * Sets up the bridge for debug mode (only browser)
      */
     if (debug) {
-      _getLogger().info('Fixing bridge for debug mode');
+     _getLogger().info('Fixing bridge for debug mode');
     }
     /**
-     * Sets up the bridge for iOS environment
+     * Sets up the bridge in iOS environment
      */
     else if (_isIos()) {
       _getLogger().info('Fixing bridge for iOS, XHR method used');
       method = _sendXHR;
     }
     /**
-    * Sets up the bridge for Android environment
+    * Sets up the bridge in Android environment
     */
     else if (_isAndroid()) {
       _getLogger().info('Fixing bridge for Android, prompt method used');
@@ -99,7 +99,7 @@ define([
    * @return {Boolean}
    */
   function _isEnabled () {
-    return !!(debug || (window.HybridgeGlobal && window.HybridgeGlobal.isReady));
+    return !!(debug || (window.HybridgeGlobal && window.HybridgeGlobal.isReady && initialized));
   }
 
   /**
@@ -113,27 +113,44 @@ define([
   }
 
   /**
+   * Checks if the current event is implemented in native
+   * @param  {String}  eventType
+   * @return {Boolean}
+   */
+  function _isEventImplemented (event) {
+    return !!(window.HybridgeGlobal && window.HybridgeGlobal.events && event && event.type &&
+      $.inArray(event.type, window.HybridgeGlobal.events) !== -1 );
+  }
+
+  /**
    * Checks the current environment and forwards to the proper bridge method
    * @param  {Object} data
    * @param  {Function} fallbackFn
    * @return {Promise}
    */
   function _send (data, fallbackFn) {
-    var error, mock;
+    var error, warning, details, mock;
     // Is mode debug on
-    if (debug && mockResponses[data.action]) {
-      mock = $.extend({}, data, mockResponses[data.action]);
-      try {
-        return $.Deferred().resolve(
-          JSON.parse(window.prompt('Hybridge Debug', JSON.stringify(mock)))
-        ).promise();
+    if (debug) {
+      if (mockResponses[data.action]) {
+        mock = $.extend({}, data, mockResponses[data.action]);
+        try {
+          return $.Deferred().resolve(
+            JSON.parse(window.prompt('Hybridge Debug - JSON response:', JSON.stringify(mock)))
+          ).promise();
+        }
+        catch (e) {
+          error = _errors.MALFORMED_JSON;
+          details = e.message;
+        }
       }
-      catch (e) {
-        error = _errors.MALFORMED_JSON;
+      else {
+        warning = _errors.DEBUG_MODE;
+        details = data.action;
       }
     }
     // Is a native environment
-    else if (_isNative()) {
+    else if(_isNative()) {
       // Native bridge is enabled
       if (_isEnabled()) {
         if (data.action) {
@@ -142,10 +159,12 @@ define([
           }
           else {
             error = _errors.ACTION_NOT_IMPLEMENTED;
+            details = data.action;
           }
         }
         else {
           error = _errors.WRONG_PARAMS;
+          details = JSON.stringify(data);
         }
       }
       // Native bridge is disabled, try fallback function
@@ -163,7 +182,7 @@ define([
     else {
       error =  _errors.NO_NATIVE;
     }
-    return $.Deferred().reject({'error' : error}).promise();
+    return $.Deferred().reject({'error' : error, 'warning' : warning, 'details' : details}).promise();
   }
 
   /**
@@ -246,10 +265,44 @@ define([
   };
 
   /**
+   * Add a handler to a Hybridge event if present
+   * @param {Event} event
+   * @param {Function} callback
+   */
+  var _addListener = function (event, callback) {
+    if (_isEventImplemented(event)) {
+      document.addEventListener(event.type, callback, false);
+    }
+    else if (debug) {
+      _getLogger().warning('Hybridge: ' + _errors.DEBUG_MODE);
+    }
+    else {
+      _getLogger().error('Hybridge: ' + _errors.EVENT_NOT_IMPLEMENTED, event);
+    }
+  };
+
+  /**
+   * Removes a handler from a Hybridge event
+   * @param {Event} event
+   * @param {Function} callback
+   */
+  var _removeListener = function (event, callback) {
+    if (_isEventImplemented(event)) {
+      document.removeEventListener(event.type, callback, false);
+    }
+    else if (debug) {
+      _getLogger().warning('Hybridge: ' + _errors.DEBUG_MODE);
+    }
+    else {
+      _getLogger().error('Hybridge: ' + _errors.EVENT_NOT_IMPLEMENTED, event);
+    }
+  };
+
+  /**
    * Enables transitionend hack in to trigger callbacks directly from native
    */
-  var setCSSTrigger = function (callback) {
-    transitionEnd = $.support.transition ? $.support.transition.end : 'webkitTransitionEnd';
+  var setCSSTrigger = function (callback, Hybridge) {
+    var transitionEnd = $.support.transition ? $.support.transition.end : 'webkitTransitionEnd';
     var trigger = document.createElement('div');
     trigger.id = 'hybridgeTrigger';
     var style = document.createElement('style');
@@ -262,7 +315,7 @@ define([
     document.getElementsByTagName('head')[0].appendChild(style);
     document.getElementsByTagName('body')[0].appendChild(trigger);
     $('#hybridgeTrigger').one(transitionEnd, function() {
-      callback();
+      callback(Hybridge);
       $('#hybridgeTrigger').remove();
       $('#triggerStyle').remove();
     });
@@ -270,23 +323,22 @@ define([
 
   /**
    * Attach methods to global object in order to initialize the Hybridge properly
+   * _events: Hybridge events triggered from native for client handling
    */
   var attachToGlobal = function () {
+    var event;
     window.HybridgeGlobal.fireEvent = _fireEvent;
+    if (window.HybridgeGlobal.events) {
+      for (var i = 0; i < window.HybridgeGlobal.events.length; i++) {
+        event = window.HybridgeGlobal.events[i];
+        _events[event] = _createEvent(event);
+      }
+    }
+    initialized = true;
   };
 
   /**
-   * Hybridge events triggered from native for client handling
-   * @type {Array}
-   */
-  _events = [];
-  _events.HybridgeReady = _createEvent('HybridgeReady');
-  _events.HybridgeMessage = _createEvent('HybridgeMessage');
-  _events.HybridgePause = _createEvent('HybridgePause');
-  _events.HybridgeResume = _createEvent('HybridgeResume');
-
-  /**
-   * Global method used from native to trigger events
+   * Global method used from native to trigger events (scope HybridgeGlobal)
    */
   var _fireEvent = function (type, data) {
     if (_events[type]) {
@@ -302,7 +354,7 @@ define([
    * Array containing different error types on rejecting requests (promises)
    * @type {Array}
    */
-  _errors = [];
+  _errors = {};
   /**
    * Environment is not mobile native (ios or android)
    */
@@ -324,7 +376,15 @@ define([
    */
   _errors.WRONG_PARAMS = 'WRONG_PARAMS';
   /**
-   * Attempt to parse JSON string resulted on parse error
+   * Call to hybridge event not implemented in native
+   */
+  _errors.EVENT_NOT_IMPLEMENTED = 'EVENT_NOT_IMPLEMENTED';
+  /**
+   * Hybridge in debug mode, requested feature is unavailable
+   */
+  _errors.DEBUG_MODE = 'DEBUG_MODE';
+  /**
+   * Hybridge attempted to parse or stringify malformed JSON (debug mode)
    */
   _errors.MALFORMED_JSON = 'MALFORMED_JSON';
 
@@ -337,6 +397,9 @@ define([
     version: version,
     isNative: _isNative,
     isEnabled: _isEnabled,
+    addListener: _addListener,
+    removeListener: _removeListener,
+    isEventImplemented: _isEventImplemented,
     send: _send,
     events: _events,
     errors: _errors
