@@ -5,9 +5,10 @@ import java.util.Observable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.pdi.hybridge.HybridgeConst.Event;
-
+import android.util.Log;
 import android.webkit.WebView;
+
+import com.pdi.hybridge.HybridgeConst.Event;
 
 public class HybridgeBroadcaster extends Observable {
 	
@@ -50,14 +51,30 @@ public class HybridgeBroadcaster extends Observable {
 		fireJavascriptEvent(view, event, null);
 	}
 	
+	public void fireMessage (WebView view, JSONObject data) {
+		HybridgeConst.Event event = HybridgeConst.Event.MESSAGE;
+		notifyObservers(event);
+		fireJavascriptEvent(view, event, data);
+	}
+	
 	public void fireJavascriptEvent (WebView view, Event event, JSONObject data) {
-		String json = data != null ? data.toString() : "{}";
-		StringBuffer js = new StringBuffer("HybridgeGlobal.fireEvent(\"");
-		js.append(event.getJsName()).append("\",").append(json).append(");");
-		runJsInWebView(view, js.toString());
+		if (isInitialized) {
+			String json = data != null ? data.toString() : "{}";
+			StringBuffer js = new StringBuffer("HybridgeGlobal.fireEvent(\"");
+			js.append(event.getJsName()).append("\",").append(json).append(");");
+			runJsInWebView(view, js.toString());
+		}
+		Log.d("Hybridge", event.toString());
 	}
 	
 	public void runJsInWebView (WebView view, String js) {
 		view.loadUrl("javascript:(function(){" + js + "})()");
 	}
+	
+	public void updateState (JSONObject data) {
+		this.setChanged();
+		this.notifyObservers(data);
+		Log.d("Hybridge", data.toString());
+	}
+	
 }
