@@ -9,12 +9,13 @@
 #ifndef JsBridge_iOS_Constants_h
 #define JsBridge_iOS_Constants_h
 
-#define HybridgeVersion 1;
+// Version
+#define kHybridgeVersion 1;
 
 // Event types
-#define EV_PAUSE @"pause";
-#define EV_RESUME @"resume";
-#define EV_MESSAGE @"message";
-#define EV_READY @"ready";
+#define kEventNamePause @"pause";
+#define kEventNameResume @"resume";
+#define KEventNameMessage @"message";
+#define kEventNameReady @"ready";
 
 #endif

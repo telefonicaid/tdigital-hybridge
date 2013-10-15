@@ -52,7 +52,7 @@
         [client URLProtocolDidFinishLoading:url];
         
         // Dispatch Event to WebView
-        [_hybridge fireEventInWebView:[[_hybridge events] objectForKey:@"EVENT_MESSAGE"] data:jsonString web:self.theWeb];
+        [_hybridge fireEventInWebView:kHybridgeEventMessage data:jsonString web:self.webview];
     };
     
     /**
@@ -81,7 +81,7 @@
         [client URLProtocolDidFinishLoading:url];
       
         // Dispatch Event to WebView
-        [_hybridge fireEventInWebView:[[_hybridge events] objectForKey:@"EVENT_MESSAGE"] data:jsonString web:self.theWeb];
+        [_hybridge fireEventInWebView:kHybridgeEventMessage data:jsonString web:self.webview];
     };
   
     /**
@@ -115,10 +115,10 @@
     [_hybridge subscribeAction:@"play" withHandler:playHandler];
     [_hybridge subscribeAction:@"state" withHandler:timeHandler];
     
-    self.theWeb = [[UIWebView alloc] initWithFrame:self.view.bounds];
-    self.theWeb.delegate = self;
-    self.theWeb.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [self.view addSubview:self.theWeb];
+    self.webview = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    self.webview.delegate = self;
+    self.webview.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.view addSubview:self.webview];
     
     // Carga HTML local
     //NSString *filePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"index" ofType:@"html"];
@@ -127,24 +127,24 @@
     // Carga de aplicacion web
     NSURL*url = [NSURL URLWithString:@"http://127.0.0.1/#movies/507/Obama9"];
   
-    [self.theWeb loadRequest:[NSURLRequest requestWithURL:url]];
+    [self.webview loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    [_hybridge fireEventInWebView:[[_hybridge events] objectForKey:@"EVENT_READY"] data:@"{}" web:self.theWeb];
+    [_hybridge fireEventInWebView:kHybridgeEventReady data:@"{}" web:self.webview];
     return YES;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     DDLogInfo(@"WebView: webViewDidFinishLoad");
-    [_hybridge initJavascript:self.theWeb];
+    [_hybridge initJavascript:self.webview];
 }
 
 - (void) fireJavascriptEvent:(NSString *)eventName data:(NSString *)jsonString
 {
-    [_hybridge fireEventInWebView:eventName data:jsonString web:self.theWeb];
+    [_hybridge fireEventInWebView:eventName data:jsonString web:self.webview];
 }
 
 @end

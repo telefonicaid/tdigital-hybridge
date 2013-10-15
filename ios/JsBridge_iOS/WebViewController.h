@@ -23,7 +23,7 @@
     Hybridge *_hybridge;
 }
 
-@property (strong) UIWebView *theWeb;
+@property (strong) UIWebView *webview;
 
 - (void) fireJavascriptEvent:(NSString *)eventName data:(NSString *)jsonString;
 
