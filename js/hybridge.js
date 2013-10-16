@@ -129,18 +129,24 @@ define([
    * @return {Promise}
    */
   function _send (data, fallbackFn) {
-    var error, warning, mock;
+    var error, warning, details, mock;
     // Is mode debug on
     if (debug) {
       if (mockResponses[data.action]) {
         mock = $.extend({}, data, mockResponses[data.action]);
         try {
           return $.Deferred().resolve(
-            JSON.parse(window.prompt('Hybridge Debug', JSON.stringify(mock)))
+            JSON.parse(window.prompt('Hybridge Debug - JSON response:', JSON.stringify(mock)))
           ).promise();
         }
         catch (e) {
           error = _errors.MALFORMED_JSON;
+          details = e.message;
+        }
+      }
+      else {
+        warning = _errors.DEBUG_MODE;
+        details = data.action;
         }
       }
       else {
@@ -157,10 +163,12 @@ define([
           }
           else {
             error = _errors.ACTION_NOT_IMPLEMENTED;
+            details = data.action;
           }
         }
         else {
           error = _errors.WRONG_PARAMS;
+          details = JSON.stringify(data);
         }
       }
       // Native bridge is disabled, try fallback function
@@ -178,7 +186,7 @@ define([
     else {
       error =  _errors.NO_NATIVE;
     }
-    return $.Deferred().reject({'error' : error, 'warning' : warning}).promise();
+    return $.Deferred().reject({'error' : error, 'warning' : warning, 'details' : details}).promise();
   }
 
   /**
@@ -297,8 +305,8 @@ define([
   /**
    * Enables transitionend hack in to trigger callbacks directly from native
    */
-  var setCSSTrigger = function (callback, Hybridge) {
-    var transitionEnd = $.support.transition ? $.support.transition.end : 'webkitTransitionEnd';
+  var setCSSTrigger = function (callback) {
+    transitionEnd = $.support.transition ? $.support.transition.end : 'webkitTransitionEnd';
     var trigger = document.createElement('div');
     trigger.id = 'hybridgeTrigger';
     var style = document.createElement('style');
@@ -311,7 +319,7 @@ define([
     document.getElementsByTagName('head')[0].appendChild(style);
     document.getElementsByTagName('body')[0].appendChild(trigger);
     $('#hybridgeTrigger').one(transitionEnd, function() {
-      callback(Hybridge);
+      callback();
       $('#hybridgeTrigger').remove();
       $('#triggerStyle').remove();
     });
@@ -373,6 +381,14 @@ define([
   _errors.WRONG_PARAMS = 'WRONG_PARAMS';
   /**
    * Call to hybridge event not implemented in native
+   */
+  _errors.EVENT_NOT_IMPLEMENTED = 'EVENT_NOT_IMPLEMENTED';
+  /**
+   * Hybridge in debug mode, requested feature is unavailable
+   */
+  _errors.DEBUG_MODE = 'DEBUG_MODE';
+  /**
+   * Hybridge attempted to parse or stringify malformed JSON (debug mode)
    */
   _errors.EVENT_NOT_IMPLEMENTED = 'EVENT_NOT_IMPLEMENTED';
   /**
