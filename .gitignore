@@ -27,6 +27,12 @@ EnjoyMobile/lint.xml
 */.classpath
 */.settings
 
+*/nbandroid/
+*/nbandroid/
+
+.DS_Store
+/.settings
+
 *.orig
 .picasa.ini
 

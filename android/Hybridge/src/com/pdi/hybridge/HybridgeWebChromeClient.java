@@ -9,11 +9,10 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.webkit.JsPromptResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-
-import com.pdi.enjoy.lib.utils.Log;
 
 public class HybridgeWebChromeClient extends WebChromeClient {
 
