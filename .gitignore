@@ -36,3 +36,7 @@ EnjoyMobile/lint.xml
 *.orig
 .picasa.ini
 
+# Hybrige android
+android/Hybridge/.classpath
+android/Hybridge/bin/
+android/Hybridge/gen/
