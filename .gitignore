@@ -27,6 +27,16 @@ EnjoyMobile/lint.xml
 */.classpath
 */.settings
 
+*/nbandroid/
+*/nbandroid/
+
+.DS_Store
+/.settings
+
 *.orig
 .picasa.ini
 
+# Hybrige android
+android/Hybridge/.classpath
+android/Hybridge/bin/
+android/Hybridge/gen/
