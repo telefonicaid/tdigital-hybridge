@@ -26,7 +26,7 @@ define([
 ], function ($) {
 
   var version = 1, xhr, method, logger, environment, debug, mockResponses, initialized = false,
-    _events = {}, _errors;
+    _events = {}, _errors, initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
 
   /**
    * Sets init configuration (native environment, logger)
@@ -57,6 +57,19 @@ define([
       _getLogger().info('Fixing bridge for Android, prompt method used');
       method = _sendPrompt;
     }
+    return initModuleDef.resolve(conf).promise();
+  }
+
+  /**
+   * Notify native of javascript initialization
+   * @return {Object} Promise returned from send method
+   */
+  function _initNative (deferredModule, deferredGlobal) {
+    _send({
+      'action' : 'init',
+      'initialized' : deferredGlobal.initialized,
+      'version' : version
+    });
   }
 
   /**
@@ -299,7 +312,7 @@ define([
   /**
    * Enables transitionend hack in to trigger callbacks directly from native
    */
-  var setCSSTrigger = function (callback) {
+  var _setCSSTrigger = function (callback) {
     var transitionEnd = $.support.transition ? $.support.transition.end : 'webkitTransitionEnd';
     var trigger = document.createElement('div');
     trigger.id = 'hybridgeTrigger';
@@ -323,31 +336,18 @@ define([
    * Attach methods to global object in order to initialize the Hybridge properly
    * _events: Hybridge events triggered from native for client handling
    */
-  var attachToGlobal = function () {
-    var event;
-    try {
-      if (window.HybridgeGlobal.events) {
-        for (var i = 0; i < window.HybridgeGlobal.events.length; i++) {
-          event = window.HybridgeGlobal.events[i];
-          _events[event] = _createEvent(event);
-        }
+  var _attachToGlobal = function () {
+    var event, def = $.Deferred();
+    if (window.HybridgeGlobal.events) {
+      for (var i = 0; i < window.HybridgeGlobal.events.length; i++) {
+        event = window.HybridgeGlobal.events[i];
+        _events[event] = _createEvent(event);
       }
-      initialized = true;
-      window.HybridgeGlobal.fireEvent = _fireEvent;
-      window.HybridgeGlobal.initialized = initialized;
-      _send({
-        'action' : 'init',
-        'initialized' : initialized,
-        'version' : version
-      });
-    } catch (e) {
-      _send({
-        'action' : 'init',
-        'initialized' : initialized,
-        'version' : version,
-        'error' : e.message()
-      });
     }
+    initialized = true;
+    window.HybridgeGlobal.fireEvent = _fireEvent;
+    window.HybridgeGlobal.initialized = initialized;
+    return initGlobalDef.resolve({'initialized':initialized}).promise();
   };
 
   /**
@@ -423,12 +423,17 @@ define([
    */
   // AMD/defer load (requirejs), native bridge already loaded
   if (typeof window.HybridgeGlobal !== 'undefined') {
-    attachToGlobal();
+    _attachToGlobal();
   }
   // Minified/inmediate load, native bridge loads after
   else {
-    setCSSTrigger(attachToGlobal);
+    _setCSSTrigger(_attachToGlobal);
   }
+
+  /**
+   * Initialize both native and javascript
+   */
+  $.when(initModuleDef, initGlobalDef).then(_initNative);
 
   return Hybridge;
 });
