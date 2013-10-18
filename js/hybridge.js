@@ -226,10 +226,8 @@ define([
       headers: { 'data': strJSON || '{}' },
       done: function() {
         if (xhr.status === 200) {
-          //xhr.responseText = '{"downloaded":100}'; // Faked response (% downloaded)
           _getLogger().info('Hybridge: ' + xhr.statusText);
           xhr.resolve(JSON.parse(xhr.responseText || '{}'));
-          //_handleMsgFromNative();
         }
         else {
           _getLogger().error('Hybridge: ' + xhr.statusText);
@@ -327,14 +325,29 @@ define([
    */
   var attachToGlobal = function () {
     var event;
-    window.HybridgeGlobal.fireEvent = _fireEvent;
-    if (window.HybridgeGlobal.events) {
-      for (var i = 0; i < window.HybridgeGlobal.events.length; i++) {
-        event = window.HybridgeGlobal.events[i];
-        _events[event] = _createEvent(event);
+    try {
+      if (window.HybridgeGlobal.events) {
+        for (var i = 0; i < window.HybridgeGlobal.events.length; i++) {
+          event = window.HybridgeGlobal.events[i];
+          _events[event] = _createEvent(event);
+        }
       }
+      initialized = true;
+      window.HybridgeGlobal.fireEvent = _fireEvent;
+      window.HybridgeGlobal.initialized = initialized;
+      _send({
+        'action' : 'init',
+        'initialized' : initialized,
+        'version' : version
+      });
+    } catch (e) {
+      _send({
+        'action' : 'init',
+        'initialized' : initialized,
+        'version' : version,
+        'error' : e.message()
+      });
     }
-    initialized = true;
   };
 
   /**
