@@ -125,10 +125,4 @@ public enum JsActionImpl implements JsAction {
         }
     }
 
-	@Override
-	public void setContext(Context context) {
-		// TODO Auto-generated method stub
-		
-	}	
-	
 }

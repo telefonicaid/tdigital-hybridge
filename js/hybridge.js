@@ -147,10 +147,6 @@ define([
       else {
         warning = _errors.DEBUG_MODE;
         details = data.action;
-        }
-      }
-      else {
-        warning = _errors.DEBUG_MODE;
       }
     }
     // Is a native environment
@@ -306,7 +302,7 @@ define([
    * Enables transitionend hack in to trigger callbacks directly from native
    */
   var setCSSTrigger = function (callback) {
-    transitionEnd = $.support.transition ? $.support.transition.end : 'webkitTransitionEnd';
+    var transitionEnd = $.support.transition ? $.support.transition.end : 'webkitTransitionEnd';
     var trigger = document.createElement('div');
     trigger.id = 'hybridgeTrigger';
     var style = document.createElement('style');
@@ -390,11 +386,7 @@ define([
   /**
    * Hybridge attempted to parse or stringify malformed JSON (debug mode)
    */
-  _errors.EVENT_NOT_IMPLEMENTED = 'EVENT_NOT_IMPLEMENTED';
-  /**
-   * Hybridge in debug mode, requested feature is unavailable
-   */
-  _errors.DEBUG_MODE = 'DEBUG_MODE';
+  _errors.MALFORMED_JSON = 'MALFORMED_JSON';
 
   /**
    * Public returned Hybridge object
