@@ -125,7 +125,7 @@
     //NSURL *url = [NSURL fileURLWithPath:filePath];
   
     // Carga de aplicacion web
-    NSURL*url = [NSURL URLWithString:@"http://127.0.0.1/#movies/507/Obama9"];
+    NSURL*url = [NSURL URLWithString:@"http://127.0.0.1"];
   
     [self.webview loadRequest:[NSURLRequest requestWithURL:url]];
 }

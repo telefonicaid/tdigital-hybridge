@@ -60,7 +60,6 @@ NSString *bridgePrefix = @"hybridge";
     /** Get header data (JSON) */
     NSDictionary *headers = [self.request allHTTPHeaderFields];
     NSString *_data = [headers objectForKey:@"data"];
-    //NSDictionary *params = [parser objectWithString:_data];
     
     // Look for a handler subscribed for this action
     BridgeHandlerBlock_t handler = [[BridgeSubscriptor sharedInstance] handlerForAction:_action];

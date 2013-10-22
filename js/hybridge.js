@@ -26,7 +26,7 @@ define([
 ], function ($) {
 
   var version = 1, xhr, method, logger, environment, debug, mockResponses, initialized = false,
-    _events = {}, _errors;
+    _events = {}, _errors, initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
 
   /**
    * Sets init configuration (native environment, logger)
@@ -57,6 +57,19 @@ define([
       _getLogger().info('Fixing bridge for Android, prompt method used');
       method = _sendPrompt;
     }
+    return initModuleDef.resolve(conf).promise();
+  }
+
+  /**
+   * Notify native of javascript initialization
+   * @return {Object} Promise returned from send method
+   */
+  function _initNative (deferredModule, deferredGlobal) {
+    _send({
+      'action' : 'init',
+      'initialized' : deferredGlobal.initialized,
+      'version' : version
+    });
   }
 
   /**
@@ -147,10 +160,6 @@ define([
       else {
         warning = _errors.DEBUG_MODE;
         details = data.action;
-        }
-      }
-      else {
-        warning = _errors.DEBUG_MODE;
       }
     }
     // Is a native environment
@@ -230,10 +239,8 @@ define([
       headers: { 'data': strJSON || '{}' },
       done: function() {
         if (xhr.status === 200) {
-          //xhr.responseText = '{"downloaded":100}'; // Faked response (% downloaded)
           _getLogger().info('Hybridge: ' + xhr.statusText);
           xhr.resolve(JSON.parse(xhr.responseText || '{}'));
-          //_handleMsgFromNative();
         }
         else {
           _getLogger().error('Hybridge: ' + xhr.statusText);
@@ -305,8 +312,8 @@ define([
   /**
    * Enables transitionend hack in to trigger callbacks directly from native
    */
-  var setCSSTrigger = function (callback) {
-    transitionEnd = $.support.transition ? $.support.transition.end : 'webkitTransitionEnd';
+  var _setCSSTrigger = function (callback) {
+    var transitionEnd = $.support.transition ? $.support.transition.end : 'webkitTransitionEnd';
     var trigger = document.createElement('div');
     trigger.id = 'hybridgeTrigger';
     var style = document.createElement('style');
@@ -329,9 +336,8 @@ define([
    * Attach methods to global object in order to initialize the Hybridge properly
    * _events: Hybridge events triggered from native for client handling
    */
-  var attachToGlobal = function () {
-    var event;
-    window.HybridgeGlobal.fireEvent = _fireEvent;
+  var _attachToGlobal = function () {
+    var event, def = $.Deferred();
     if (window.HybridgeGlobal.events) {
       for (var i = 0; i < window.HybridgeGlobal.events.length; i++) {
         event = window.HybridgeGlobal.events[i];
@@ -339,6 +345,9 @@ define([
       }
     }
     initialized = true;
+    window.HybridgeGlobal.fireEvent = _fireEvent;
+    window.HybridgeGlobal.initialized = initialized;
+    return initGlobalDef.resolve({'initialized':initialized}).promise();
   };
 
   /**
@@ -390,11 +399,7 @@ define([
   /**
    * Hybridge attempted to parse or stringify malformed JSON (debug mode)
    */
-  _errors.EVENT_NOT_IMPLEMENTED = 'EVENT_NOT_IMPLEMENTED';
-  /**
-   * Hybridge in debug mode, requested feature is unavailable
-   */
-  _errors.DEBUG_MODE = 'DEBUG_MODE';
+  _errors.MALFORMED_JSON = 'MALFORMED_JSON';
 
   /**
    * Public returned Hybridge object
@@ -418,12 +423,17 @@ define([
    */
   // AMD/defer load (requirejs), native bridge already loaded
   if (typeof window.HybridgeGlobal !== 'undefined') {
-    attachToGlobal();
+    _attachToGlobal();
   }
   // Minified/inmediate load, native bridge loads after
   else {
-    setCSSTrigger(attachToGlobal);
+    _setCSSTrigger(_attachToGlobal);
   }
+
+  /**
+   * Initialize both native and javascript
+   */
+  $.when(initModuleDef, initGlobalDef).then(_initNative);
 
   return Hybridge;
 });

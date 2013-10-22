@@ -5,6 +5,8 @@ import java.util.Observable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.webkit.WebView;
 
@@ -16,6 +18,8 @@ public class HybridgeBroadcaster extends Observable {
 	
 	private boolean isInitialized = false;
 	
+	private final String TAG = "HybridgeBroadcaster";
+	
 	public HybridgeBroadcaster () {
 	}
 
@@ -25,20 +29,21 @@ public class HybridgeBroadcaster extends Observable {
         }
         return instance;
     }
-    
+
     public void initJs (WebView view, JSONArray actions, JSONArray events) {
-    	//if (!isInitialized) {
-			runJsInWebView(view, "window.HybridgeGlobal||(HybridgeGlobal = {" +
-		            "  isReady : true" +
-		            ", version : " + HybridgeConst.VERSION +
-		            ", actions : " + actions.toString() +
-		            ", events : " + events.toString() +
-		        "})" + 
-		        ";window.$&&$(\"#hybridgeTrigger\").toggleClass(\"switch\");");
-			isInitialized = true;
-    	//}
+        runJsInWebView(view, "window.HybridgeGlobal || function () {" +
+                "window.HybridgeGlobal = {" +
+                "  isReady : true" +
+                ", version : " + HybridgeConst.VERSION +
+                ", actions : " + actions.toString() +
+                ", events : " + events.toString() +
+                "};" +
+                "window.$ && $('#hybridgeTrigger').toggleClass('switch');" +
+                "}()"
+                );
+        isInitialized = true;
     }
-	
+
 	public void firePause (WebView view) {
 		HybridgeConst.Event event = HybridgeConst.Event.PAUSE;
 		notifyObservers(event);
@@ -64,17 +69,22 @@ public class HybridgeBroadcaster extends Observable {
 			js.append(event.getJsName()).append("\",").append(json).append(");");
 			runJsInWebView(view, js.toString());
 		}
-		Log.d("Hybridge", event.toString());
 	}
-	
-	public void runJsInWebView (WebView view, String js) {
-		view.loadUrl("javascript:(function(){" + js + "})()");
+
+	public void runJsInWebView (final WebView view, final String js) {
+	    new Handler(Looper.getMainLooper()).post(
+	            new Runnable() {
+	                @Override
+	                public void run() {
+	                    view.loadUrl("javascript:(function(){" + js + "})()");
+	                }
+	            });
 	}
 	
 	public void updateState (JSONObject data) {
 		this.setChanged();
 		this.notifyObservers(data);
-		Log.d("Hybridge", data.toString());
+		Log.d(TAG, data.toString());
 	}
 	
 }
