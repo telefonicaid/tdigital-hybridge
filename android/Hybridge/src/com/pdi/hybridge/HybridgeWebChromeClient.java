@@ -49,30 +49,35 @@ public class HybridgeWebChromeClient extends WebChromeClient {
 	@SuppressLint("DefaultLocale")
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void executeJSONTask(String action, JSONObject json, JsPromptResult result, Context context) {
-		Class clazz = this.actions.get(action);
-    	AsyncTask task = null;
-		try {
-			task = (AsyncTask<JSONObject, Void, JSONObject>) 
-					clazz.getDeclaredConstructor
-					( new Class[] { clazz.getDeclaringClass(), android.content.Context.class } )
-					.newInstance(null, context);
-			//task = ((AsyncTask<JSONObject, Void, JSONObject>) clazz.getDeclaredConstructor(clazz).newInstance(context));
-			//task = ((AsyncTask<JSONObject, Void, JSONObject>) clazz.newInstance());
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Log.v(mTag, "Execute action " + action);
-    	task.execute(json, result);
-    }
+	    Class clazz = this.actions.get(action);
+	    if (clazz != null) {
+	        AsyncTask task = null;
+	        try {
+	            task = (AsyncTask<JSONObject, Void, JSONObject>) 
+	                    clazz.getDeclaredConstructor
+	                    ( new Class[] { clazz.getDeclaringClass(), android.content.Context.class } )
+	                    .newInstance(null, context);
+	            //task = ((AsyncTask<JSONObject, Void, JSONObject>) clazz.getDeclaredConstructor(clazz).newInstance(context));
+	            //task = ((AsyncTask<JSONObject, Void, JSONObject>) clazz.newInstance());
+	        } catch (InstantiationException e) {
+	            e.printStackTrace();
+	        } catch (IllegalAccessException e) {
+	            e.printStackTrace();
+	        } catch (IllegalArgumentException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        } catch (InvocationTargetException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        } catch (NoSuchMethodException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
+	        Log.v(mTag, "Execute action " + action);
+	        task.execute(json, result);
+	    } else {
+	        result.confirm(json.toString());
+	        Log.d(mTag, "Hybridge action not implemented: " + action);
+	    }
+	}
 }

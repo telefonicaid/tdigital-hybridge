@@ -337,7 +337,7 @@ define([
    * _events: Hybridge events triggered from native for client handling
    */
   var _attachToGlobal = function () {
-    var event, def = $.Deferred();
+    var event;
     if (window.HybridgeGlobal.events) {
       for (var i = 0; i < window.HybridgeGlobal.events.length; i++) {
         event = window.HybridgeGlobal.events[i];
