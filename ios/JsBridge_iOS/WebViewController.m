@@ -14,13 +14,14 @@
 
 @implementation WebViewController
 
+NSString *_testURL = @"http://127.0.0.1";
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {        
         _parser = [[SBJsonParser alloc] init];
         _writer = [[SBJsonWriter alloc] init];
-
     }
     return self;
 }
@@ -117,7 +118,7 @@
     //NSURL *url = [NSURL fileURLWithPath:filePath];
   
     // Carga de aplicacion web
-    NSURL*url = [NSURL URLWithString:@"http://127.0.0.1/publish/IOS"];
+    NSURL*url = [NSURL URLWithString:_testURL];
   
     [self.webview loadRequest:[NSURLRequest requestWithURL:url]];
 }
