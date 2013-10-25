@@ -52,7 +52,6 @@ static BridgeSubscriptor *sharedInstance = nil;
         [self.subscriptions setObject:handlerBlock forKey:action];
     }
     @catch (NSException * e) {
-        DDLogError(@"Exception: %@", e);
     }
 }
 
@@ -62,7 +61,6 @@ static BridgeSubscriptor *sharedInstance = nil;
         [self.subscriptions removeObjectForKey:action];
     }
     @catch (NSException * e) {
-        DDLogError(@"Exception: %@", e);
     }
 }
 

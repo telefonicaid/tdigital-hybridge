@@ -25,7 +25,6 @@ const NSString *commPrefix = @"bridge";
         //NSDictionary *params = nil;
         
         if ([method isEqualToString:@"HEAD"]) {
-            NSLog(@"Petición ajax HEAD interceptada");
             // TODO: process headers data
         }
         
