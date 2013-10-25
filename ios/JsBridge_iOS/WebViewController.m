@@ -12,8 +12,6 @@
 #import "SBJson.h"
 #import "Hybridge.h"
 
-#define kTestURL = @"http://127.0.0.1";
-
 @implementation WebViewController
 
 NSString *_testURL = @"http://127.0.0.1";
