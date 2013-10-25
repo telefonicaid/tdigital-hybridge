@@ -12,9 +12,9 @@
 #import "SBJson.h"
 #import "Hybridge.h"
 
-@implementation WebViewController
+#define kTestURL = @"http://127.0.0.1";
 
-NSString *_testURL = @"http://127.0.0.1";
+@implementation WebViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -118,7 +118,7 @@ NSString *_testURL = @"http://127.0.0.1";
     //NSURL *url = [NSURL fileURLWithPath:filePath];
   
     // Carga de aplicacion web
-    NSURL*url = [NSURL URLWithString:_testURL];
+    NSURL*url = [NSURL URLWithString:kTestURL];
   
     [self.webview loadRequest:[NSURLRequest requestWithURL:url]];
 }
