@@ -37,9 +37,6 @@
     // Example handler, just parses data to JSON from ajax header in order to process it
     // and writes back JSON in a response header
     BridgeHandlerBlock_t timeHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
-        NSLog(@"Ha llegado la petición time");
-        NSLog(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
-        NSLog(@"Data: %@", data);
         
         NSDictionary *params = [_parser objectWithString:data];
         
@@ -65,9 +62,6 @@
      *	@return	void
      */
     BridgeHandlerBlock_t productHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
-        NSLog(@"Ha llegado la petición product info");
-        NSLog(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
-        NSLog(@"Data: %@", data);
       
         NSMutableDictionary *product = [[NSMutableDictionary alloc] init];
         // Get product info
@@ -93,7 +87,6 @@
      *	@return	void
      */
     BridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
-        NSLog(@"Ha llegado la petición download");
         
     };
     
@@ -106,7 +99,6 @@
      *	@return	void
      */
     BridgeHandlerBlock_t playHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
-        NSLog(@"Ha llegado la petición: play");
         
     };
     
@@ -138,7 +130,6 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSLog(@"WebView: webViewDidFinishLoad");
     [_hybridge initJavascript:self.webview];
 }
 

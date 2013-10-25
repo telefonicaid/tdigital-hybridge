@@ -36,7 +36,6 @@ NSString *bridgePrefix = @"hybridge";
     if([[self.request HTTPMethod] caseInsensitiveCompare:@"OPTIONS"] == NSOrderedSame)
     {
         // Manejar las peticiones OPTION (CORS preflight)
-        NSLog(@"Response OPTIONS prefight request");
         //BridgeHandlerBlock_t handler = [[BridgeSubscriptor sharedInstance] handlerForAction:@"preflight"];
         //handler(self, nil, [self createResponse]);
         
@@ -53,7 +52,6 @@ NSString *bridgePrefix = @"hybridge";
     if ([[self.request.URL pathComponents] count] > 1) {
         _action = [[self.request.URL pathComponents] objectAtIndex:1];
     }
-    NSLog(@"%@", _action);
     
     /** Get header data (JSON) */
     NSDictionary *headers = [self.request allHTTPHeaderFields];
