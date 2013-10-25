@@ -1,6 +1,4 @@
 platform :ios, 6.0
 inhibit_all_warnings!
 
-pod 'MCALog', :git => 'https://pdihub.hi.inet/mca/mca-mobile-ios-utils.git', :branch => 'develop'
-
 pod 'SBJson', '~> 3.2'

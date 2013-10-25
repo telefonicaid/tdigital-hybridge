@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 tid.es. All rights reserved.
 //
 
-#import "MCALog.h"
-
 @class SBJsonParser;
 @class SBJsonWriter;
 

@@ -37,9 +37,9 @@
     // Example handler, just parses data to JSON from ajax header in order to process it
     // and writes back JSON in a response header
     BridgeHandlerBlock_t timeHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
-        DDLogInfo(@"Ha llegado la petición time");
-        DDLogInfo(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
-        DDLogInfo(@"Data: %@", data);
+        NSLog(@"Ha llegado la petición time");
+        NSLog(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
+        NSLog(@"Data: %@", data);
         
         NSDictionary *params = [_parser objectWithString:data];
         
@@ -65,9 +65,9 @@
      *	@return	void
      */
     BridgeHandlerBlock_t productHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
-        DDLogInfo(@"Ha llegado la petición product info");
-        DDLogInfo(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
-        DDLogInfo(@"Data: %@", data);
+        NSLog(@"Ha llegado la petición product info");
+        NSLog(@"Componentes: %@", [url.request.URL.pathComponents componentsJoinedByString:@","]);
+        NSLog(@"Data: %@", data);
       
         NSMutableDictionary *product = [[NSMutableDictionary alloc] init];
         // Get product info
@@ -93,7 +93,7 @@
      *	@return	void
      */
     BridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
-        DDLogInfo(@"Ha llegado la petición download");
+        NSLog(@"Ha llegado la petición download");
         
     };
     
@@ -106,7 +106,7 @@
      *	@return	void
      */
     BridgeHandlerBlock_t playHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
-        DDLogInfo(@"Ha llegado la petición: play");
+        NSLog(@"Ha llegado la petición: play");
         
     };
     
@@ -125,7 +125,7 @@
     //NSURL *url = [NSURL fileURLWithPath:filePath];
   
     // Carga de aplicacion web
-    NSURL*url = [NSURL URLWithString:@"http://127.0.0.1"];
+    NSURL*url = [NSURL URLWithString:@"http://127.0.0.1/publish/IOS"];
   
     [self.webview loadRequest:[NSURLRequest requestWithURL:url]];
 }
@@ -138,7 +138,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    DDLogInfo(@"WebView: webViewDidFinishLoad");
+    NSLog(@"WebView: webViewDidFinishLoad");
     [_hybridge initJavascript:self.webview];
 }
 

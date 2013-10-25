@@ -55,21 +55,21 @@ NSString * const kHybridgeEventReady = kEventNameReady;
         [_actions addObject:action];
     }
     @catch (NSException * e) {
-        DDLogError(@"Exception: %@", e);
+        NSLog(@"Exception: %@", e);
     }
 }
 
 - (NSString *)runJsInWebview:(NSString*)js web:(UIWebView*) webview
 {
-    DDLogInfo(@"runJsInWebview: %@",js);
+    NSLog(@"runJsInWebview: %@",js);
     NSString *jsResponse = [webview stringByEvaluatingJavaScriptFromString:js];
-    DDLogInfo(@"runJsInWebview response: %@",jsResponse);
+    NSLog(@"runJsInWebview response: %@",jsResponse);
     return jsResponse;
 }
 
 - (void)fireEventInWebView:(NSString *)eventName data:(NSString *)jsonString web:(UIWebView*) webview
 {
-    DDLogInfo(@"Enviando evento a Webview: %@", eventName);
+    NSLog(@"Enviando evento a Webview: %@", eventName);
     NSMutableString* ms = [[NSMutableString alloc] initWithString:@"HybridgeGlobal.fireEvent(\""];
     [ms appendString:eventName];
     [ms appendString:@"\","];
