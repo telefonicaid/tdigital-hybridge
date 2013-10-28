@@ -4,6 +4,8 @@ public class HybridgeConst {
 	
 	public static final int VERSION = 1;
 	
+	public static final String EVENT_NAME = "event";
+	
 	public enum Event {
 		PAUSE("pause"),
 		RESUME("resume"),

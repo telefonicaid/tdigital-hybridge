@@ -62,6 +62,12 @@ public class HybridgeBroadcaster extends Observable {
 		fireJavascriptEvent(view, event, data);
 	}
 	
+    public void fireReady (WebView view, JSONObject data) {
+        HybridgeConst.Event event = HybridgeConst.Event.READY;
+        notifyObservers(event);
+        fireJavascriptEvent(view, event, data);
+    }
+	
 	public void fireJavascriptEvent (WebView view, Event event, JSONObject data) {
 		if (isInitialized) {
 			String json = data != null ? data.toString() : "{}";
