@@ -1,10 +1,13 @@
 package com.pdi.hybridge;
 
+import java.util.HashMap;
 import java.util.Observable;
+import java.util.Observer;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -20,7 +23,10 @@ public class HybridgeBroadcaster extends Observable {
 	
 	private final String TAG = "HybridgeBroadcaster";
 	
+	private HashMap<Integer, AsyncTask<JSONObject, Void, JSONObject>> currents;
+	
 	public HybridgeBroadcaster () {
+	    currents =  new HashMap<Integer, AsyncTask<JSONObject,Void,JSONObject>>();
 	}
 
     public static HybridgeBroadcaster getInstance () {
@@ -93,4 +99,30 @@ public class HybridgeBroadcaster extends Observable {
 		Log.d(TAG, data.toString());
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+    public void addObserver(Observer observer) {
+	    super.addObserver(observer);
+	    Class<?> clazz = observer.getClass().getSuperclass();
+	    if(clazz != null && clazz == android.os.AsyncTask.class) {
+	        int hashCode = observer.hashCode();
+	        AsyncTask<JSONObject, Void, JSONObject> current = currents.get(hashCode); 
+	        if(current != null) {
+	            if(current.cancel(true)) {
+	                currents.remove(hashCode);
+	            }
+	        }
+	        currents.put(hashCode, (AsyncTask<JSONObject, Void, JSONObject>) observer);
+	    }
+	}
+	
+	@Override
+    public void deleteObserver(Observer observer) {
+	    super.deleteObserver(observer);
+        Class<?> clazz = observer.getClass().getSuperclass();
+        if(clazz != null && clazz == android.os.AsyncTask.class) {
+            int hashCode = observer.hashCode();
+            currents.remove(hashCode);
+        }	    
+	}
 }
