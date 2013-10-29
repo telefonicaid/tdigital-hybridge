@@ -31,7 +31,7 @@ public class HybridgeWebChromeClient extends WebChromeClient {
     }
 
     @Override
-    public final boolean onJsPrompt (WebView view, String url, String msg, String defValue, JsPromptResult result) {
+    public final boolean onJsPrompt(WebView view, String url, String msg, String defValue, JsPromptResult result) {
         String action = msg;
         JSONObject json = null;
         Log.v(mTag, "Hybridge action: " + action);

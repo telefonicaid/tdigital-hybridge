@@ -14,7 +14,7 @@ public class HybridgeConst {
 
         private String jsName;
 
-        private Event (String jsName) {
+        private Event(String jsName) {
             this.jsName = jsName;
         }
 
