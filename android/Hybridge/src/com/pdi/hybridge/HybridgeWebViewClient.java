@@ -11,33 +11,33 @@ import com.pdi.hybridge.HybridgeConst.Event;
 
 public class HybridgeWebViewClient extends WebViewClient {
 
-	protected JSONArray actions;
-	protected JSONArray events;
-	protected HybridgeBroadcaster broadcast;
-	
-	@SuppressLint("DefaultLocale")
-	public HybridgeWebViewClient(JsAction[] actions) {	
-		this.actions = new JSONArray();
-		for (JsAction action : actions) {
-			this.actions.put(action.toString().toLowerCase());
-		}
+    protected JSONArray actions;
+    protected JSONArray events;
+    protected HybridgeBroadcaster broadcast;
 
-		this.events = new JSONArray();
-		Event[] events = HybridgeConst.Event.values();
-		for (Event event : events) {
-			this.events.put(event.getJsName());
-		}
-		this.broadcast = HybridgeBroadcaster.getInstance();
-	}
-	
+    @SuppressLint("DefaultLocale")
+    public HybridgeWebViewClient(JsAction[] actions) {	
+        this.actions = new JSONArray();
+        for (JsAction action : actions) {
+            this.actions.put(action.toString().toLowerCase());
+        }
+
+        this.events = new JSONArray();
+        Event[] events = HybridgeConst.Event.values();
+        for (Event event : events) {
+            this.events.put(event.getJsName());
+        }
+        this.broadcast = HybridgeBroadcaster.getInstance();
+    }
+
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
         return super.shouldInterceptRequest(view, url);
     }
-    
+
     @Override  
     public void onPageFinished(WebView view, String url) {
-    	this.broadcast.initJs(view, actions, events);  
+        this.broadcast.initJs(view, actions, events);  
     }
 
 }
