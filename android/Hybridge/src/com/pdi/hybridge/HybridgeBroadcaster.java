@@ -104,11 +104,11 @@ public class HybridgeBroadcaster extends Observable {
     public void addObserver(Observer observer) {
 	    super.addObserver(observer);
 	    Class<?> clazz = observer.getClass().getSuperclass();
-	    if(clazz != null && clazz == android.os.AsyncTask.class) {
+	    if (clazz != null && clazz == android.os.AsyncTask.class) {
 	        int hashCode = observer.hashCode();
 	        AsyncTask<JSONObject, Void, JSONObject> current = currents.get(hashCode); 
-	        if(current != null) {
-	            if(current.cancel(true)) {
+	        if (current != null) {
+	            if (current.cancel(true)) {
 	                currents.remove(hashCode);
 	            }
 	        }
@@ -120,7 +120,7 @@ public class HybridgeBroadcaster extends Observable {
     public void deleteObserver(Observer observer) {
 	    super.deleteObserver(observer);
         Class<?> clazz = observer.getClass().getSuperclass();
-        if(clazz != null && clazz == android.os.AsyncTask.class) {
+        if (clazz != null && clazz == android.os.AsyncTask.class) {
             int hashCode = observer.hashCode();
             currents.remove(hashCode);
         }	    
