@@ -25,18 +25,18 @@ public class HybridgeBroadcaster extends Observable {
 
     private HashMap<Integer, AsyncTask<JSONObject, Void, JSONObject>> currents;
 
-    public HybridgeBroadcaster () {
+    public HybridgeBroadcaster() {
         currents =  new HashMap<Integer, AsyncTask<JSONObject,Void,JSONObject>>();
     }
 
-    public static HybridgeBroadcaster getInstance () {
+    public static HybridgeBroadcaster getInstance() {
         if (instance == null) {
             instance = new HybridgeBroadcaster();
         }
         return instance;
     }
 
-    public void initJs (WebView view, JSONArray actions, JSONArray events) {
+    public void initJs(WebView view, JSONArray actions, JSONArray events) {
         runJsInWebView(view, "window.HybridgeGlobal || function () {" +
                 "window.HybridgeGlobal = {" +
                 "  isReady : true" +
@@ -50,13 +50,13 @@ public class HybridgeBroadcaster extends Observable {
         isInitialized = true;
     }
 
-    public void firePause (WebView view) {
+    public void firePause(WebView view) {
         HybridgeConst.Event event = HybridgeConst.Event.PAUSE;
         notifyObservers(event);
         fireJavascriptEvent(view, event, null);
     }
 
-    public void fireResume (WebView view) {
+    public void fireResume(WebView view) {
         HybridgeConst.Event event = HybridgeConst.Event.RESUME;
         notifyObservers(event);
         fireJavascriptEvent(view, event, null);
@@ -68,13 +68,13 @@ public class HybridgeBroadcaster extends Observable {
         fireJavascriptEvent(view, event, data);
     }
 
-    public void fireReady (WebView view, JSONObject data) {
+    public void fireReady(WebView view, JSONObject data) {
         HybridgeConst.Event event = HybridgeConst.Event.READY;
         notifyObservers(event);
         fireJavascriptEvent(view, event, data);
     }
 
-    public void fireJavascriptEvent (WebView view, Event event, JSONObject data) {
+    public void fireJavascriptEvent(WebView view, Event event, JSONObject data) {
         if (isInitialized) {
             String json = data != null ? data.toString() : "{}";
             StringBuffer js = new StringBuffer("HybridgeGlobal.fireEvent(\"");
@@ -83,7 +83,7 @@ public class HybridgeBroadcaster extends Observable {
         }
     }
 
-    public void runJsInWebView (final WebView view, final String js) {
+    public void runJsInWebView(final WebView view, final String js) {
         new Handler(Looper.getMainLooper()).post(
                 new Runnable() {
                     @Override
@@ -93,7 +93,7 @@ public class HybridgeBroadcaster extends Observable {
                 });
     }
 
-    public void updateState (JSONObject data) {
+    public void updateState(JSONObject data) {
         this.setChanged();
         this.notifyObservers(data);
         Log.d(TAG, data.toString());
