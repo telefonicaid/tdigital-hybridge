@@ -53,6 +53,10 @@ Load `hybridge.js` as a module in your AMD code. Simplest setup:
     });
   </script>
 ```
+An hypothetical `download action` defined in native could be easily invoked from Javascript:
+```javascript
+Hybridge.send({'action': 'download', 'url': 'http://...'})
+```
 
 ###Android
 * Compile the sources and copy `hybridge.jar` with your proyect libs dependencies. Alternatively, you can set the Hybridge project as a Android library dependency.
@@ -102,7 +106,7 @@ public enum JsActionImpl implements JsAction {
     }
 ```
 
-* Use `HybridgeWebChromeClient` and `HybridgeWebViewClient` in your WebView and your actions implementation:
+* Use `HybridgeWebChromeClient` and `HybridgeWebViewClient` in your WebView with your actions implementation Enum values as constructor parameter:
 ```java
 webView.setWebViewClient(new HybridgeWebViewClient(JsActionImpl.values()));
 webView.setWebChromeClient(new HybridgeWebChromeClient(JsActionImpl.values()));
