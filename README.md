@@ -54,7 +54,7 @@ Load `hybridge.js` as a module in your AMD code. Simplest setup:
 ```
 
 ###Android
-* Copy `hybridge.jar` with your proyect libs dependencies.
+* Compile the sources and copy `hybridge.jar` with your proyect libs dependencies.
 
 * Create your own **actions** by implementing the interface `JsAction.java` as an `Enum`. 
 Hybridge will handle this actions inside a `Enum` listing **actions** as AsyncTask each one:
