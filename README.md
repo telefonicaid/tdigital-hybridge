@@ -55,7 +55,11 @@ Load `hybridge.js` as a module in your AMD code. Simplest setup:
 ```
 An hypothetical `download action` defined in native could be easily invoked from Javascript:
 ```javascript
-Hybridge.send({'action': 'download', 'url': 'http://...'})
+Hybridge.send({'action' : 'download', 'url' : 'http://...'})
+```
+And you'll receive a Javascript *Promise* in response:
+```javascript
+Hybridge.send({'action' : 'gpsposition'}).done(updateMap);
 ```
 
 ###Android
