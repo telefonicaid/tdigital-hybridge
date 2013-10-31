@@ -121,6 +121,9 @@ webView.setWebChromeClient(new HybridgeWebChromeClient(JsActionImpl.values()));
 ###iOS
 Coming soon...
 
+##Native Events
+Coming soon...
+
 ##Demos
 Coming soon...
 
