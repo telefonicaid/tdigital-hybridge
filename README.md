@@ -67,6 +67,7 @@ Hybridge will handle this actions inside a `Enum` listing **actions** as AsyncTa
 public enum JsActionImpl implements JsAction {
 
     DOWNLOAD(DownloadTask.class),
+    GPSPOSITION(GPSPositionTask.class),
     CALLCONTACT(CallContactTask.class);
 
     private Class task;
