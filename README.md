@@ -22,6 +22,7 @@ You'll also need [JQuery](http://jquery.com) (version 1.5 or newer) for the Java
 
 None.
 
+---
 ## Usage
 
 There are two ways of communication between native and Javascript.
@@ -101,11 +102,10 @@ public enum JsActionImpl implements JsAction {
     }
 ```
 
-* Set your WebView:
+* Use `HybridgeWebChromeClient` and `HybridgeWebViewClient` in your WebView and your actions implementation:
 ```java
-webView.getSettings().setJavaScriptEnabled(true);
-webView.setWebViewClient(webViewClient);
-webView.setWebChromeClient(webChromeClient);
+webView.setWebViewClient(new HybridgeWebViewClient(JsActionImpl.values()));
+webView.setWebChromeClient(new HybridgeWebChromeClient(JsActionImpl.values()));
 ```
 
 ###iOS
