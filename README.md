@@ -57,7 +57,7 @@ An hypothetical `download action` defined in native could be easily invoked from
 ```javascript
 Hybridge.send({'action' : 'download', 'url' : 'http://...'})
 ```
-And you'll receive a Javascript *Promise* in response:
+And you'll receive a Javascript *Promise* in response to process in your callback function:
 ```javascript
 Hybridge.send({'action' : 'gpsposition'}).done(updateMap);
 ```
