@@ -90,7 +90,7 @@ public enum JsActionImpl implements JsAction {
         private JsPromptResult result;
         private Context context;
 
-        public LoginTask(Context context) {
+        public DownloadTask(Context context) {
             this.context = context;
         }
 
