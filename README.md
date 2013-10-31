@@ -99,6 +99,7 @@ public enum JsActionImpl implements JsAction {
             JSONObject json = (JSONObject) params[0];
             result = (JsPromptResult) params[1];
             // Process download
+            ...
             return json;
         }
 ...
