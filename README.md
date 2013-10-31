@@ -106,7 +106,7 @@ public enum JsActionImpl implements JsAction {
     }
 ```
 
-* Use `HybridgeWebChromeClient` and `HybridgeWebViewClient` in your WebView with your actions implementation Enum values as constructor parameter:
+* Use `HybridgeWebChromeClient` and `HybridgeWebViewClient` in your WebView with the Enum values of your actions implementation as the constructor parameter:
 ```java
 webView.setWebViewClient(new HybridgeWebViewClient(JsActionImpl.values()));
 webView.setWebChromeClient(new HybridgeWebChromeClient(JsActionImpl.values()));
