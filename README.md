@@ -119,10 +119,67 @@ webView.setWebChromeClient(new HybridgeWebChromeClient(JsActionImpl.values()));
 ```
 
 ###iOS
-Coming soon...
+* Install [CocoaPods](http://cocoapods.org) if didn't already.
+* Get iOS dependencies with `pod install`.
+* Import `Hybridge.h` and `SBJson.h` in your *UIWebView* controller.
+* Bind the Hybridge singleton and init SBJson:
 
+```objective-c
+_parser = [[SBJsonParser alloc] init];
+_writer = [[SBJsonWriter alloc] init];
+_hybridge = [Hybridge sharedInstance]
+```
+* Implements your native `actions` in *blocks* with the handler `BridgeHandlerBlock_t`:
+
+```objective-c
+BridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
+    NSDictionary *params = [_parser objectWithString:data];
+    // Handle download with data from Javascript request
+    ...
+};
+```
+* You'll use [SBJson](http://superloopy.io/json-framework) library to parse the JSON `data` sent from Javascript as seen in the previous code snippet.
+* Finally, subscribe each of your `actions` to the Hybridge by binding to the name you'll use to invoke it from Javascript.
+
+```objective-c
+[_hybridge subscribeAction:@"download" withHandler:downloadHandler];
+```
 ---
 ##Native Events
+You can communicate to Javascript from Android/iOS by triggering any of the defined `events` in Hybridge for recommended use:
+* ready: Used on Hybridge initialization. 
+* pause: Used when app goes background.
+* resume: Used when app goes foreground.
+* message: Used to send arbitrary data when required.
+
+###Android
+Use *HybridgeBroadcaster* singleton to trigger events in Javascript:
+```java
+HybridgeBroadcaster.getInstance().fireJavascriptEvent(webView, Event.READY, jsonData);
+```
+
+###iOS
+Use *Hybridge* singleton to trigger events in Javascript:
+```objective-c
+[_hybridge fireEventInWebView:kHybridgeEventReady data:@"{foo : \"data\"}" web:self.webview]
+```
+
+###Javascript
+Subscribe your Javascript to the native events in order to process the data received in a callback function:
+```javascript
+function processData (event) {
+ var data = ev.data;
+ ... 
+}
+
+Hybridge.addListener(Hybridge.events.message, processData);
+```
+Don't forget to remove your handlers to avoid memory leaks:
+```javascript
+Hybridge.removeListener(Hybridge.events.message, processData);
+```
+---
+##Debug
 Coming soon...
 
 ---
