@@ -29,7 +29,7 @@ There are two ways of communication between native and Javascript.
 This is implemented in a different way in Android and iOS, but the Javascript part is just the same in both environments:
 * Hybridge uses **actions** as native tasks that you want to be done when requested from Javascript while sending JSON data in the request and getting a JSON in response. 
 
-* Native Hybridge part can trigger **custom events** and send attached JSON data to Javascript when needed.
+* Native Hybridge part can trigger **native events** and send attached JSON data to Javascript when needed.
 
 ### Javascript
 Load `hybridge.js` as a module in your AMD code. Simplest setup:
