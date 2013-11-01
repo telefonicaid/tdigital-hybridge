@@ -147,10 +147,10 @@ BridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, NSH
 ---
 ##Native Events
 You can communicate to Javascript from Android/iOS by triggering any of the defined `events` in Hybridge for recommended use:
-* ready: Used on Hybridge initialization. 
-* pause: Used when app goes background.
-* resume: Used when app goes foreground.
-* message: Used to send arbitrary data when required.
+* ready: Hybridge initialization. 
+* pause: Mobile app goes background.
+* resume: Mobile app goes foreground.
+* message: Send arbitrary data when required.
 
 ###Android
 Use *HybridgeBroadcaster* singleton to trigger events in Javascript:
