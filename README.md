@@ -147,10 +147,10 @@ BridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, NSH
 ---
 ##Native Events
 You can communicate to Javascript from Android/iOS by triggering any of the defined `events` in Hybridge for recommended use:
-* *ready*: Hybridge initialization. 
-* *pause*: Mobile app goes background.
-* *resume*: Mobile app goes foreground.
-* *message*: Send arbitrary data when required.
+* **ready**: Hybridge initialization. 
+* **pause**: Mobile app goes background.
+* **resume**: Mobile app goes foreground.
+* **message**: Send arbitrary data when required.
 
 ###Android
 Use *HybridgeBroadcaster* singleton to trigger events in Javascript:
@@ -179,12 +179,80 @@ Don't forget to remove your handlers to avoid memory leaks:
 Hybridge.removeListener(Hybridge.events.message, processData);
 ```
 ---
+##Javascript API
+A good enough start could be simply look over the code from [**hybridge.js**](js/hybridge.js), nevertheless,
+let's enumerate the available methods and properties from the Hybridge Javascript object:
+
+###Methods
+* **init(configuration:Object)** 
+ Provides initialization configuration: 
+ * *environment* (ios|android : *String*): mandatory, as long as you want to communicate with native side.
+ * *logger* (Function): optional logger object handler, otherwise `window.console` object is used for standard output.
+ * *debug* (boolean): activates debug (web side) mode, more information on this next.
+ * *mockResponses* (Object): provides optional mock object for debug mode.
+ 
+* **isNative()**
+ Returns true if *environment* value is correctly assigned.
+* **isEnabled()**
+ Returns true if Hybridge is already initialized (native and Javascript parts) or `debug` mode is on.
+* **addListener(hybridgeEvent:Event, callback:Function)**
+ Subscribes a `Hybridge event` to a callback handler.
+* **removeListener(hybridgeEvent:Event, callback:Function)**
+ Unsubscribes a `Hybridge event` to a callback handler.
+* **isEventImplemented(hybridgeEvent:String)**
+ Returns true if the event is implemented in the current native version of Hybridge.
+* **send(data:Object[, fallback:Function])**
+ Provides the way to communicate from Javascript to native side. An `action` parameter is required in order to execute an implemented native task.
+ Returns a [JQuery](http://jquery.com) [Promise](http://api.jquery.com/Types/#Promise) containing data returned from native or custom error.
+ You can add a second function parameter `fallback` in case something goes wrong and you want to supply aditional user feedback as well as update your UI. 
+
+###Properties
+* **errors** Container object of customs errors returned by the Hybridge:
+ * *NO_NATIVE*: Environment is not mobile native (ios or android).
+ * *NO_NATIVE_ENABLE*: Native environment doesn't support native Hybridge.
+ * *NO_FALLBACK*: Call to hybridge lacks of fallback function.
+ * *ACTION_NOT_IMPLEMENTED*: Call to hybridge action not implemented in native.
+ * *WRONG_PARAMS*: Call to hybridge doesn't have required parameters (action).
+ * *EVENT_NOT_IMPLEMENTED*: Call to hybridge event not implemented in native.
+ * *DEBUG_MODE*: Hybridge in debug mode, requested feature is unavailable.
+ * *MALFORMED_JSON*: Hybridge attempted to parse or stringify malformed JSON (debug mode).
+* **events** Container object of available *native events*.
+* **version** Current version of Javascript Hybridge.
+
+---
 ##Debug
-Coming soon...
+Hybridge provides a easy way to mock native mobile responses as you work on the UI development parts. Given a `downloadStatus` action it can be mocked on Hybridge initialization:
+```javascript
+Hybridge.init({
+  'environment': 'android',
+  'logger': CustomLoger,
+  'debug': true,
+  'mockResponses': {
+    'downloadStatus': {
+      'downloadedPercentage': 50
+    }
+  }
+});
+```
+When the page calls `downloadStatus` action, a prompt window will show the JSON mock data. It can be modified as you please for your UI tests.
+
 
 ---
 ##Custom Errors
-Coming soon...
+In a typical scenario, where web and installed native parts can be different versions you can deal with it by handling the custom error returned:
+```javascript
+Hybridge.send({
+                'action' : 'download',
+                'url' : url
+              })
+              .done(updateUIfunction)
+              .fail(function (e) {
+                if (e.error && e.error === Hybridge.errors.ACTION_NOT_IMPLEMENTED) {
+                  // Advise user to update native applicacion to the newest version
+                  ...
+                }
+              });
+```
 
 ---
 ##Demos
