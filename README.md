@@ -216,7 +216,7 @@ let's enumerate the available methods and properties from the Hybridge Javascrip
  * *EVENT_NOT_IMPLEMENTED*: Call to hybridge event not implemented in native.
  * *DEBUG_MODE*: Hybridge in debug mode, requested feature is unavailable.
  * *MALFORMED_JSON*: Hybridge attempted to parse or stringify malformed JSON (debug mode).
-* **events** Container object of available *native events*.
+* **events** Container object of available [native events](#native-events).
 * **version** Current version of Javascript Hybridge.
 
 ---
