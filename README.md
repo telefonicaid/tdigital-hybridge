@@ -183,6 +183,9 @@ Hybridge.removeListener(Hybridge.events.message, processData);
 Coming soon...
 
 ---
+##Custom Errors
+Coming soon...
+---
 ##Demos
 Coming soon...
 
