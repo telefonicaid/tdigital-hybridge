@@ -145,7 +145,7 @@ define([
     var error, warning, details, mock;
     // Is mode debug on
     if (debug) {
-      if (mockResponses[data.action]) {
+      if (mockResponses && mockResponses[data.action]) {
         mock = $.extend({}, data, mockResponses[data.action]);
         try {
           return $.Deferred().resolve(
@@ -364,7 +364,7 @@ define([
   };
 
   /**
-   * Array containing different error types on rejecting requests (promises)
+   * Object containing different error types on rejecting requests (promises)
    * @type {Array}
    */
   _errors = {};

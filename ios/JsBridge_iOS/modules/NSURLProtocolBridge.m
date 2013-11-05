@@ -1,10 +1,8 @@
-//
-//  NSURLProtocolBridge.m
-//  Hybridge_iOS
-//
-//  Created by David Garcia on 12/06/13.
-//  Copyright (c) 2013 tid.es. All rights reserved.
-//
+/**
+ * Hybridge
+ * (c) Telefonica Digital, 2013 - All rights reserved
+ * License: GNU Affero V3 (see LICENSE file)
+ */
 
 #import "NSURLProtocolBridge.h"
 #import "NativeAction.h"
