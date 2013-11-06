@@ -9,6 +9,12 @@ import android.webkit.WebViewClient;
 
 import com.pdi.hybridge.HybridgeConst.Event;
 
+/**
+ * Hybridge
+ * (c) Telefonica Digital, 2013 - All rights reserved
+ * License: GNU Affero V3 (see LICENSE file)
+ */
+
 public class HybridgeWebViewClient extends WebViewClient {
 
     protected JSONArray actions;

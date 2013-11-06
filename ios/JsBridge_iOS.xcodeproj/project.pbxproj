@@ -21,9 +21,6 @@
 		E4D01FDD1767E0280055949C /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = E4CDBED61767DE1A00243905 /* index.html */; };
 		E4D01FDE1767E0280055949C /* jquery.min.js in Resources */ = {isa = PBXBuildFile; fileRef = E4CDBED71767DE1A00243905 /* jquery.min.js */; };
 		E4D02032176B2C290055949C /* JsBridgeAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D02031176B2C290055949C /* JsBridgeAppDelegate.m */; };
-		E4D5E9A917AA68680099ED40 /* JsBridgeURLInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A017AA68680099ED40 /* JsBridgeURLInterceptor.m */; };
-		E4D5E9AA17AA68680099ED40 /* JsBridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A217AA68680099ED40 /* JsBridgeViewController.m */; };
-		E4D5E9AB17AA68680099ED40 /* NativeAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A417AA68680099ED40 /* NativeAction.m */; };
 		E4D5E9AC17AA68680099ED40 /* NSURLProtocolBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */; };
 		E4D5E9B317AA79E60099ED40 /* BridgeSubscriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9B217AA79E60099ED40 /* BridgeSubscriptor.m */; };
 		E4D5E9BA17AA82170099ED40 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D5E9B917AA82170099ED40 /* WebViewController.m */; };
@@ -50,12 +47,6 @@
 		E4CDBED71767DE1A00243905 /* jquery.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jquery.min.js; path = www/jquery.min.js; sourceTree = "<group>"; };
 		E4D02030176B2C290055949C /* JsBridgeAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsBridgeAppDelegate.h; sourceTree = "<group>"; };
 		E4D02031176B2C290055949C /* JsBridgeAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsBridgeAppDelegate.m; sourceTree = "<group>"; };
-		E4D5E99F17AA68680099ED40 /* JsBridgeURLInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsBridgeURLInterceptor.h; path = modules/JsBridgeURLInterceptor.h; sourceTree = "<group>"; };
-		E4D5E9A017AA68680099ED40 /* JsBridgeURLInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JsBridgeURLInterceptor.m; path = modules/JsBridgeURLInterceptor.m; sourceTree = "<group>"; };
-		E4D5E9A117AA68680099ED40 /* JsBridgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsBridgeViewController.h; path = modules/JsBridgeViewController.h; sourceTree = "<group>"; };
-		E4D5E9A217AA68680099ED40 /* JsBridgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JsBridgeViewController.m; path = modules/JsBridgeViewController.m; sourceTree = "<group>"; };
-		E4D5E9A317AA68680099ED40 /* NativeAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeAction.h; path = modules/NativeAction.h; sourceTree = "<group>"; };
-		E4D5E9A417AA68680099ED40 /* NativeAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NativeAction.m; path = modules/NativeAction.m; sourceTree = "<group>"; };
 		E4D5E9A517AA68680099ED40 /* NSURLProtocolBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSURLProtocolBridge.h; path = modules/NSURLProtocolBridge.h; sourceTree = "<group>"; };
 		E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSURLProtocolBridge.m; path = modules/NSURLProtocolBridge.m; sourceTree = "<group>"; };
 		E4D5E9B117AA79E60099ED40 /* BridgeSubscriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BridgeSubscriptor.h; path = modules/BridgeSubscriptor.h; sourceTree = "<group>"; };
@@ -161,12 +152,6 @@
 			children = (
 				E4D5E9B117AA79E60099ED40 /* BridgeSubscriptor.h */,
 				E4D5E9B217AA79E60099ED40 /* BridgeSubscriptor.m */,
-				E4D5E99F17AA68680099ED40 /* JsBridgeURLInterceptor.h */,
-				E4D5E9A017AA68680099ED40 /* JsBridgeURLInterceptor.m */,
-				E4D5E9A117AA68680099ED40 /* JsBridgeViewController.h */,
-				E4D5E9A217AA68680099ED40 /* JsBridgeViewController.m */,
-				E4D5E9A317AA68680099ED40 /* NativeAction.h */,
-				E4D5E9A417AA68680099ED40 /* NativeAction.m */,
 				E4D5E9A517AA68680099ED40 /* NSURLProtocolBridge.h */,
 				E4D5E9A617AA68680099ED40 /* NSURLProtocolBridge.m */,
 				E43C043A17B930AC00F3CC67 /* Hybridge.h */,
@@ -287,9 +272,6 @@
 			files = (
 				E4CDBEA81767C60B00243905 /* main.m in Sources */,
 				E4D02032176B2C290055949C /* JsBridgeAppDelegate.m in Sources */,
-				E4D5E9A917AA68680099ED40 /* JsBridgeURLInterceptor.m in Sources */,
-				E4D5E9AA17AA68680099ED40 /* JsBridgeViewController.m in Sources */,
-				E4D5E9AB17AA68680099ED40 /* NativeAction.m in Sources */,
 				E4D5E9AC17AA68680099ED40 /* NSURLProtocolBridge.m in Sources */,
 				E4D5E9B317AA79E60099ED40 /* BridgeSubscriptor.m in Sources */,
 				E4D5E9BA17AA82170099ED40 /* WebViewController.m in Sources */,

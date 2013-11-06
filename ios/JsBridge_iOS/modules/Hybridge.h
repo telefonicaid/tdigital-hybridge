@@ -1,10 +1,8 @@
-//
-//  Hibridge.h
-//  JsBridge_iOS
-//
-//  Created by David Garcia on 12/08/13.
-//  Copyright (c) 2013 tid.es. All rights reserved.
-//
+/**
+ * Hybridge
+ * (c) Telefonica Digital, 2013 - All rights reserved
+ * License: GNU Affero V3 (see LICENSE file)
+ */
 
 #import <Foundation/Foundation.h>
 #import "BridgeSubscriptor.h"

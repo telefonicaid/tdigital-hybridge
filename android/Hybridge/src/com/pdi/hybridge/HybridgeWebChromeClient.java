@@ -1,3 +1,9 @@
+/**
+ * Hybridge
+ * (c) Telefonica Digital, 2013 - All rights reserved
+ * License: GNU Affero V3 (see LICENSE file)
+ */
+
 package com.pdi.hybridge;
 
 import java.lang.reflect.InvocationTargetException;
@@ -7,7 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.webkit.JsPromptResult;
@@ -38,7 +44,7 @@ public class HybridgeWebChromeClient extends WebChromeClient {
         try {
             json = new JSONObject(defValue);
             Log.v(mTag, "JSON parsed (Action " + action + ") : " + json.toString());
-            executeJSONTask(action, json, result, view.getContext());
+            executeJSONTask(action, json, result, (Activity) view.getContext());
         } catch (JSONException e) {
             result.cancel();
             Log.e(mTag, e.getMessage());
@@ -48,27 +54,24 @@ public class HybridgeWebChromeClient extends WebChromeClient {
 
     @SuppressLint("DefaultLocale")
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private void executeJSONTask(String action, JSONObject json, JsPromptResult result, Context context) {
+    private void executeJSONTask(String action, JSONObject json, JsPromptResult result, Activity activity) {
         Class clazz = this.actions.get(action);
         if (clazz != null) {
             AsyncTask task = null;
             try {
                 task = (AsyncTask<JSONObject, Void, JSONObject>) 
                         clazz.getDeclaredConstructor
-                        ( new Class[] { clazz.getDeclaringClass(), android.content.Context.class } )
-                        .newInstance(null, context);
+                        ( new Class[] { android.app.Activity.class } )
+                        .newInstance(activity);
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (NoSuchMethodException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             Log.v(mTag, "Execute action " + action);

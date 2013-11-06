@@ -1,10 +1,8 @@
-//
-//  Constants.h
-//  JsBridge_iOS
-//
-//  Created by David Garcia on 18/09/13.
-//  Copyright (c) 2013 tid.es. All rights reserved.
-//
+/**
+ * Hybridge
+ * (c) Telefonica Digital, 2013 - All rights reserved
+ * License: GNU Affero V3 (see LICENSE file)
+ */
 
 #ifndef JsBridge_iOS_Constants_h
 #define JsBridge_iOS_Constants_h

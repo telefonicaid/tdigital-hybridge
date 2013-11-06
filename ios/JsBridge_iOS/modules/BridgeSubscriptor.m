@@ -1,10 +1,8 @@
-//
-//  BridgeSubscriptor.m
-//  Hybridge_iOS
-//
-//  Created by Jaime on 21/06/13.
-//  Copyright (c) 2013 tid.es. All rights reserved.
-//
+/**
+ * Hybridge
+ * (c) Telefonica Digital, 2013 - All rights reserved
+ * License: GNU Affero V3 (see LICENSE file)
+ */
 
 #import "BridgeSubscriptor.h"
 
