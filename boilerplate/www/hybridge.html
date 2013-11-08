@@ -1,0 +1,34 @@
+<html>
+<head>
+  <title>Hybridge Boilerplate</title>
+  <script src="http://requirejs.org/docs/release/2.1.9/minified/require.js"></script>
+  <script type="text/javascript">
+    require.config({
+      paths: {
+        "jquery" : "https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js",
+        "hybridge" : "js/hybridge"
+      },
+      waitSeconds: 30
+    });
+  </script>
+  <script type="text/javascript">
+    require(["jquery","hybridge"],
+      function ($, Hybridge) {
+        var processInit = function (event) {
+          $("#message").text("Hybridge (version " + HybridgeGlobal.version + ") is ON");
+          Hybridge.removeListener(Hybridge.events.ready, processInit);
+        }
+        Hybridge.addListener(Hybridge.events.ready, processInit);
+        Hybridge.init({
+          'environment' : 'ios'
+        });
+      }
+    );
+  </script>
+</head>
+<body>
+
+  <h3 id="message"></h3>
+
+</body>
+</html>

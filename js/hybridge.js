@@ -25,6 +25,8 @@ define([
   'jquery'
 ], function ($) {
 
+  'use strict';
+
   var version = 1, xhr, method, logger, environment, debug, mockResponses, initialized = false,
     _events = {}, _errors, initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
 

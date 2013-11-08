@@ -12,15 +12,12 @@ Pod::Spec.new do |s|
     s.platform                  = :ios
     s.ios.deployment_target     = '6.0'
 
-    s.source_files              = 'ios/JsBridge_iOS/modules/*.{h,m}', 'ios/JsBridge_iOS/Utils/**/*.{h,m}'
+    s.source_files              = 'ios/Hybridge/Hybridge/*.{h,m}'
 
-    s.xcconfig                  =  { 'LIBRARY_SEARCH_PATHS' => '"$(SRCROOT)/Pods/tdigital-hybridge"', 
+    s.xcconfig                  =  { 'LIBRARY_SEARCH_PATHS' => '"$(SRCROOT)/Pods/tdigital-hybridge"',
                                     'GCC_PREPROCESSOR_DEFINITIONS' => '$(CONFIGURATION)=1' }
-                                    
+
     s.requires_arc              = true
 
-    s.framework                 = "Foundation", "UIKit", "CoreGraphics"
-
-    s.dependency                'SBJson', '~> 3.2'
-    s.dependency                'CocoaLumberjack', '~> 1.6.2'
+    s.framework                 = "Foundation", "UIKit"
 end

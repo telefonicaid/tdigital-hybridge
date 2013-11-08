@@ -15,19 +15,12 @@ Firstly, get the code by downloading the zip or cloning the project into your lo
 Hybridge works in an AMD fashion, so you'll need [RequireJS](http://requirejs.org) for the loading.
 You'll also need [JQuery](http://jquery.com) (version 1.5 or newer) for the Javascript part since [Deferred](http://api.jquery.com/category/deferred-object) object is used intensively.
 
-#### iOS
- The only Objective-C dependency is [SBJson](http://superloopy.io/json-framework) and is handled for the grace of [CocoaPods](http://cocoapods.org) which is ridiculously easy to setup. 
-
-#### Android
-
-None.
-
 ---
 ## Usage
 
 There are two ways of communication between native and Javascript.
 This is implemented in a different way in Android and iOS, but the Javascript part is just the same in both environments:
-* Hybridge uses **actions** as native tasks that you want to be done when requested from Javascript while sending JSON data in the request and getting a JSON in response. 
+* Hybridge uses **actions** as native tasks that you want to be done when requested from Javascript while sending JSON data in the request and getting a JSON in response.
 
 * Native Hybridge part can trigger **native events** and send attached JSON data to Javascript when needed.
 
@@ -65,7 +58,7 @@ Hybridge.send({'action' : 'gpsposition'}).done(updateMap);
 ###Android
 * Compile the sources and copy `hybridge.jar` with your proyect libs dependencies. Alternatively, you can set the Hybridge project as a Android library dependency.
 
-* Create your own **actions** by implementing the interface `JsAction` as an `Enum`. 
+* Create your own **actions** by implementing the interface `JsAction` as an `Enum`.
 Hybridge will handle this actions inside a `Enum` listing **actions** as AsyncTask each one:
 ```java
 public enum JsActionImpl implements JsAction {
@@ -89,7 +82,7 @@ public enum JsActionImpl implements JsAction {
     public void setTask(Class task) {
         this.task = task;
     }
-    
+
     public class DownloadTask extends AsyncTask<Object, Void, JSONObject> {
 
         private JsPromptResult result;
@@ -144,10 +137,16 @@ BridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, NSH
 ```objective-c
 [_hybridge subscribeAction:@"download" withHandler:downloadHandler];
 ```
+
+---
+###Boilerplate
+The fastest track to start using Hybridge is use the Boilerplate.
+There are both supported environment projects for iOS and Android and a test HTML file *(hybridge.html)* that you can put in the root of your local server, along with the *hybridge.js* file as a development start of your app.
+
 ---
 ##Native Events
 You can communicate to Javascript from Android/iOS by triggering any of the defined `events` in Hybridge for recommended use:
-* **ready**: Hybridge initialization. 
+* **ready**: Hybridge initialization.
 * **pause**: Mobile app goes background.
 * **resume**: Mobile app goes foreground.
 * **message**: Send arbitrary data when required.
@@ -169,7 +168,7 @@ Subscribe your Javascript to the native events in order to process the data rece
 ```javascript
 function processData (event) {
  var data = ev.data;
- ... 
+ ...
 }
 
 Hybridge.addListener(Hybridge.events.message, processData);
@@ -184,13 +183,13 @@ A good enough start could be simply look over the code from [**hybridge.js**](js
 let's enumerate the available methods and properties from the Hybridge Javascript object:
 
 ###Methods
-* **init(configuration:Object)** 
- Provides initialization configuration: 
+* **init(configuration:Object)**
+ Provides initialization configuration:
  * *environment* (ios|android : *String*): mandatory, as long as you want to communicate with native side.
  * *logger* (Function): optional logger object handler, otherwise `window.console` object is used for standard output.
  * *debug* (boolean): activates debug (web side) mode, more information on this next.
  * *mockResponses* (Object): provides optional mock object for debug mode.
- 
+
 * **isNative()**
  Returns true if *environment* value is correctly assigned.
 * **isEnabled()**
@@ -204,7 +203,7 @@ let's enumerate the available methods and properties from the Hybridge Javascrip
 * **send(data:Object[, fallback:Function])**
  Provides the way to communicate from Javascript to native side. An `action` parameter is required in order to execute an implemented native task.
  Returns a [JQuery](http://jquery.com) [Promise](http://api.jquery.com/Types/#Promise) containing data returned from native or custom error.
- You can add a second function parameter `fallback` in case something goes wrong and you want to supply aditional user feedback as well as update your UI. 
+ You can add a second function parameter `fallback` in case something goes wrong and you want to supply aditional user feedback as well as update your UI.
 
 ###Properties
 * **errors** Container object of customs errors returned by the Hybridge:
