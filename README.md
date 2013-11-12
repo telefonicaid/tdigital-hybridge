@@ -103,7 +103,6 @@ public class DownloadTask extends AsyncTask<Object, Void, JSONObject> {
         return json;
     }
 ...
-
 }
 ```
 
@@ -116,9 +115,7 @@ webView.setWebChromeClient(new HybridgeWebChromeClient(JsActionImpl.values()));
 * Implement `Observable` in your WebView and subscribe it in order to notificate Javascript the events received from `HybridgeBroadcaster`:
 ```java
 HybridgeBroadcaster.getInstance().addObserver(this);
-
 ...
-
 @Override
 public void update(Observable observable, Object data) {
     JSONObject json = (JSONObject) data;
@@ -135,7 +132,7 @@ public void update(Observable observable, Object data) {
 ```
 
 ###iOS
-* Compile the sources and copy the Hybridge static lib in your project `Hybridge.h and libHybridge.a`.
+* Compile the sources and copy the Hybridge static lib in your project `Hybridge.h` and `libHybridge.a`.
 * Import `Hybridge.h` in your *UIWebView* controller.
 * Bind the Hybridge singleton:
 
@@ -161,8 +158,8 @@ HybridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, N
 ---
 ###Boilerplate
 The fastest track to start using Hybridge is use the Boilerplate.
-There are both supported environment projects for iOS and Android and a test HTML file *(hybridge.html)* that you can put in the root of your local server,
-along with the *hybridge.js* file as a development start of your app.
+There are both supported environment projects for iOS and Android and a test HTML file `hybridge.html` that you can put in the root of your local server,
+along with the `hybridge.js` file as a development start of your app.
 
 ---
 ##Native Events
