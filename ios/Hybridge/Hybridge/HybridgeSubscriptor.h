@@ -15,12 +15,6 @@
 /** Singleton constructor */ 
 + (HybridgeSubscriptor *)sharedInstance;
 
-/** Defined block to be used as handler of each action. Parameters:
- - name of action
- - list of path components in
- - data */
-//typedef void (^HybridgeHandlerBlock_t)(NSURLProtocol*, NSString*, NSHTTPURLResponse*);
-
 /** Subscribes to action with the given handler block 
  @param action name of the action to suscribe
  @param handlerBlock handler to be called when a request arrives with the given action */
