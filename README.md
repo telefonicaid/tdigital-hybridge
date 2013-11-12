@@ -56,7 +56,8 @@ Hybridge.send({'action' : 'gpsposition'}).done(updateMap);
 ```
 
 ###Android
-* Compile the sources and copy `hybridge.jar` with your proyect libs dependencies. Alternatively, you can set the Hybridge project as a Android library dependency.
+* Compile the sources and copy `hybridge.jar` with your proyect libs dependencies.
+Alternatively, you can set the Hybridge project as an Android library dependency.
 
 * Create your own **actions** by implementing the interface `JsAction` as an `Enum`.
 Hybridge will handle this actions inside a `Enum` listing **actions** as AsyncTask each one:
@@ -83,26 +84,30 @@ public enum JsActionImpl implements JsAction {
         this.task = task;
     }
 
-    public class DownloadTask extends AsyncTask<Object, Void, JSONObject> {
-
-        private JsPromptResult result;
-        private Context context;
-
-        public DownloadTask(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        protected JSONObject doInBackground(Object... params) {
-            JSONObject json = (JSONObject) params[0];
-            result = (JsPromptResult) params[1];
-            // Process download
-            ...
-            return json;
-        }
 ...
 
+}
+
+public class DownloadTask extends AsyncTask<Object, Void, JSONObject> {
+
+    private JsPromptResult result;
+    private Context context;
+
+    public DownloadTask(Context context) {
+        this.context = context;
     }
+
+    @Override
+    protected JSONObject doInBackground(Object... params) {
+        JSONObject json = (JSONObject) params[0];
+        result = (JsPromptResult) params[1];
+        // Process download
+        ...
+        return json;
+    }
+...
+
+}
 ```
 
 * Use `HybridgeWebChromeClient` and `HybridgeWebViewClient` in your WebView with the Enum values of your actions implementation as the constructor parameter:
@@ -111,27 +116,45 @@ webView.setWebViewClient(new HybridgeWebViewClient(JsActionImpl.values()));
 webView.setWebChromeClient(new HybridgeWebChromeClient(JsActionImpl.values()));
 ```
 
+* Implement `Observable` in your WebView and subscribe it in order to notificate Javascript the events received from `HybridgeBroadcaster`:
+```java
+HybridgeBroadcaster.getInstance().addObserver(this);
+
+...
+
+@Override
+public void update(Observable observable, Object data) {
+    JSONObject json = (JSONObject) data;
+    if (json.has(HybridgeConst.EVENT_NAME)) {
+        try {
+            HybridgeBroadcaster.getInstance().fireJavascriptEvent(mWebView, (Event) json.get(HybridgeConst.EVENT_NAME), json);
+        } catch (JSONException e) {
+            Log.e(mTag, "Problem with JSON object " + e.getMessage());
+        }
+    } else {
+        HybridgeBroadcaster.getInstance().fireMessage(mWebView, json);
+    }
+}
+```
+
 ###iOS
-* Install [CocoaPods](http://cocoapods.org) if didn't already.
-* Get iOS dependencies with `pod install`.
-* Import `Hybridge.h` and `SBJson.h` in your *UIWebView* controller.
-* Bind the Hybridge singleton and init SBJson:
+* Compile the sources and copy the Hybridge static lib in your project `Hybridge.h and libHybridge.a`.
+* Import `Hybridge.h` in your *UIWebView* controller.
+* Bind the Hybridge singleton:
 
 ```objective-c
-_parser = [[SBJsonParser alloc] init];
-_writer = [[SBJsonWriter alloc] init];
 _hybridge = [Hybridge sharedInstance]
 ```
-* Implements your native `actions` in *blocks* with the handler `BridgeHandlerBlock_t`:
+* Implements your native `actions` in *blocks* with the handler `HybridgeHandlerBlock_t`:
 
 ```objective-c
-BridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
+HybridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
     NSDictionary *params = [_parser objectWithString:data];
     // Handle download with data from Javascript request
     ...
 };
 ```
-* You'll use [SBJson](http://superloopy.io/json-framework) library to parse the JSON `data` sent from Javascript as seen in the previous code snippet.
+* You'll parse the JSON `data` sent from Javascript as seen in the previous code snippet.
 * Finally, subscribe each of your `actions` to the Hybridge by binding to the name you'll use to invoke it from Javascript.
 
 ```objective-c
@@ -141,7 +164,8 @@ BridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, NSH
 ---
 ###Boilerplate
 The fastest track to start using Hybridge is use the Boilerplate.
-There are both supported environment projects for iOS and Android and a test HTML file *(hybridge.html)* that you can put in the root of your local server, along with the *hybridge.js* file as a development start of your app.
+There are both supported environment projects for iOS and Android and a test HTML file *(hybridge.html)* that you can put in the root of your local server,
+along with the *hybridge.js* file as a development start of your app.
 
 ---
 ##Native Events
@@ -241,16 +265,16 @@ When the page calls `downloadStatus` action, a prompt window will show the JSON 
 In a typical scenario, where web and installed native parts can be different versions you can deal with it by handling the custom error returned:
 ```javascript
 Hybridge.send({
-                'action' : 'download',
-                'url' : url
-              })
-              .done(updateUIfunction)
-              .fail(function (e) {
-                if (e.error && e.error === Hybridge.errors.ACTION_NOT_IMPLEMENTED) {
-                  // Advise user to update native applicacion to the newest version
-                  ...
-                }
-              });
+    'action' : 'download',
+    'url' : url
+  })
+  .done(updateUIfunction)
+  .fail(function (e) {
+    if (e.error && e.error === Hybridge.errors.ACTION_NOT_IMPLEMENTED) {
+      // Advise user to update native applicacion to the newest version
+      ...
+    }
+  });
 ```
 
 ---
