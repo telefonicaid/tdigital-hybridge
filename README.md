@@ -83,11 +83,8 @@ public enum JsActionImpl implements JsAction {
     public void setTask(Class task) {
         this.task = task;
     }
-
 ...
-
 }
-
 public class DownloadTask extends AsyncTask<Object, Void, JSONObject> {
 
     private JsPromptResult result;
