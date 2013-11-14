@@ -8,11 +8,6 @@
 #import "Hybridge.h"
 
 @interface WebViewController : UIViewController <UIWebViewDelegate>
-{
-
-@private
-    Hybridge *_hybridge;
-}
 
 @property (strong) UIWebView *webview;
 

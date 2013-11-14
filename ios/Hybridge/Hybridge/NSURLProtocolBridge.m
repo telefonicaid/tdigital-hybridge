@@ -32,10 +32,6 @@ NSString *bridgePrefix = @"hybridge";
     
     if([[self.request HTTPMethod] caseInsensitiveCompare:@"OPTIONS"] == NSOrderedSame)
     {
-        // Manejar las peticiones OPTION (CORS preflight)
-        //HybridgeHandlerBlock_t handler = [[HybridgeSubscriptor sharedInstance] handlerForAction:@"preflight"];
-        //handler(self, nil, [self createResponse]);
-        
         id client = [self client];
         [client URLProtocol:self didReceiveResponse:[self createResponse] cacheStoragePolicy:NSURLCacheStorageNotAllowed];
         [client URLProtocolDidFinishLoading:self];

@@ -7,6 +7,12 @@
 #import "WebViewController.h"
 #import "Hybridge.h"
 
+@interface WebViewController ()
+{
+    @private Hybridge *_hybridge;
+}
+@end
+
 @implementation WebViewController
 
 NSString *_targetURL = @"http://127.0.0.1/hybridge.html";
