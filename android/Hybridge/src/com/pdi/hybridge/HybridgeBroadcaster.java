@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.webkit.WebView;
+import android.webkit.WebView.HitTestResult;
 
 import com.pdi.hybridge.HybridgeConst.Event;
 
@@ -90,13 +91,18 @@ public class HybridgeBroadcaster extends Observable {
     }
 
     public void runJsInWebView(final WebView view, final String js) {
-        new Handler(Looper.getMainLooper()).post(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        view.loadUrl("javascript:(function(){" + js + "})()");
-                    }
-                });
+        WebView.HitTestResult hr = ((WebView)view).getHitTestResult();
+        if (hr == null || hr.getType() != HitTestResult.EDIT_TEXT_TYPE) {
+            new Handler(Looper.getMainLooper()).post(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            view.loadUrl("javascript:(function(){" + js + "})()");
+                        }
+                    });
+        } else {
+            Log.d(TAG, "Missing update, user is entering text");
+        }
     }
 
     public void updateState(JSONObject data) {
