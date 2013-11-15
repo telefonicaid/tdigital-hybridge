@@ -13,6 +13,7 @@ import java.util.Observer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
@@ -30,10 +31,14 @@ public class HybridgeBroadcaster extends Observable {
 
     private final String TAG = "HybridgeBroadcaster";
 
+    private StringBuffer jsBuffer;
+    
     private HashMap<Integer, AsyncTask<JSONObject, Void, JSONObject>> currents;
 
+    @SuppressLint("UseSparseArrays")
     public HybridgeBroadcaster() {
-        currents =  new HashMap<Integer, AsyncTask<JSONObject,Void,JSONObject>>();
+        currents = new HashMap<Integer, AsyncTask<JSONObject,Void,JSONObject>>();
+        jsBuffer = new StringBuffer("");
     }
 
     public static HybridgeBroadcaster getInstance() {
@@ -83,26 +88,35 @@ public class HybridgeBroadcaster extends Observable {
 
     public void fireJavascriptEvent(WebView view, Event event, JSONObject data) {
         if (isInitialized) {
+            WebView.HitTestResult hr = ((WebView)view).getHitTestResult();
+            String prejs = "";
             String json = data != null ? data.toString() : "{}";
             StringBuffer js = new StringBuffer("HybridgeGlobal.fireEvent(\"");
             js.append(event.getJsName()).append("\",").append(json).append(");");
-            runJsInWebView(view, js.toString());
+
+            if (hr == null || hr.getType() != HitTestResult.EDIT_TEXT_TYPE) {
+                if(jsBuffer.length() != 0) {
+                    prejs = jsBuffer.append(js.toString()).toString();
+                    runJsInWebView(view, prejs);
+                    jsBuffer = new StringBuffer();
+                } else {
+                    runJsInWebView(view, js.toString());
+                }
+            } else {
+                Log.d(TAG, "Defer javascript message, user is entering text");
+                jsBuffer.append(js.toString());
+            }
         }
     }
 
     public void runJsInWebView(final WebView view, final String js) {
-        WebView.HitTestResult hr = ((WebView)view).getHitTestResult();
-        if (hr == null || hr.getType() != HitTestResult.EDIT_TEXT_TYPE) {
-            new Handler(Looper.getMainLooper()).post(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            view.loadUrl("javascript:(function(){" + js + "})()");
-                        }
-                    });
-        } else {
-            Log.d(TAG, "Missing update, user is entering text");
-        }
+        new Handler(Looper.getMainLooper()).post(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        view.loadUrl("javascript:(function(){" + js + "})()");
+                    }
+                });
     }
 
     public void updateState(JSONObject data) {
