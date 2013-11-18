@@ -98,7 +98,7 @@ public class HybridgeBroadcaster extends Observable {
                 if(jsBuffer.length() != 0) {
                     prejs = jsBuffer.append(js.toString()).toString();
                     runJsInWebView(view, prejs);
-                    jsBuffer = new StringBuffer();
+                    jsBuffer = new StringBuffer("");
                 } else {
                     runJsInWebView(view, js.toString());
                 }
