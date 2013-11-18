@@ -88,13 +88,13 @@ public class HybridgeBroadcaster extends Observable {
 
     public void fireJavascriptEvent(WebView view, Event event, JSONObject data) {
         if (isInitialized) {
-            WebView.HitTestResult hr = ((WebView)view).getHitTestResult();
+            WebView.HitTestResult hitTestResult = ((WebView)view).getHitTestResult();
             String prejs = "";
             String json = data != null ? data.toString() : "{}";
             StringBuffer js = new StringBuffer("HybridgeGlobal.fireEvent(\"");
             js.append(event.getJsName()).append("\",").append(json).append(");");
 
-            if (hr == null || hr.getType() != HitTestResult.EDIT_TEXT_TYPE) {
+            if (hitTestResult == null || hitTestResult.getType() != HitTestResult.EDIT_TEXT_TYPE) {
                 if(jsBuffer.length() != 0) {
                     prejs = jsBuffer.append(js.toString()).toString();
                     runJsInWebView(view, prejs);
