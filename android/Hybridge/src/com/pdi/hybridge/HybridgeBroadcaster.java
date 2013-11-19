@@ -13,11 +13,13 @@ import java.util.Observer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.webkit.WebView;
+import android.webkit.WebView.HitTestResult;
 
 import com.pdi.hybridge.HybridgeConst.Event;
 
@@ -29,10 +31,14 @@ public class HybridgeBroadcaster extends Observable {
 
     private final String TAG = "HybridgeBroadcaster";
 
+    private StringBuffer jsBuffer;
+    
     private HashMap<Integer, AsyncTask<JSONObject, Void, JSONObject>> currents;
 
+    @SuppressLint("UseSparseArrays")
     public HybridgeBroadcaster() {
-        currents =  new HashMap<Integer, AsyncTask<JSONObject,Void,JSONObject>>();
+        currents = new HashMap<Integer, AsyncTask<JSONObject,Void,JSONObject>>();
+        jsBuffer = new StringBuffer("");
     }
 
     public static HybridgeBroadcaster getInstance() {
@@ -82,10 +88,24 @@ public class HybridgeBroadcaster extends Observable {
 
     public void fireJavascriptEvent(WebView view, Event event, JSONObject data) {
         if (isInitialized) {
+            WebView.HitTestResult hitTestResult = ((WebView)view).getHitTestResult();
+            String prejs = "";
             String json = data != null ? data.toString() : "{}";
             StringBuffer js = new StringBuffer("HybridgeGlobal.fireEvent(\"");
             js.append(event.getJsName()).append("\",").append(json).append(");");
-            runJsInWebView(view, js.toString());
+
+            if (hitTestResult == null || hitTestResult.getType() != HitTestResult.EDIT_TEXT_TYPE) {
+                if(jsBuffer.length() != 0) {
+                    prejs = jsBuffer.append(js.toString()).toString();
+                    runJsInWebView(view, prejs);
+                    jsBuffer = new StringBuffer("");
+                } else {
+                    runJsInWebView(view, js.toString());
+                }
+            } else {
+                Log.d(TAG, "Defer javascript message, user is entering text");
+                jsBuffer.append(js.toString());
+            }
         }
     }
 
