@@ -86,37 +86,37 @@ public class HybridgeBroadcaster extends Observable {
         fireJavascriptEvent(view, event, data);
     }
 
-    public void fireJavascriptEvent(WebView view, Event event, JSONObject data) {
+    public void fireJavascriptEvent(final WebView view, final Event event, final JSONObject data) {
         if (isInitialized) {
-            WebView.HitTestResult hitTestResult = ((WebView)view).getHitTestResult();
-            String prejs = "";
-            String json = data != null ? data.toString() : "{}";
-            StringBuffer js = new StringBuffer("HybridgeGlobal.fireEvent(\"");
-            js.append(event.getJsName()).append("\",").append(json).append(");");
-
-            if (hitTestResult == null || hitTestResult.getType() != HitTestResult.EDIT_TEXT_TYPE) {
-                if(jsBuffer.length() != 0) {
-                    prejs = jsBuffer.append(js.toString()).toString();
-                    runJsInWebView(view, prejs);
-                    jsBuffer = new StringBuffer("");
-                } else {
-                    runJsInWebView(view, js.toString());
-                }
-            } else {
-                Log.d(TAG, "Defer javascript message, user is entering text");
-                jsBuffer.append(js.toString());
-            }
-        }
-    }
-
-    public void runJsInWebView(final WebView view, final String js) {
-        new Handler(Looper.getMainLooper()).post(
+            view.post(
                 new Runnable() {
                     @Override
                     public void run() {
-                        view.loadUrl("javascript:(function(){" + js + "})()");
+                        WebView.HitTestResult hitTestResult = ((WebView)view).getHitTestResult();
+                        String prejs = "";
+                        String json = data != null ? data.toString() : "{}";
+                        StringBuffer js = new StringBuffer("HybridgeGlobal.fireEvent(\"");
+                        js.append(event.getJsName()).append("\",").append(json).append(");");
+
+                        if (hitTestResult == null || hitTestResult.getType() != HitTestResult.EDIT_TEXT_TYPE) {
+                            if(jsBuffer.length() != 0) {
+                                prejs = jsBuffer.append(js.toString()).toString();
+                                runJsInWebView(view, prejs);
+                                jsBuffer = new StringBuffer("");
+                            } else {
+                                runJsInWebView(view, js.toString());
+                            }
+                        } else {
+                            Log.d(TAG, "Defer javascript message, user is entering text");
+                            jsBuffer.append(js.toString());
+                        }
                     }
                 });
+        }
+    }
+
+    public void runJsInWebView(WebView view, final String js) {
+        view.loadUrl("javascript:(function(){" + js + "})()");
     }
 
     public void updateState(JSONObject data) {
