@@ -59,6 +59,11 @@ define([
       _getLogger().info('Fixing bridge for Android, prompt method used');
       method = _sendPrompt;
     }
+    /**
+     * Inits ready event
+     */
+    _events.ready = _createEvent('ready');
+
     return initModuleDef.resolve(conf).promise();
   }
 
@@ -133,8 +138,9 @@ define([
    * @return {Boolean}
    */
   function _isEventImplemented (event) {
-    return !!(window.HybridgeGlobal && window.HybridgeGlobal.events && event && event.type &&
-      $.inArray(event.type, window.HybridgeGlobal.events) !== -1 );
+    return !!((event && event.type === 'ready') ||
+      (window.HybridgeGlobal && window.HybridgeGlobal.events && event && event.type &&
+      $.inArray(event.type, window.HybridgeGlobal.events) !== -1));
   }
 
   /**
@@ -343,7 +349,9 @@ define([
     if (window.HybridgeGlobal.events) {
       for (var i = 0; i < window.HybridgeGlobal.events.length; i++) {
         event = window.HybridgeGlobal.events[i];
-        _events[event] = _createEvent(event);
+        if (!_events[event]) {
+          _events[event] = _createEvent(event);
+        }
       }
     }
     initialized = true;
