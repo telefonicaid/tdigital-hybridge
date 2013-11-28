@@ -4,11 +4,11 @@
  * License: GNU Affero V3 (see LICENSE file)
  */
 
-#import "NSURLProtocolBridge.h"
-#import "HybridgeSubscriptor.h"
-#import "Hybridge.h"
+#import "HYBURLProtocol.h"
+#import "HYBHybridgeSubscriptor.h"
+#import "HYBHybridge.h"
 
-@implementation NSURLProtocolBridge
+@implementation HYBURLProtocol
 
 NSString *bridgePrefix = @"hybridge";
 
@@ -49,7 +49,7 @@ NSString *bridgePrefix = @"hybridge";
     NSString *_data = [headers objectForKey:@"data"];
     
     // Look for a handler subscribed for this action
-    HybridgeHandlerBlock_t handler = [[HybridgeSubscriptor sharedInstance] handlerForAction:_action];
+    HybridgeHandlerBlock_t handler = [[HYBHybridgeSubscriptor sharedInstance] handlerForAction:_action];
     
     if (handler != nil) {
         handler(self, _data, [self createResponse]);

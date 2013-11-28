@@ -4,6 +4,6 @@
  * License: GNU Affero V3 (see LICENSE file)
  */
 
-@interface NSURLProtocolBridge : NSURLProtocol
+@interface HYBURLProtocol : NSURLProtocol
 
 @end

@@ -22,18 +22,18 @@
 
 /* Begin PBXBuildFile section */
 		E42E3F35182A68170033C908 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42E3F34182A68170033C908 /* Foundation.framework */; };
-		E42E3F3C182A68170033C908 /* Hybridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E42E3F3B182A68170033C908 /* Hybridge.m */; };
+		E42E3F3C182A68170033C908 /* HYBHybridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E42E3F3B182A68170033C908 /* HYBHybridge.m */; };
 		E42E3F43182A68170033C908 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42E3F42182A68170033C908 /* XCTest.framework */; };
 		E42E3F44182A68170033C908 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42E3F34182A68170033C908 /* Foundation.framework */; };
 		E42E3F49182A68170033C908 /* libHybridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E42E3F31182A68170033C908 /* libHybridge.a */; };
-		E4C80885182A6B44002BF73C /* HybridgeSubscriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C80881182A6B44002BF73C /* HybridgeSubscriptor.m */; };
-		E4C80886182A6B44002BF73C /* NSURLProtocolBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C80884182A6B44002BF73C /* NSURLProtocolBridge.m */; };
-		E4C80887182A6B7B002BF73C /* HybridgeSubscriptor.h in Sources */ = {isa = PBXBuildFile; fileRef = E4C80880182A6B44002BF73C /* HybridgeSubscriptor.h */; };
-		E4C80888182A6B7B002BF73C /* Constants.h in Sources */ = {isa = PBXBuildFile; fileRef = E4C80882182A6B44002BF73C /* Constants.h */; };
-		E4C80889182A6B7B002BF73C /* NSURLProtocolBridge.h in Sources */ = {isa = PBXBuildFile; fileRef = E4C80883182A6B44002BF73C /* NSURLProtocolBridge.h */; };
-		E4C8088A182A6B7B002BF73C /* Hybridge.h in Sources */ = {isa = PBXBuildFile; fileRef = E42E3F39182A68170033C908 /* Hybridge.h */; };
+		E4C80885182A6B44002BF73C /* HYBHybridgeSubscriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C80881182A6B44002BF73C /* HYBHybridgeSubscriptor.m */; };
+		E4C80886182A6B44002BF73C /* HYBURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C80884182A6B44002BF73C /* HYBURLProtocol.m */; };
+		E4C80887182A6B7B002BF73C /* HYBHybridgeSubscriptor.h in Sources */ = {isa = PBXBuildFile; fileRef = E4C80880182A6B44002BF73C /* HYBHybridgeSubscriptor.h */; };
+		E4C80888182A6B7B002BF73C /* HYBConstants.h in Sources */ = {isa = PBXBuildFile; fileRef = E4C80882182A6B44002BF73C /* HYBConstants.h */; };
+		E4C80889182A6B7B002BF73C /* HYBURLProtocol.h in Sources */ = {isa = PBXBuildFile; fileRef = E4C80883182A6B44002BF73C /* HYBURLProtocol.h */; };
+		E4C8088A182A6B7B002BF73C /* HYBHybridge.h in Sources */ = {isa = PBXBuildFile; fileRef = E42E3F39182A68170033C908 /* HYBHybridge.h */; };
 		E4C8088D182A6F21002BF73C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C8088C182A6F21002BF73C /* UIKit.framework */; };
-		E4C80916182A9348002BF73C /* Hybridge.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E42E3F39182A68170033C908 /* Hybridge.h */; };
+		E4C80916182A9348002BF73C /* HYBHybridge.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E42E3F39182A68170033C908 /* HYBHybridge.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +53,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				E4C80916182A9348002BF73C /* Hybridge.h in CopyFiles */,
+				E4C80916182A9348002BF73C /* HYBHybridge.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,15 +63,15 @@
 		E42E3F31182A68170033C908 /* libHybridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHybridge.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E42E3F34182A68170033C908 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E42E3F38182A68170033C908 /* Hybridge-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hybridge-Prefix.pch"; sourceTree = "<group>"; };
-		E42E3F39182A68170033C908 /* Hybridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hybridge.h; sourceTree = "<group>"; };
-		E42E3F3B182A68170033C908 /* Hybridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hybridge.m; sourceTree = "<group>"; };
+		E42E3F39182A68170033C908 /* HYBHybridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HYBHybridge.h; sourceTree = "<group>"; };
+		E42E3F3B182A68170033C908 /* HYBHybridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYBHybridge.m; sourceTree = "<group>"; };
 		E42E3F41182A68170033C908 /* HybridgeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HybridgeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E42E3F42182A68170033C908 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		E4C80880182A6B44002BF73C /* HybridgeSubscriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HybridgeSubscriptor.h; sourceTree = "<group>"; };
-		E4C80881182A6B44002BF73C /* HybridgeSubscriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HybridgeSubscriptor.m; sourceTree = "<group>"; };
-		E4C80882182A6B44002BF73C /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		E4C80883182A6B44002BF73C /* NSURLProtocolBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLProtocolBridge.h; sourceTree = "<group>"; };
-		E4C80884182A6B44002BF73C /* NSURLProtocolBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLProtocolBridge.m; sourceTree = "<group>"; };
+		E4C80880182A6B44002BF73C /* HYBHybridgeSubscriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBHybridgeSubscriptor.h; sourceTree = "<group>"; };
+		E4C80881182A6B44002BF73C /* HYBHybridgeSubscriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBHybridgeSubscriptor.m; sourceTree = "<group>"; };
+		E4C80882182A6B44002BF73C /* HYBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBConstants.h; sourceTree = "<group>"; };
+		E4C80883182A6B44002BF73C /* HYBURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBURLProtocol.h; sourceTree = "<group>"; };
+		E4C80884182A6B44002BF73C /* HYBURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBURLProtocol.m; sourceTree = "<group>"; };
 		E4C8088C182A6F21002BF73C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -129,13 +129,13 @@
 		E42E3F36182A68170033C908 /* Hybridge */ = {
 			isa = PBXGroup;
 			children = (
-				E4C80880182A6B44002BF73C /* HybridgeSubscriptor.h */,
-				E4C80881182A6B44002BF73C /* HybridgeSubscriptor.m */,
-				E4C80882182A6B44002BF73C /* Constants.h */,
-				E4C80883182A6B44002BF73C /* NSURLProtocolBridge.h */,
-				E4C80884182A6B44002BF73C /* NSURLProtocolBridge.m */,
-				E42E3F39182A68170033C908 /* Hybridge.h */,
-				E42E3F3B182A68170033C908 /* Hybridge.m */,
+				E4C80880182A6B44002BF73C /* HYBHybridgeSubscriptor.h */,
+				E4C80881182A6B44002BF73C /* HYBHybridgeSubscriptor.m */,
+				E4C80882182A6B44002BF73C /* HYBConstants.h */,
+				E4C80883182A6B44002BF73C /* HYBURLProtocol.h */,
+				E4C80884182A6B44002BF73C /* HYBURLProtocol.m */,
+				E42E3F39182A68170033C908 /* HYBHybridge.h */,
+				E42E3F3B182A68170033C908 /* HYBHybridge.m */,
 				E42E3F37182A68170033C908 /* Supporting Files */,
 			);
 			path = Hybridge;
@@ -246,13 +246,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4C80887182A6B7B002BF73C /* HybridgeSubscriptor.h in Sources */,
-				E4C80888182A6B7B002BF73C /* Constants.h in Sources */,
-				E4C80889182A6B7B002BF73C /* NSURLProtocolBridge.h in Sources */,
-				E4C8088A182A6B7B002BF73C /* Hybridge.h in Sources */,
-				E4C80886182A6B44002BF73C /* NSURLProtocolBridge.m in Sources */,
-				E42E3F3C182A68170033C908 /* Hybridge.m in Sources */,
-				E4C80885182A6B44002BF73C /* HybridgeSubscriptor.m in Sources */,
+				E4C80887182A6B7B002BF73C /* HYBHybridgeSubscriptor.h in Sources */,
+				E4C80888182A6B7B002BF73C /* HYBConstants.h in Sources */,
+				E4C80889182A6B7B002BF73C /* HYBURLProtocol.h in Sources */,
+				E4C8088A182A6B7B002BF73C /* HYBHybridge.h in Sources */,
+				E4C80886182A6B44002BF73C /* HYBURLProtocol.m in Sources */,
+				E42E3F3C182A68170033C908 /* HYBHybridge.m in Sources */,
+				E4C80885182A6B44002BF73C /* HYBHybridgeSubscriptor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E47A5FAD184764270041F290 /* libHybridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C80925182C0F40002BF73C /* libHybridge.a */; };
 		E4C808D6182A7BCE002BF73C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C808D5182A7BCE002BF73C /* Foundation.framework */; };
 		E4C808D8182A7BCE002BF73C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C808D7182A7BCE002BF73C /* CoreGraphics.framework */; };
 		E4C808DA182A7BCE002BF73C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C808D9182A7BCE002BF73C /* UIKit.framework */; };
@@ -20,7 +21,6 @@
 		E4C80909182A7E52002BF73C /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C80908182A7E52002BF73C /* WebViewController.m */; };
 		E4C80923182C0DE2002BF73C /* HybridgeBoilerplate-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4C808DD182A7BCE002BF73C /* HybridgeBoilerplate-Info.plist */; };
 		E4C80924182C0DE2002BF73C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E4C808DE182A7BCE002BF73C /* InfoPlist.strings */; };
-		E4C80926182C0F40002BF73C /* libHybridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C80925182C0F40002BF73C /* libHybridge.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E47A5FAC184762940041F290 /* HYBHybridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HYBHybridge.h; sourceTree = "<group>"; };
 		E4C808D2182A7BCE002BF73C /* HybridgeBoilerplate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HybridgeBoilerplate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4C808D5182A7BCE002BF73C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E4C808D7182A7BCE002BF73C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -44,7 +45,6 @@
 		E4C808E3182A7BCE002BF73C /* HybridgeBoilerplate-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HybridgeBoilerplate-Prefix.pch"; sourceTree = "<group>"; };
 		E4C808E4182A7BCE002BF73C /* HybridgeAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HybridgeAppDelegate.h; sourceTree = "<group>"; };
 		E4C808E5182A7BCE002BF73C /* HybridgeAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HybridgeAppDelegate.m; sourceTree = "<group>"; };
-		E4C808E7182A7BCE002BF73C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E4C808ED182A7BCE002BF73C /* HybridgeBoilerplateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HybridgeBoilerplateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4C808EE182A7BCE002BF73C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		E4C808F6182A7BCE002BF73C /* HybridgeBoilerplateTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HybridgeBoilerplateTests-Info.plist"; sourceTree = "<group>"; };
@@ -52,7 +52,6 @@
 		E4C808FA182A7BCE002BF73C /* HybridgeBoilerplateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HybridgeBoilerplateTests.m; sourceTree = "<group>"; };
 		E4C80907182A7E52002BF73C /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		E4C80908182A7E52002BF73C /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
-		E4C80918182B7139002BF73C /* Hybridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hybridge.h; sourceTree = "<group>"; };
 		E4C80925182C0F40002BF73C /* libHybridge.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libHybridge.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,8 +60,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E47A5FAD184764270041F290 /* libHybridge.a in Frameworks */,
 				E4C808D8182A7BCE002BF73C /* CoreGraphics.framework in Frameworks */,
-				E4C80926182C0F40002BF73C /* libHybridge.a in Frameworks */,
 				E4C808DA182A7BCE002BF73C /* UIKit.framework in Frameworks */,
 				E4C808D6182A7BCE002BF73C /* Foundation.framework in Frameworks */,
 			);
@@ -119,7 +118,6 @@
 				E4C80906182A7E14002BF73C /* controllers */,
 				E4C808E4182A7BCE002BF73C /* HybridgeAppDelegate.h */,
 				E4C808E5182A7BCE002BF73C /* HybridgeAppDelegate.m */,
-				E4C808E7182A7BCE002BF73C /* Images.xcassets */,
 				E4C808DC182A7BCE002BF73C /* Supporting Files */,
 			);
 			path = HybridgeBoilerplate;
@@ -182,7 +180,7 @@
 		E4C80912182A8FE3002BF73C /* Hybridge */ = {
 			isa = PBXGroup;
 			children = (
-				E4C80918182B7139002BF73C /* Hybridge.h */,
+				E47A5FAC184762940041F290 /* HYBHybridge.h */,
 			);
 			name = Hybridge;
 			sourceTree = "<group>";
@@ -418,6 +416,7 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Hybridge-cextzdocjfnyabbzkujnzmweafld/Build/Products/Debug-universal",
 					"/Users/davidgarcia/tdigital-hybridge/boilerplate/ios/HybridgeBoilerplate",
+					"/Users/davidgarcia/tdigital-hybridge/boilerplate/ios/HybridgeBoilerplate/HybridgeBoilerplate",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -441,6 +440,7 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Hybridge-cextzdocjfnyabbzkujnzmweafld/Build/Products/Debug-universal",
 					"/Users/davidgarcia/tdigital-hybridge/boilerplate/ios/HybridgeBoilerplate",
+					"/Users/davidgarcia/tdigital-hybridge/boilerplate/ios/HybridgeBoilerplate/HybridgeBoilerplate",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

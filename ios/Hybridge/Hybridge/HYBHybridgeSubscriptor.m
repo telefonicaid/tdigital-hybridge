@@ -4,20 +4,20 @@
  * License: GNU Affero V3 (see LICENSE file)
  */
 
-#import "HybridgeSubscriptor.h"
-#import "Hybridge.h"
+#import "HYBHybridgeSubscriptor.h"
+#import "HYBHybridge.h"
 
-@interface HybridgeSubscriptor()
+@interface HYBHybridgeSubscriptor()
 
 @property (strong, nonatomic) NSMutableDictionary *subscriptions;
 
 @end
 
-@implementation HybridgeSubscriptor
+@implementation HYBHybridgeSubscriptor
 
-static HybridgeSubscriptor *sharedInstance = nil;
+static HYBHybridgeSubscriptor *sharedInstance = nil;
 
-+ (HybridgeSubscriptor *)sharedInstance {
++ (HYBHybridgeSubscriptor *)sharedInstance {
     if (sharedInstance == nil) {
         sharedInstance = [[super allocWithZone:NULL] init];
     }

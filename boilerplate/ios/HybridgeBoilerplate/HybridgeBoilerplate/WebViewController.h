@@ -5,7 +5,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "Hybridge.h"
+#import "HYBHybridge.h"
 
 @interface WebViewController : UIViewController <UIWebViewDelegate>
 
