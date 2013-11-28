@@ -132,12 +132,12 @@ public void update(Observable observable, Object data) {
 ```
 
 ###iOS
-* Compile the sources and copy the Hybridge static lib in your project `Hybridge.h` and `libHybridge.a`.
-* Import `Hybridge.h` in your *UIWebView* controller.
+* Compile the sources and copy the Hybridge static lib in your project `HYBHybridge.h` and `libHybridge.a`.
+* Import `HYBHybridge.h` in your *UIWebView* controller.
 * Bind the Hybridge singleton:
 
 ```objective-c
-_hybridge = [Hybridge sharedInstance]
+_hybridge = [HYBHybridge sharedInstance]
 ```
 * Implements your native `actions` in *blocks* with the handler `HybridgeHandlerBlock_t`:
 
@@ -182,14 +182,17 @@ Use *Hybridge* singleton to trigger events in Javascript:
 ```
 
 ###Javascript
-Subscribe your Javascript to the native events in order to process the data received in a callback function:
+Subscribe your Javascript on `ready` event to the native events in order to process the data received in a callback function:
 ```javascript
 function processData (event) {
- var data = ev.data;
- ...
+  var data = ev.data;
+  ...
 }
 
-Hybridge.addListener(Hybridge.events.message, processData);
+Hybridge.addListener(Hybridge.events.ready, function () {
+  Hybridge.addListener(Hybridge.events.message, processData);
+  ...
+}
 ```
 Don't forget to remove your handlers to avoid memory leaks:
 ```javascript
