@@ -4,24 +4,24 @@
  * License: GNU Affero V3 (see LICENSE file)
  */
 
-#import "Hybridge.h"
-#import "Constants.h"
-#import "HybridgeSubscriptor.h"
-#import "NSURLProtocolBridge.h"
+#import "HYBHybridge.h"
+#import "HYBConstants.h"
+#import "HYBHybridgeSubscriptor.h"
+#import "HYBURLProtocol.h"
 
-@interface Hybridge ()
+@interface HYBHybridge ()
 
 {
-    HybridgeSubscriptor *_subscriptor;
+    HYBHybridgeSubscriptor *_subscriptor;
     NSMutableArray *_actions;
     NSArray *_events;
 }
 
 @end
 
-@implementation Hybridge
+@implementation HYBHybridge
 
-static Hybridge *sharedInstance = nil;
+static HYBHybridge *sharedInstance = nil;
 
 int const kVersion = kHybridgeVersion;
 NSString * const kHybridgeEventPause = kEventNamePause;
@@ -29,7 +29,7 @@ NSString * const kHybridgeEventResume = kEventNameResume;
 NSString * const kHybridgeEventMessage = KEventNameMessage;
 NSString * const kHybridgeEventReady = kEventNameReady;
 
-+ (Hybridge *)sharedInstance {
++ (HYBHybridge *)sharedInstance {
     if (sharedInstance == nil) {
         sharedInstance = [[super allocWithZone:NULL] init];
     }    
@@ -41,8 +41,8 @@ NSString * const kHybridgeEventReady = kEventNameReady;
     self = [super init];
     
     if (self) {
-        [NSURLProtocol registerClass:[NSURLProtocolBridge class]];
-        _subscriptor = [HybridgeSubscriptor sharedInstance];
+        [NSURLProtocol registerClass:[HYBURLProtocol class]];
+        _subscriptor = [HYBHybridgeSubscriptor sharedInstance];
         _actions = [[NSMutableArray alloc] init];
         _events = @[kHybridgeEventPause,
                     kHybridgeEventResume,

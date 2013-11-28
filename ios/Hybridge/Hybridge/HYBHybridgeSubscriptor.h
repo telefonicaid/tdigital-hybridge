@@ -5,15 +5,15 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "Hybridge.h"
+#import "HYBHybridge.h"
 
 /** This singleton class manages a list of subscriptions for received requests in the bridge.
  Each single subscription has an action name associated to and a handler to be called
  */
-@interface HybridgeSubscriptor : NSObject
+@interface HYBHybridgeSubscriptor : NSObject
 
 /** Singleton constructor */ 
-+ (HybridgeSubscriptor *)sharedInstance;
++ (HYBHybridgeSubscriptor *)sharedInstance;
 
 /** Subscribes to action with the given handler block 
  @param action name of the action to suscribe

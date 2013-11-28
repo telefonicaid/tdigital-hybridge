@@ -7,7 +7,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIWebView.h>
 
-@interface Hybridge : NSObject
+@interface HYBHybridge : NSObject
 
 /**
  *  Current Native Hybridge version
@@ -36,7 +36,7 @@ typedef void (^HybridgeHandlerBlock_t)(NSURLProtocol*, NSString*, NSHTTPURLRespo
  *
  *	@return single Hibridge instance
  */
-+ (Hybridge *)sharedInstance;
++ (HYBHybridge *)sharedInstance;
 
 /**
  *  Returns the actual list of available native actions

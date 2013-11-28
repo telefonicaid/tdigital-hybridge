@@ -5,11 +5,11 @@
  */
 
 #import "WebViewController.h"
-#import "Hybridge.h"
+#import "HYBHybridge.h"
 
 @interface WebViewController ()
 {
-    @private Hybridge *_hybridge;
+    @private HYBHybridge *_hybridge;
 }
 @end
 
@@ -31,7 +31,7 @@ NSString *_targetURL = @"http://127.0.0.1/hybridge.html";
     [super viewDidLoad];
   
     // Hybridge binding
-    _hybridge = [Hybridge sharedInstance];
+    _hybridge = [HYBHybridge sharedInstance];
 
     // Handlers
     
