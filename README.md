@@ -192,7 +192,7 @@ function processData (event) {
 Hybridge.addListener(Hybridge.events.ready, function () {
   Hybridge.addListener(Hybridge.events.message, processData);
   ...
-}
+});
 ```
 Don't forget to remove your handlers to avoid memory leaks:
 ```javascript
