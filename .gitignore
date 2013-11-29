@@ -1,0 +1,48 @@
+# Xcode
+build/*
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.xcworkspace
+!default.xcworkspace
+xcuserdata
+profile
+*.moved-aside
+*.DS_Store
+Pods
+
+# Java
+*/gen/
+*/bin/
+.project
+.idea
+.externalToolBuilders/
+*/local.properties
+EnjoyMobile/lint.xml
+*/.classpath
+*/.settings
+
+*/nbandroid/
+*/nbandroid/
+
+.DS_Store
+/.settings
+
+*.orig
+.picasa.ini
+
+# Hybrige android
+android/Hybridge/.classpath
+android/Hybridge/bin/
+android/Hybridge/gen/
+
+# Boilerplate
+boilerplate/android/HybridgeBoilerplate/.classpath
+boilerplate/android/HybridgeBoilerplate/bin/
+boilerplate/android/HybridgeBoilerplate/gen/
+boilerplate/ios/HybridgeBoilerplate/build/*
