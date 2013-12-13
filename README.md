@@ -2,21 +2,46 @@
 
 Yet another javascript / mobile native simple bridge for hybrid apps, back and forth...
 
-## Why?
+## <a name='index'>Index</a>
+
+  1. [Why?](#why)
+  1. [Getting Started](#start)
+   * [Dependencies](#dependencies)
+      * [Javascript](#dependencies_javascript)
+  1. [Usage](#usage)
+   * [Javascript](#usage_javascript)
+   * [Android](#usage_android)
+   * [iOS](#usage_ios)
+   * [Boilerplate](#usage_boilerplate)
+  1. [Native Events](#events)
+   * [Android](#events_android)
+   * [iOS](#events_ios)
+   * [Javascript](#events_javascript)
+  1. [Javascript API](#api)
+   * [Methods](#api_methods)
+   * [Properties](#api_properties)
+  1. [Debug](#debug)
+  1. [Custom Errors](#errors)
+  1. [Demos](#demos)
+  1. [License](#license)
+
+## <a name='why'>Why?</a>
 When developing hybrid apps surely you'll need to access different native features and resources. Out there are plenty of bridge solutions.
 Hybridge tries to make easy communication and data exchanging between native (iOS & Android) and Javascript worlds, avoiding too much overhead.
 
----
-## Getting Started
+**[[⬆]](#index)**
+
+## <a name='start'>Getting Started</a>
 Firstly, get the code by downloading the zip or cloning the project into your local.
 
-### Dependencies
-#### Javascript
+### <a name='dependencies'>Dependencies</a>
+#### <a name='dependencies_javascript'>Javascript</a>
 Hybridge works in an AMD fashion, so you'll need [RequireJS](http://requirejs.org) for the loading.
 You'll also need [JQuery](http://jquery.com) (version 1.5 or newer) for the Javascript part since [Deferred](http://api.jquery.com/category/deferred-object) object is used intensively.
 
----
-## Usage
+**[[⬆]](#index)**
+
+## <a name='usage'>Usage</a>
 
 There are two ways of communication between native and Javascript.
 This is implemented in a different way in Android and iOS, but the Javascript part is just the same in both environments:
@@ -24,7 +49,7 @@ This is implemented in a different way in Android and iOS, but the Javascript pa
 
 * Native Hybridge part can trigger **native events** and send attached JSON data to Javascript when needed.
 
-### Javascript
+### <a name='usage_javascript'>Javascript</a>
 Load `hybridge.js` as a module in your AMD code. Simplest setup:
 ```html
   <script src="js/require.js"></script>
@@ -55,7 +80,9 @@ And you'll receive a Javascript *Promise* in response to process in your callbac
 Hybridge.send({'action' : 'gpsposition'}).done(updateMap);
 ```
 
-###Android
+**[[⬆]](#index)**
+
+### <a name='usage_android'>Android</a>
 * Compile the sources and copy `hybridge.jar` with your proyect libs dependencies.
 Alternatively, you can set the Hybridge project as an Android library dependency.
 
@@ -131,7 +158,9 @@ public void update(Observable observable, Object data) {
 }
 ```
 
-###iOS
+**[[⬆]](#index)**
+
+### <a name='usage_ios'>iOS</a>
 * Compile the sources and copy the Hybridge static lib in your project `HYBHybridge.h` and `libHybridge.a`.
 * Import `HYBHybridge.h` in your *UIWebView* controller.
 * Bind the Hybridge singleton:
@@ -155,33 +184,35 @@ HybridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, N
 [_hybridge subscribeAction:@"download" withHandler:downloadHandler];
 ```
 
----
-###Boilerplate
+**[[⬆]](#index)**
+
+### <a name='usage_boilerplate'>Boilerplate</a>
 The fastest track to start using Hybridge is use the Boilerplate.
 There are both supported environment projects for iOS and Android and a test HTML file `hybridge.html` that you can put in the root of your local server,
 along with the `hybridge.js` file as a development start of your app.
 
----
-##Native Events
+**[[⬆]](#index)**
+
+## <a name='events'>Native Events</a>
 You can communicate to Javascript from Android/iOS by triggering any of the defined `events` in Hybridge for recommended use:
 * **ready**: Hybridge initialization.
 * **pause**: Mobile app goes background.
 * **resume**: Mobile app goes foreground.
 * **message**: Send arbitrary data when required.
 
-###Android
+### <a name='events_android'>Android</a>
 Use *HybridgeBroadcaster* singleton to trigger events in Javascript:
 ```java
 HybridgeBroadcaster.getInstance().fireJavascriptEvent(webView, Event.READY, jsonData);
 ```
 
-###iOS
+### <a name='events_ios'>iOS</a>
 Use *Hybridge* singleton to trigger events in Javascript:
 ```objective-c
 [_hybridge fireEventInWebView:kHybridgeEventReady data:@"{foo : \"data\"}" web:self.webview]
 ```
 
-###Javascript
+### <a name='events_javascript'>Javascript</a>
 Subscribe your Javascript on `ready` event to the native events in order to process the data received in a callback function:
 ```javascript
 function processData (event) {
@@ -198,12 +229,13 @@ Don't forget to remove your handlers to avoid memory leaks:
 ```javascript
 Hybridge.removeListener(Hybridge.events.message, processData);
 ```
----
-##Javascript API
+**[[⬆]](#index)**
+
+## <a name='api'>Javascript API</a>
 A good enough start could be simply look over the code from [**hybridge.js**](js/hybridge.js), nevertheless,
 let's enumerate the available methods and properties from the Hybridge Javascript object:
 
-###Methods
+### <a name='api_methods'>Methods</a>
 * **init(configuration:Object)**
  Provides initialization configuration:
  * *environment* (ios|android : *String*): mandatory, as long as you want to communicate with native side.
@@ -226,7 +258,7 @@ let's enumerate the available methods and properties from the Hybridge Javascrip
  Returns a [JQuery](http://jquery.com) [Promise](http://api.jquery.com/Types/#Promise) containing data returned from native or custom error.
  You can add a second function parameter `fallback` in case something goes wrong and you want to supply aditional user feedback as well as update your UI.
 
-###Properties
+### <a name='api_properties'>Properties</a>
 * **errors** Container object of customs errors returned by the Hybridge:
  * *NO_NATIVE*: Environment is not mobile native (ios or android).
  * *NO_NATIVE_ENABLE*: Native environment doesn't support native Hybridge.
@@ -239,8 +271,9 @@ let's enumerate the available methods and properties from the Hybridge Javascrip
 * **events** Container object of available [native events](#native-events).
 * **version** Current version of Javascript Hybridge.
 
----
-##Debug
+**[[⬆]](#index)**
+
+## <a name='debug'>Debug</a>
 Hybridge provides a easy way to mock native mobile responses as you work on the UI development parts. Given a `downloadStatus` action it can be mocked on Hybridge initialization:
 ```javascript
 Hybridge.init({
@@ -256,9 +289,9 @@ Hybridge.init({
 ```
 When the page calls `downloadStatus` action, a prompt window will show the JSON mock data. It can be modified as you please for your UI tests.
 
+**[[⬆]](#index)**
 
----
-##Custom Errors
+## <a name='errors'>Custom Errors</a>
 In a typical scenario, where web and installed native parts can be different versions you can deal with it by handling the custom error returned:
 ```javascript
 Hybridge.send({
@@ -274,11 +307,13 @@ Hybridge.send({
   });
 ```
 
----
-##Demos
+**[[⬆]](#index)**
+
+## <a name='demos'>Demos</a>
 Coming soon...
 
----
-## License
+**[[⬆]](#index)**
+
+## <a name='license'>License</a>
 Copyright (c) 2013 Telefonica Digital
 Licensed under the AfferoGPLv3 license.
