@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E44681CA1879895800D18DF3 /* libHybridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C80925182C0F40002BF73C /* libHybridge.a */; };
 		E47A5FAD184764270041F290 /* libHybridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C80925182C0F40002BF73C /* libHybridge.a */; };
 		E4C808D6182A7BCE002BF73C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C808D5182A7BCE002BF73C /* Foundation.framework */; };
 		E4C808D8182A7BCE002BF73C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C808D7182A7BCE002BF73C /* CoreGraphics.framework */; };
@@ -74,6 +75,7 @@
 				E4C808EF182A7BCE002BF73C /* XCTest.framework in Frameworks */,
 				E4C808F1182A7BCE002BF73C /* UIKit.framework in Frameworks */,
 				E4C808F0182A7BCE002BF73C /* Foundation.framework in Frameworks */,
+				E44681CA1879895800D18DF3 /* libHybridge.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,9 +416,8 @@
 				INFOPLIST_FILE = "HybridgeBoilerplate/HybridgeBoilerplate-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Hybridge-cextzdocjfnyabbzkujnzmweafld/Build/Products/Debug-universal",
-					"/Users/davidgarcia/tdigital-hybridge/boilerplate/ios/HybridgeBoilerplate",
-					"/Users/davidgarcia/tdigital-hybridge/boilerplate/ios/HybridgeBoilerplate/HybridgeBoilerplate",
+					"$(SRCROOT)",
+					"$(SRCROOT)/HybridgeBoilerplate",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -438,9 +439,8 @@
 				INFOPLIST_FILE = "HybridgeBoilerplate/HybridgeBoilerplate-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Hybridge-cextzdocjfnyabbzkujnzmweafld/Build/Products/Debug-universal",
-					"/Users/davidgarcia/tdigital-hybridge/boilerplate/ios/HybridgeBoilerplate",
-					"/Users/davidgarcia/tdigital-hybridge/boilerplate/ios/HybridgeBoilerplate/HybridgeBoilerplate",
+					"$(SRCROOT)",
+					"$(SRCROOT)/HybridgeBoilerplate",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -464,6 +464,10 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "HybridgeBoilerplateTests/HybridgeBoilerplateTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -483,6 +487,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HybridgeBoilerplate/HybridgeBoilerplate-Prefix.pch";
 				INFOPLIST_FILE = "HybridgeBoilerplateTests/HybridgeBoilerplateTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
