@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+<project name="customHybridge" default="release" basedir="." xmlns:if="ant:if" xmlns:unless="ant:unless">
+
+    <echo level="info">Start custom_rules.xml of Hybridge...</echo>
+
+    <target name="current-version" description="Gets the current version.">
+        <property file="version.properties"/>
+        <property name="build.number" value="${build.revision.number}.${build.major.number}.${build.minor.number}"/>
+        <echo>Current build number:${build.number}</echo>
+    </target>
+
+    <target name="-inc-minor" if="incminor">
+        <propertyfile  file="version.properties">
+          <entry key="build.minor.number" type="int" operation="+" value="1" pattern="0"/>
+        </propertyfile>
+    </target>
+
+    <target name="-inc-major" if="incmajor">
+        <propertyfile  file="version.properties">
+           <entry key="build.major.number" type="int" operation="+" value="1" pattern="0"/>
+        </propertyfile>
+    </target>
+
+    <target name="genLib" description="Generates" 
+        depends="release, -inc-major, -inc-minor, current-version">
+        <jar
+            destfile="bin/hybridge-${build.number}.jar"
+            basedir="bin/classes"
+        />
+        <echo level="info">***Generated Hybridge lib with version: ${build.number}***</echo>
+    </target>
+
+</project>
