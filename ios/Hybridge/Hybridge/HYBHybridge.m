@@ -96,7 +96,7 @@ NSString * const kHybridgeEventReady = kEventNameReady;
     
     NSMutableString* js =
     [[NSMutableString alloc]
-        initWithString:@"window.HybridgeGlobal || function () { window.HybridgeGlobal = {isReady:true,version:"];
+        initWithString:@"window.HybridgeGlobal || setTimeout(function () { window.HybridgeGlobal = {isReady:true,version:"];
     [js appendString:[NSString stringWithFormat:@"%d", kVersion]];
     [js appendString:@", actions:"];
     [js appendString:(dataActions ?
@@ -111,7 +111,7 @@ NSString * const kHybridgeEventReady = kEventNameReady;
                               length:[dataEvents length]
                             encoding:NSUTF8StringEncoding] : @"[]")];
     [js appendString:@"}; window.$ && $('#hybridgeTrigger').toggleClass('switch');"];
-    [js appendString:@"}()"];
+    [js appendString:@"}, 0)"];
     
     [self runJsInWebview:js web:webview];
 }
