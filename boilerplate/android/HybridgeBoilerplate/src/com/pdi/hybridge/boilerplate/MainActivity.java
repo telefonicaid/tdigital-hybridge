@@ -48,7 +48,7 @@ public class MainActivity extends Activity implements Observer {
     }
 
     private final HybridgeWebViewClient webViewClient = new HybridgeWebViewClient(JsActionImpl.values());
- 
+
     private final WebChromeClient webChromeClient = new HybridgeWebChromeClient(JsActionImpl.values());
     
     @Override
