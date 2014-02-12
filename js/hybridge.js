@@ -423,6 +423,7 @@ define([
     addListener: _addListener,
     removeListener: _removeListener,
     isEventImplemented: _isEventImplemented,
+    isActionImplemented: _isActionImplemented,
     send: _send,
     events: _events,
     errors: _errors

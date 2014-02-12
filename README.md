@@ -258,6 +258,8 @@ let's enumerate the available methods and properties from the Hybridge Javascrip
  Unsubscribes a `Hybridge event` to a callback handler.
 * **isEventImplemented(hybridgeEvent:String)**
  Returns true if the event is implemented in the current native version of Hybridge.
+* **isActionImplemented(hybridgeEvent:String)**
+ Returns true if the action is implemented in the current native version of Hybridge.
 * **send(data:Object[, fallback:Function])**
  Provides the way to communicate from Javascript to native side. An `action` parameter is required in order to execute an implemented native task.
  Returns a [JQuery](http://jquery.com) [Promise](http://api.jquery.com/Types/#Promise) containing data returned from native or custom error.
