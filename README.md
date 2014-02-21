@@ -188,8 +188,13 @@ HybridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, N
 
 ### <a name='usage_boilerplate'>Boilerplate</a>
 The fastest track to start using Hybridge is use the Boilerplate.
-There are both supported environment projects for iOS and Android and a test HTML file `hybridge.html` that you can put in the root of your local server,
+
+Firstly, You'll need a local server running in you development environment to load initially the test files.
+There are both supported environment projects for iOS and Android and on the other hand a test HTML file called `hybridge.html` that you can put in the root of your local server,
 along with the `hybridge.js` file as a development start of your app.
+All you need is to place those files in your local web documents root and modify them as your convenience, as well as change the original local test path (`http://127.0.0.1/hybridge.html`) to another URL.
+In this way is really simple to migrate from a previous web application to a hybrid one.
+Nevertheless, a HTTP path is needed since currently Hybridge doesn't support load of local HTML files.
 
 **[[⬆]](#index)**
 
@@ -253,6 +258,8 @@ let's enumerate the available methods and properties from the Hybridge Javascrip
  Unsubscribes a `Hybridge event` to a callback handler.
 * **isEventImplemented(hybridgeEvent:String)**
  Returns true if the event is implemented in the current native version of Hybridge.
+* **isActionImplemented(hybridgeEvent:String)**
+ Returns true if the action is implemented in the current native version of Hybridge.
 * **send(data:Object[, fallback:Function])**
  Provides the way to communicate from Javascript to native side. An `action` parameter is required in order to execute an implemented native task.
  Returns a [JQuery](http://jquery.com) [Promise](http://api.jquery.com/Types/#Promise) containing data returned from native or custom error.
