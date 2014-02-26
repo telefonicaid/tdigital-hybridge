@@ -33,3 +33,10 @@ Pods
 */*/bin/
 */*/gen/
 */*/build/
+
+# Web
+.idea
+
+# Development
+node_modules
+bower_components
