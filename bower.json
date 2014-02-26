@@ -21,6 +21,7 @@
     "*.podspec"
   ],
   "dependencies": {
-    "jquery": ">=1.5.x"
+    "jquery": "*",
+    "requirejs": "~2.1.0"
   }
 }
