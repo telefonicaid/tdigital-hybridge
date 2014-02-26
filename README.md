@@ -5,9 +5,10 @@ Yet another javascript / mobile native simple bridge for hybrid apps, back and f
 ## <a name='index'>Index</a>
 
   1. [Why?](#why)
-  1. [Getting Started](#start)
-   * [Dependencies](#dependencies)
-      * [Javascript](#dependencies_javascript)
+  1. [Installation](#installation)
+   * [Javascript](#installation_javascript)
+   * [Android](#installation_javascript)
+   * [iOS](#installation_ios)
   1. [Usage](#usage)
    * [Javascript](#usage_javascript)
    * [Android](#usage_android)
@@ -31,13 +32,26 @@ Hybridge tries to make easy communication and data exchanging between native (iO
 
 **[[⬆]](#index)**
 
-## <a name='start'>Getting Started</a>
-Firstly, get the code by downloading the zip or cloning the project into your local.
+## <a name='installation'>Installation</a>
+Hybridge follows [semantic versioning](http://semver.org/). In the `boilerplate` directory you can find examples of how to get running in the different platforms.
 
-### <a name='dependencies'>Dependencies</a>
-#### <a name='dependencies_javascript'>Javascript</a>
+### <a name='installation_javascript'>Javascript</a>
+
+Since v1.2.0, `hybridge` is available in [bower](http://bower.io/). Bower will install `hybridge` itself and all its dependencies.
+```sh
+$ bower install --save hybridge
+```
+
+You can manually download the javascript [js/hybridge.js](js/hybridge.js) and use the traditional way.
+
 Hybridge works in an AMD fashion, so you'll need [RequireJS](http://requirejs.org) for the loading.
 You'll also need [JQuery](http://jquery.com) (version 1.5 or newer) for the Javascript part since [Deferred](http://api.jquery.com/category/deferred-object) object is used intensively.
+
+
+### <a name='installation_android'>Android</a>
+
+### <a name='installation_ios'>iOS</a>
+
 
 **[[⬆]](#index)**
 
