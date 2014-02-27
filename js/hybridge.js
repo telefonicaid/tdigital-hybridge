@@ -239,28 +239,29 @@ define([
     if (xhr && xhr.readyState !== 4) {
         xhr = null;
     }
+    var def = $.Deferred();
     var action = data.action;
     var id = data.id;
     xhr = $.ajax({
       url: 'http://hybridge/' + action + '/' + id + '/' + new Date().getTime(),
       type: 'HEAD',
-      headers: { 'data': strJSON || '{}' },
-      done: function() {
+      headers: { 'data': strJSON || '{}' }
+    });
+    xhr.done(function() {
         if (xhr.status === 200) {
           _getLogger().info('Hybridge: ' + xhr.statusText);
-          xhr.resolve(JSON.parse(xhr.responseText || '{}'));
+          def.resolve(JSON.parse(xhr.responseText || '{}'));
         }
         else {
           _getLogger().error('Hybridge: ' + xhr.statusText);
-          xhr.reject({'error' : 'HTTP error: ' + xhr.status});
+          def.reject({'error' : 'HTTP error: ' + xhr.status});
         }
-      },
-      error: function(xhr, text, textError) {
+      });
+    xhr.fail(function(xhr, text, textError) {
         _getLogger().error('Error on bridge to native. Non native environment?',
                            xhr, text, textError);
-      }
-    });
-    return xhr.promise();
+      });
+    return def.promise();
   }
 
   /**
