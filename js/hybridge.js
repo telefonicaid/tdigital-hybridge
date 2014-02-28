@@ -294,7 +294,7 @@ define([
       document.addEventListener(event.type, callback, false);
     }
     else if (debug) {
-      _getLogger().warning('Hybridge: ' + _errors.DEBUG_MODE);
+      _getLogger().log('Hybridge: ' + _errors.DEBUG_MODE);
     }
     else {
       _getLogger().error('Hybridge: ' + _errors.EVENT_NOT_IMPLEMENTED, event);
@@ -311,7 +311,7 @@ define([
       document.removeEventListener(event.type, callback, false);
     }
     else if (debug) {
-      _getLogger().warning('Hybridge: ' + _errors.DEBUG_MODE);
+      _getLogger().log('Hybridge: ' + _errors.DEBUG_MODE);
     }
     else {
       _getLogger().error('Hybridge: ' + _errors.EVENT_NOT_IMPLEMENTED, event);
