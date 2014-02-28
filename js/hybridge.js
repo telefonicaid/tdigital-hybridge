@@ -28,7 +28,7 @@ define([
   'use strict';
 
   var version = 1, xhr, method, logger, environment, debug, mockResponses, initialized = false,
-    _events = {}, _errors, initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
+    _events = [], _errors, initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
 
   /**
    * Sets init configuration (native environment, logger)
@@ -60,9 +60,9 @@ define([
       method = _sendPrompt;
     }
     /**
-     * Inits ready event
+     * Adds ready event
      */
-    _events.ready = _createEvent('ready');
+    _events.push('ready');
 
     return initModuleDef.resolve(conf).promise();
   }
@@ -350,8 +350,8 @@ define([
     if (window.HybridgeGlobal.events) {
       for (var i = 0; i < window.HybridgeGlobal.events.length; i++) {
         event = window.HybridgeGlobal.events[i];
-        if (!_events[event]) {
-          _events[event] = _createEvent(event);
+        if (_events.indexOf(event) !== -1) {
+          _events.push(event);
         }
       }
     }
@@ -365,9 +365,11 @@ define([
    * Global method used from native to trigger events (scope HybridgeGlobal)
    */
   var _fireEvent = function (type, data) {
-    if (_events[type]) {
-      _events[type].data = data;
-      return document.dispatchEvent(_events[type]);
+    var event;
+    if (_events.indexOf(type) !== -1) {
+      event = _createEvent(type);
+      event.data = data;
+      return document.dispatchEvent(event);
     }
     else {
       _getLogger().error('Hybridge event not defined: ' + type);
