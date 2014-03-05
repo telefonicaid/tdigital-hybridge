@@ -377,6 +377,24 @@ define([
   };
 
   /**
+   * Function to notify whenever Hybridge becomes or is enabled/ready
+   *
+   * If hybridge is ready at calling time, the callback is inmediatelly executed
+   *
+   * @param {Function} cb  Callback to be called once Hybridge is ready
+   */
+  function _ready(cb) {
+    if (_isEnabled()) {
+      cb();
+    } else {
+      _addListener('ready', function onReady() {
+        _removeListener('ready', onReady);
+        cb();
+      });
+    }
+  }
+
+  /**
    * Object containing different error types on rejecting requests (promises)
    * @type {Array}
    */
@@ -429,7 +447,8 @@ define([
     isActionImplemented: _isActionImplemented,
     send: _send,
     events: _events,
-    errors: _errors
+    errors: _errors,
+    ready: _ready
   };
 
   /**
