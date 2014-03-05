@@ -264,6 +264,11 @@ let's enumerate the available methods and properties from the Hybridge Javascrip
  Provides the way to communicate from Javascript to native side. An `action` parameter is required in order to execute an implemented native task.
  Returns a [JQuery](http://jquery.com) [Promise](http://api.jquery.com/Types/#Promise) containing data returned from native or custom error.
  You can add a second function parameter `fallback` in case something goes wrong and you want to supply aditional user feedback as well as update your UI.
+* **ready(callback:Function)**
+ Function that executes the callback function once Hybridge has become enabled. If Hybridge was enabled at calling time, 
+ the callback is executed inmediatly. The main difference with `addListener('ready', handler)` event subscription
+ is that the event handler never becomes executed when the subscription happens and Hybridge was enabled
+ 
 
 ### <a name='api_properties'>Properties</a>
 * **errors** Container object of customs errors returned by the Hybridge:
