@@ -28,7 +28,7 @@ define([
   'use strict';
 
   var version = 1, xhr, method, logger, environment, debug, mockResponses, initialized = false,
-    _events = {}, _errors, initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
+    _events = [], _errors, initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
 
   /**
    * Sets init configuration (native environment, logger)
@@ -60,9 +60,9 @@ define([
       method = _sendPrompt;
     }
     /**
-     * Inits ready event
+     * Adds ready event
      */
-    _events.ready = _createEvent('ready');
+    _events.push('ready');
 
     return initModuleDef.resolve(conf).promise();
   }
@@ -239,28 +239,29 @@ define([
     if (xhr && xhr.readyState !== 4) {
         xhr = null;
     }
+    var def = $.Deferred();
     var action = data.action;
     var id = data.id;
     xhr = $.ajax({
       url: 'http://hybridge/' + action + '/' + id + '/' + new Date().getTime(),
       type: 'HEAD',
-      headers: { 'data': strJSON || '{}' },
-      done: function() {
+      headers: { 'data': strJSON || '{}' }
+    });
+    xhr.done(function() {
         if (xhr.status === 200) {
           _getLogger().info('Hybridge: ' + xhr.statusText);
-          xhr.resolve(JSON.parse(xhr.responseText || '{}'));
+          def.resolve(JSON.parse(xhr.responseText || '{}'));
         }
         else {
           _getLogger().error('Hybridge: ' + xhr.statusText);
-          xhr.reject({'error' : 'HTTP error: ' + xhr.status});
+          def.reject({'error' : 'HTTP error: ' + xhr.status});
         }
-      },
-      error: function(xhr, text, textError) {
+      });
+    xhr.fail(function(xhr, text, textError) {
         _getLogger().error('Error on bridge to native. Non native environment?',
                            xhr, text, textError);
-      }
-    });
-    return xhr.promise();
+      });
+    return def.promise();
   }
 
   /**
@@ -293,7 +294,7 @@ define([
       document.addEventListener(event.type, callback, false);
     }
     else if (debug) {
-      _getLogger().warning('Hybridge: ' + _errors.DEBUG_MODE);
+      _getLogger().log('Hybridge: ' + _errors.DEBUG_MODE);
     }
     else {
       _getLogger().error('Hybridge: ' + _errors.EVENT_NOT_IMPLEMENTED, event);
@@ -310,7 +311,7 @@ define([
       document.removeEventListener(event.type, callback, false);
     }
     else if (debug) {
-      _getLogger().warning('Hybridge: ' + _errors.DEBUG_MODE);
+      _getLogger().log('Hybridge: ' + _errors.DEBUG_MODE);
     }
     else {
       _getLogger().error('Hybridge: ' + _errors.EVENT_NOT_IMPLEMENTED, event);
@@ -349,8 +350,8 @@ define([
     if (window.HybridgeGlobal.events) {
       for (var i = 0; i < window.HybridgeGlobal.events.length; i++) {
         event = window.HybridgeGlobal.events[i];
-        if (!_events[event]) {
-          _events[event] = _createEvent(event);
+        if (_events.indexOf(event) !== -1) {
+          _events.push(event);
         }
       }
     }
@@ -364,9 +365,11 @@ define([
    * Global method used from native to trigger events (scope HybridgeGlobal)
    */
   var _fireEvent = function (type, data) {
-    if (_events[type]) {
-      _events[type].data = data;
-      return document.dispatchEvent(_events[type]);
+    var event;
+    if (_events.indexOf(type) !== -1) {
+      event = _createEvent(type);
+      event.data = data;
+      return document.dispatchEvent(event);
     }
     else {
       _getLogger().error('Hybridge event not defined: ' + type);

@@ -37,7 +37,7 @@ Firstly, get the code by downloading the zip or cloning the project into your lo
 ### <a name='dependencies'>Dependencies</a>
 #### <a name='dependencies_javascript'>Javascript</a>
 Hybridge works in an AMD fashion, so you'll need [RequireJS](http://requirejs.org) for the loading.
-You'll also need [JQuery](http://jquery.com) (version 1.5 or newer) for the Javascript part since [Deferred](http://api.jquery.com/category/deferred-object) object is used intensively.
+You'll also need [JQuery](http://jquery.com) (version 1.8.3 or newer) for the Javascript part since [Deferred](http://api.jquery.com/category/deferred-object) object is used intensively.
 
 **[[⬆]](#index)**
 
