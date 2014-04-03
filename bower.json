@@ -1,0 +1,27 @@
+{
+  "name": "hybridge",
+  "version": "1.2.0",
+  "homepage": "https://github.com/telefonicaid/tdigital-hybridge",
+  "description": "javascript / mobile native simple bridge for hybrid apps, back and forth...",
+  "main": "js/hybridge.js",
+  "keywords": [
+    "native",
+    "javascript",
+    "ios",
+    "android",
+    "bridge",
+    "hybrid"
+  ],
+  "license": "AfferoGPLv3",
+  "ignore": [
+    "android",
+    "ios",
+    "boilerplate",
+    ".gitignore",
+    "*.podspec"
+  ],
+  "dependencies": {
+    "jquery": "*",
+    "requirejs": "~2.1.0"
+  }
+}
