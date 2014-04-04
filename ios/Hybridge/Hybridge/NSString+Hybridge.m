@@ -15,11 +15,13 @@
     
     static NSString * const kFormat = @"HybridgeGlobal.fireEvent(\"%@\", %@)";
     
-    NSData *JSONData = [NSJSONSerialization dataWithJSONObject:data ? : @{}
-                                                       options:0
-                                                         error:NULL];
-    NSString *JSONString = [[NSString alloc] initWithData:JSONData encoding:NSUTF8StringEncoding];
+    NSString *JSONString = [self hyb_JSONStringWithObject:data ? : @{}];
     return [NSString stringWithFormat:kFormat, event, JSONString];
+}
+
++ (instancetype)hyb_JSONStringWithObject:(id)object {
+    NSData *JSONData = [NSJSONSerialization dataWithJSONObject:object options:0 error:NULL];
+    return [[NSString alloc] initWithData:JSONData encoding:NSUTF8StringEncoding];
 }
 
 @end

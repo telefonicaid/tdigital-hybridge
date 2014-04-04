@@ -42,8 +42,9 @@
  This method should be called after the web view has finished loading the HTML contents.
  
  @param webView The `UIWebView` to configure.
+ @return The result of preparing the web view.
  */
-- (void)prepareWebView:(UIWebView *)webView;
+- (NSString *)prepareWebView:(UIWebView *)webView;
 
 /**
  This method is called by the URL loading system when a Hybridge request is made.

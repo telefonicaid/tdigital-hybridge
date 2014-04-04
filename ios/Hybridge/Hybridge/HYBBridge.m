@@ -7,6 +7,10 @@
 //
 
 #import "HYBBridge.h"
+#import "HYBURLProtocol.h"
+#import "HYBEvent.h"
+
+#import "NSString+Hybridge.h"
 #import "NSHTTPURLResponse+Hybridge.h"
 
 static SEL HYBSelectorWithAction(NSString *action) {
@@ -38,21 +42,47 @@ static SEL HYBSelectorWithAction(NSString *action) {
 
 @implementation HYBBridge
 
++ (void)initialize {
+    if (self == [HYBBridge class]) {
+        [NSURLProtocol registerClass:[HYBURLProtocol class]];
+    }
+}
+
 + (NSInteger)version {
     return 1;
 }
 
+static HYBBridge *activeBridge;
+
 + (void)setActiveBridge:(HYBBridge *)bridge {
-    // TODO: implement
+    activeBridge = bridge;
 }
 
 + (instancetype)activeBridge {
-    // TODO: implement
-    return nil;
+    return activeBridge;
 }
 
-- (void)prepareWebView:(UIWebView *)webView {
-    // TODO: implement
+- (NSString *)prepareWebView:(UIWebView *)webView {
+    NSParameterAssert(webView);
+    
+    static NSString * const kFormat = @"window.HybridgeGlobal || setTimeout(function() {"
+                                      @"	window.HybridgeGlobal = {"
+                                      @"		isReady:true,"
+                                      @"		version:%@,"
+                                      @"		actions:%@,"
+                                      @"		events:%@"
+                                      @"	};"
+                                      @"	window.$ && $('#hybridgeTrigger').toggleClass('switch');"
+                                      @"}, 0)";
+    
+    NSArray *actions = [self.delegate bridgeActions:self];
+    NSString *actionsString = [NSString hyb_JSONStringWithObject:actions ? : @[]];
+    
+    NSArray *events = @[HYBEventPause, HYBEventResume, HYBEventMessage, HYBEventReady];
+    NSString *eventsString = [NSString hyb_JSONStringWithObject:events];
+    
+    NSString *javascript = [NSString stringWithFormat:kFormat, @([[self class] version]), actionsString, eventsString];
+    return [webView stringByEvaluatingJavaScriptFromString:javascript];
 }
 
 - (NSHTTPURLResponse *)sendAction:(NSString *)action data:(NSDictionary *)data {
@@ -65,13 +95,11 @@ static SEL HYBSelectorWithAction(NSString *action) {
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
         invocation.target = self.delegate;
         invocation.selector = selector;
-
+        [invocation setArgument:&data atIndex:2];
+        
 		[invocation invoke];
         
-		__unsafe_unretained id result = nil;
-		[invocation getReturnValue:&result];
-        
-		return result;
+		return [NSHTTPURLResponse hyb_responseWithAction:action statusCode:200];
     } else if ([self.delegate respondsToSelector:@selector(bridge:didReceiveAction:data:)]) {
         return [self.delegate bridge:self didReceiveAction:action data:data];
     }

@@ -28,13 +28,18 @@ static NSString * const kHTTPOptionsMethod = @"OPTIONS";
     NSHTTPURLResponse *response = nil;
     
     if (![[self.request HTTPMethod] isEqualToString:kHTTPOptionsMethod]) {
-        NSString *action = [[[self.request URL] pathComponents] firstObject];
+        NSArray *components = [[self.request URL] pathComponents];
+        NSString *action = [components count] > 1 ? components[1] : nil;
         
-        NSDictionary *headers = [self.request allHTTPHeaderFields];
-        NSData *data = [headers[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
-        id JSONObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
-        
-        response = [[HYBBridge activeBridge] sendAction:action data:JSONObject];
+        if (action) {
+            NSDictionary *headers = [self.request allHTTPHeaderFields];
+            NSData *data = [headers[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
+            id JSONObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+            
+            response = [[HYBBridge activeBridge] sendAction:action data:JSONObject];
+        } else {
+            response = [NSHTTPURLResponse hyb_responseWithURL:[self.request URL] statusCode:404];
+        }
     }
     
     if (!response) {
