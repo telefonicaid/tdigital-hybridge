@@ -1,4 +1,8 @@
-# Xcode files
+# System
+.DS_Store
+# Subversion
+.svn
+# Xcode
 build/*
 *.pbxuser
 !default.pbxuser
@@ -9,8 +13,10 @@ build/*
 *.perspectivev3
 !default.perspectivev3
 *.xcworkspace
-!default.xcworkspace
 xcuserdata
 profile
 *.moved-aside
-*.DS_Store
+# AppCode
+.idea
+#Cocoapods
+Pods
