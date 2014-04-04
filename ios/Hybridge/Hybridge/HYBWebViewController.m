@@ -11,28 +11,74 @@
 
 @interface HYBWebViewController ()
 
+@property (strong, nonatomic) NSURL *URL;
+
 @end
 
 @implementation HYBWebViewController
+
+#pragma mark - Properties
+
+- (UIWebView *)webView {
+    return (UIWebView *)self.view;
+}
+
+#pragma mark - Lifecycle
+
+- (void)dealloc {
+    [self.webView stopLoading];
+    self.webView.delegate = nil;
+}
 
 - (id)initWithURL:(NSURL *)url {
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
-        // Custom initialization
+        _bridge = [[HYBBridge alloc] init];
+        _URL = url;
     }
     
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+- (void)loadView {
+    if ([self nibName]) {
+        [super loadView];
+        NSAssert([self.view isKindOfClass:[UIWebView class]], @"HYBWebViewController view must be a UIWebView instance.");
+    } else {
+        UIWebView *view = [[UIWebView alloc] init];
+        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        view.scalesPageToFit = YES;
+        view.delegate = self;
+        
+        self.view = view;
+    }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self.webView loadRequest:[NSURLRequest requestWithURL:self.URL]];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [HYBBridge setActiveBridge:self.bridge];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    if (self.bridge == [HYBBridge activeBridge]) {
+        [HYBBridge setActiveBridge:nil];
+    }
+}
+
+#pragma mark - UIWebViewDelegate
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [self.bridge prepareWebView:webView];
 }
 
 @end

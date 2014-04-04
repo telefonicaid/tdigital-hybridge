@@ -13,7 +13,7 @@
 /**
  A view controller that manages a web view and the bridge to communicate with it.
  */
-@interface HYBWebViewController : UIViewController
+@interface HYBWebViewController : UIViewController <UIWebViewDelegate>
 
 @property (strong, nonatomic, readonly) UIWebView *webView;
 @property (strong, nonatomic, readonly) HYBBridge *bridge;
