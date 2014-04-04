@@ -28,6 +28,7 @@
 		9960C8AD18EE914600FEC7DB /* UIWebView+Hybridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9960C8AB18EE914600FEC7DB /* UIWebView+Hybridge.m */; };
 		9960C8B018EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 9960C8AE18EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9960C8B118EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9960C8AF18EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.m */; };
+		9960C8C518EEC19200FEC7DB /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9960C8BD18EEC19200FEC7DB /* libOCMock.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,13 @@
 		9960C8AB18EE914600FEC7DB /* UIWebView+Hybridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+Hybridge.m"; sourceTree = "<group>"; };
 		9960C8AE18EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSHTTPURLResponse+Hybridge.h"; sourceTree = "<group>"; };
 		9960C8AF18EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSHTTPURLResponse+Hybridge.m"; sourceTree = "<group>"; };
+		9960C8BD18EEC19200FEC7DB /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
+		9960C8BF18EEC19200FEC7DB /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
+		9960C8C018EEC19200FEC7DB /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
+		9960C8C118EEC19200FEC7DB /* OCMConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMConstraint.h; sourceTree = "<group>"; };
+		9960C8C218EEC19200FEC7DB /* OCMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMock.h; sourceTree = "<group>"; };
+		9960C8C318EEC19200FEC7DB /* OCMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockObject.h; sourceTree = "<group>"; };
+		9960C8C418EEC19200FEC7DB /* OCMockRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockRecorder.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +103,7 @@
 				992DEDB918ED963A005CD768 /* libHybridge.a in Frameworks */,
 				992DEDB618ED963A005CD768 /* UIKit.framework in Frameworks */,
 				992DEDB418ED963A005CD768 /* Foundation.framework in Frameworks */,
+				9960C8C518EEC19200FEC7DB /* libOCMock.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,8 +171,9 @@
 		992DEDBA18ED963A005CD768 /* HybridgeTests */ = {
 			isa = PBXGroup;
 			children = (
-				992DEDC018ED963A005CD768 /* HybridgeTests.m */,
+				9960C8BC18EEC19200FEC7DB /* OCMock */,
 				992DEDBB18ED963A005CD768 /* Supporting Files */,
+				992DEDC018ED963A005CD768 /* HybridgeTests.m */,
 			);
 			path = HybridgeTests;
 			sourceTree = "<group>";
@@ -175,6 +185,28 @@
 				992DEDBD18ED963A005CD768 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9960C8BC18EEC19200FEC7DB /* OCMock */ = {
+			isa = PBXGroup;
+			children = (
+				9960C8BD18EEC19200FEC7DB /* libOCMock.a */,
+				9960C8BE18EEC19200FEC7DB /* OCMock */,
+			);
+			path = OCMock;
+			sourceTree = "<group>";
+		};
+		9960C8BE18EEC19200FEC7DB /* OCMock */ = {
+			isa = PBXGroup;
+			children = (
+				9960C8BF18EEC19200FEC7DB /* NSNotificationCenter+OCMAdditions.h */,
+				9960C8C018EEC19200FEC7DB /* OCMArg.h */,
+				9960C8C118EEC19200FEC7DB /* OCMConstraint.h */,
+				9960C8C218EEC19200FEC7DB /* OCMock.h */,
+				9960C8C318EEC19200FEC7DB /* OCMockObject.h */,
+				9960C8C418EEC19200FEC7DB /* OCMockRecorder.h */,
+			);
+			path = OCMock;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -424,7 +456,23 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(SRCROOT)/OCMock\"",
+				);
 				INFOPLIST_FILE = "HybridgeTests/HybridgeTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HybridgeTests/OCMock",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-force_load",
+					"\"$(SRCROOT)/OCMock/libOCMock.a\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -440,7 +488,23 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hybridge/Hybridge-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(SRCROOT)/OCMock\"",
+				);
 				INFOPLIST_FILE = "HybridgeTests/HybridgeTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HybridgeTests/OCMock",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-force_load",
+					"\"$(SRCROOT)/OCMock/libOCMock.a\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
