@@ -12,11 +12,12 @@
 
 /**
  Fires a Hybridge event in the receiver.
- This method returns immediately without waiting for the event to be processed.
  
  @param event The event to fire.
  @param data A dictionary containing data to pass along with the event.
+ 
+ @return The result of firing the event.
  */
-- (void)hyb_fireEvent:(NSString *)event data:(NSDictionary *)data;
+- (NSString *)hyb_fireEvent:(NSString *)event data:(NSDictionary *)data;
 
 @end

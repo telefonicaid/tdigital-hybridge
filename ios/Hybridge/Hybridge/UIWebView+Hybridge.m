@@ -7,11 +7,13 @@
 //
 
 #import "UIWebView+Hybridge.h"
+#import "NSString+Hybridge.h"
 
 @implementation UIWebView (Hybridge)
 
-- (void)hyb_fireEvent:(NSString *)event data:(NSDictionary *)data {
-    // TODO: implement
+- (NSString *)hyb_fireEvent:(NSString *)event data:(NSDictionary *)data {
+    NSString *javascript = [NSString hyb_javascriptStringWithEvent:event data:data];
+    return [self stringByEvaluatingJavaScriptFromString:javascript];
 }
 
 @end
