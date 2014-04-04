@@ -27,7 +27,8 @@ NSString * const HYBHostName = @"hybridge";
 + (instancetype)hyb_responseWithAction:(NSString *)action statusCode:(NSInteger)statusCode {
     NSParameterAssert(action);
     
-    NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:HYBHostName path:action];
+    NSString *path = [NSString stringWithFormat:@"/%@", action];
+    NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:HYBHostName path:path];
     return [self hyb_responseWithURL:url statusCode:statusCode];
 }
 
