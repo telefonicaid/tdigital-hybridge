@@ -2,8 +2,8 @@
 //  HYBTestCase.m
 //  Hybridge
 //
-//  Created by guille on 04/04/14.
 //  Copyright (c) 2014 Telefonica I+D. All rights reserved.
+//  Licensed under the Affero GNU GPL v3, see LICENSE for more details.
 //
 
 #import "HYBTestCase.h"

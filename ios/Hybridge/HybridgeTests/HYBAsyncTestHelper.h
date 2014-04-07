@@ -1,8 +1,8 @@
 //
 //  HYBAsyncTestHelper.h
 //
-//  Created by guille on 23/09/13.
 //  Copyright (c) 2013 Guillermo Gonzalez. All rights reserved.
+//  Licensed under the Affero GNU GPL v3, see LICENSE for more details.
 //
 
 #import <Foundation/Foundation.h>
