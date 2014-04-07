@@ -38,6 +38,15 @@
 + (instancetype)activeBridge;
 
 /**
+ Initializes the bridge with a dispatch queue.
+ This is the designated initializer.
+ 
+ @param queue The queue that will be used to dispatch actions. If `nil` the main queue will be used.
+ @return A newly initialized bridge.
+ */
+- (id)initWithQueue:(dispatch_queue_t)queue;
+
+/**
  Configures a `UIWebView` to be able to communicate with this bridge.
  This method should be called after the web view has finished loading the HTML contents.
  
@@ -62,10 +71,9 @@
  
  @param action The action name.
  @param data An `NSDictionary` containing data attached to the action.
- 
- @return `nil` if the action was handled correctly, otherwise an `NSHTTPURLResponse` initialized with a 404 status code.
+ @param completion A block that will be executed after the action has been dispatched.
  */
-- (NSHTTPURLResponse *)sendAction:(NSString *)action data:(NSDictionary *)data;
+- (void)dispatchAction:(NSString *)action data:(NSDictionary *)data completion:(void (^)(NSHTTPURLResponse *))completion;
 
 @end
 
@@ -86,12 +94,11 @@
 /**
  Called when the bridge receives an action.
  
- @param bridge The bridge that receives the action.
  @param action The action name.
  @param data An `NSDictionary` containing data attached to the action.
  
  @return `nil` if the action was handled correctly, otherwise a `NSHTTPURLResponse` initialized with the appropiate status code.
  */
-- (NSHTTPURLResponse *)bridge:(HYBBridge *)bridge didReceiveAction:(NSString *)action data:(NSDictionary *)data;
+- (NSHTTPURLResponse *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data;
 
 @end

@@ -40,6 +40,33 @@ static SEL HYBSelectorWithAction(NSString *action) {
     return NSSelectorFromString(selectorName);
 }
 
+static NSHTTPURLResponse *HYBSendAction(NSString *action, NSDictionary *data, NSObject<HYBBridgeDelegate> *delegate) {
+    SEL selector = HYBSelectorWithAction(action);
+    
+    if ([delegate respondsToSelector:selector]) {
+        NSMethodSignature *methodSignature = [delegate methodSignatureForSelector:selector];
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
+        invocation.target = delegate;
+        invocation.selector = selector;
+        [invocation setArgument:&data atIndex:2];
+        
+		[invocation invoke];
+        
+		return [NSHTTPURLResponse hyb_responseWithAction:action statusCode:200];
+    } else if ([delegate respondsToSelector:@selector(bridgeDidReceiveAction:data:)]) {
+        NSHTTPURLResponse *response = [delegate bridgeDidReceiveAction:action data:data];
+        return response ? : [NSHTTPURLResponse hyb_responseWithAction:action statusCode:200];
+    }
+    
+    return [NSHTTPURLResponse hyb_responseWithAction:action statusCode:404];
+}
+
+@interface HYBBridge ()
+
+@property (strong, nonatomic) dispatch_queue_t queue;
+
+@end
+
 @implementation HYBBridge
 
 + (void)initialize {
@@ -55,11 +82,29 @@ static SEL HYBSelectorWithAction(NSString *action) {
 static HYBBridge *activeBridge;
 
 + (void)setActiveBridge:(HYBBridge *)bridge {
-    activeBridge = bridge;
+    @synchronized(self) {
+        activeBridge = bridge;
+    }
 }
 
 + (instancetype)activeBridge {
-    return activeBridge;
+    @synchronized(self) {
+        return activeBridge;
+    }
+}
+
+- (id)init {
+    return [self initWithQueue:nil];
+}
+
+- (id)initWithQueue:(dispatch_queue_t)queue {
+    self = [super init];
+    
+    if (self) {
+        self.queue = queue ? : dispatch_get_main_queue();
+    }
+    
+    return self;
 }
 
 - (NSString *)prepareWebView:(UIWebView *)webView {
@@ -85,26 +130,15 @@ static HYBBridge *activeBridge;
     return [webView stringByEvaluatingJavaScriptFromString:javascript];
 }
 
-- (NSHTTPURLResponse *)sendAction:(NSString *)action data:(NSDictionary *)data {
+- (void)dispatchAction:(NSString *)action data:(NSDictionary *)data completion:(void (^)(NSHTTPURLResponse *))completion {
     NSParameterAssert(action);
+    NSParameterAssert(completion);
     
-    SEL selector = HYBSelectorWithAction(action);
-    
-    if ([self.delegate respondsToSelector:selector]) {
-        NSMethodSignature *methodSignature = [self.delegate methodSignatureForSelector:selector];
-        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
-        invocation.target = self.delegate;
-        invocation.selector = selector;
-        [invocation setArgument:&data atIndex:2];
-        
-		[invocation invoke];
-        
-		return [NSHTTPURLResponse hyb_responseWithAction:action statusCode:200];
-    } else if ([self.delegate respondsToSelector:@selector(bridge:didReceiveAction:data:)]) {
-        return [self.delegate bridge:self didReceiveAction:action data:data];
-    }
-    
-    return [NSHTTPURLResponse hyb_responseWithAction:action statusCode:404];
+    NSObject<HYBBridgeDelegate> *delegate = self.delegate;
+    dispatch_async(self.queue, ^{
+        NSHTTPURLResponse *response = HYBSendAction(action, data, delegate);
+        completion(response);
+    });
 }
 
 @end

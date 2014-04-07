@@ -95,6 +95,7 @@
 		9960C8DA18EEDB8000FEC7DB /* NSString+Hybridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hybridge.m"; sourceTree = "<group>"; };
 		9960C8DD18EEDC6500FEC7DB /* NSStringHybridgeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringHybridgeTests.m; sourceTree = "<group>"; };
 		9960C8DF18EEE83A00FEC7DB /* HYBBridgeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBBridgeTests.m; sourceTree = "<group>"; };
+		99801D0F18F28B4E0027FC7A /* HYBAsyncTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HYBAsyncTestHelper.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +189,7 @@
 				992DEDBB18ED963A005CD768 /* Supporting Files */,
 				9960C8D618EED54200FEC7DB /* HYBTestCase.h */,
 				9960C8D718EED54200FEC7DB /* HYBTestCase.m */,
+				99801D0F18F28B4E0027FC7A /* HYBAsyncTestHelper.h */,
 				9960C8D218EEC45800FEC7DB /* NSHTTPURLResponseHybridgeTests.m */,
 				9960C8DD18EEDC6500FEC7DB /* NSStringHybridgeTests.m */,
 				9960C8DF18EEE83A00FEC7DB /* HYBBridgeTests.m */,

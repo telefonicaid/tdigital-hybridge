@@ -7,6 +7,7 @@
 //
 
 #import "HYBTestCase.h"
+#import "HYBAsyncTestHelper.h"
 
 @interface HYBBridgeTests : HYBTestCase <HYBBridgeDelegate>
 
@@ -62,7 +63,7 @@
     XCTAssertEqualObjects(@"ok", result, @"should return the value returned by the web view");
 }
 
-- (void)testSendAction {
+- (void)testActionDispatch {
     HYBBridge *bridge = [HYBBridge new];
     bridge.delegate = self;
     
@@ -72,15 +73,19 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request addValue:@"{\"foo\":\"bar\"}" forHTTPHeaderField:@"data"];
     
-    NSHTTPURLResponse *response = nil;
-    [NSURLConnection sendSynchronousRequest:request
-                          returningResponse:&response
-                                      error:NULL];
+    NSHTTPURLResponse * __block response = nil;
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *r, NSData *data, NSError *error) {
+                               response = (NSHTTPURLResponse *)r;
+                           }];
+    HYBAssertEventually(response, @"should complete with a response");
+    
     XCTAssertTrue(self.didReceiveActionCalled, @"should call the delegate");
     XCTAssertEqual((NSInteger)200, [response statusCode], @"should return 200 OK");
 }
 
-- (void)testSendActionWithMethodHandler {
+- (void)testActionDispatchWithMethodHandler {
     HYBBridge *bridge = [HYBBridge new];
     bridge.delegate = self;
     
@@ -90,12 +95,32 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request addValue:@"{\"bar\":\"foo\"}" forHTTPHeaderField:@"data"];
     
-    NSHTTPURLResponse *response = nil;
-    [NSURLConnection sendSynchronousRequest:request
-                          returningResponse:&response
-                                      error:NULL];
+    NSHTTPURLResponse * __block response = nil;
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *r, NSData *data, NSError *error) {
+                               response = (NSHTTPURLResponse *)r;
+                           }];
+    HYBAssertEventually(response, @"should complete with a response");
+    
     XCTAssertTrue(self.handlerCalled, @"should call the handler method");
     XCTAssertEqual((NSInteger)200, [response statusCode], @"should return 200 OK");
+}
+
+- (void)testUnhandledAction {
+    HYBBridge *bridge = [HYBBridge new];
+    [HYBBridge setActiveBridge:bridge];
+    
+    NSURL *url = [NSURL URLWithString:@"http://hybridge/unhandled_action"];
+    
+    NSHTTPURLResponse * __block response = nil;
+    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url]
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *r, NSData *data, NSError *error) {
+                               response = (NSHTTPURLResponse *)r;
+                           }];
+    HYBAssertEventually(response, @"should complete with a response");
+    XCTAssertEqual((NSInteger)404, [response statusCode], @"should return 404 Not found");
 }
 
 #pragma mark - HYBBridgeDelegate
@@ -104,10 +129,8 @@
     return @[@"test", @"something"];
 }
 
-- (NSHTTPURLResponse *)bridge:(HYBBridge *)bridge
-             didReceiveAction:(NSString *)action
-                         data:(NSDictionary *)data
-{
+- (NSHTTPURLResponse *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data {
+    XCTAssertTrue([NSThread isMainThread], @"should be called in the main thread");
     XCTAssertEqualObjects(@"test", action, @"should receive a 'test' action");
     
     NSDictionary *expectedData = @{@"foo": @"bar"};
@@ -118,6 +141,8 @@
 }
 
 - (void)handleSomethingWithData:(NSDictionary *)data {
+    XCTAssertTrue([NSThread isMainThread], @"should be called in the main thread");
+    
     NSDictionary *expectedData = @{@"bar": @"foo"};
     XCTAssertEqualObjects(expectedData, data, @"should receive the correct data");
     

@@ -25,29 +25,29 @@ static NSString * const kHTTPOptionsMethod = @"OPTIONS";
 }
 
 - (void)startLoading {
-    NSHTTPURLResponse *response = nil;
-    
-    if (![[self.request HTTPMethod] isEqualToString:kHTTPOptionsMethod]) {
+    if ([[self.request HTTPMethod] isEqualToString:kHTTPOptionsMethod]) {
+        NSHTTPURLResponse *response = [NSHTTPURLResponse hyb_responseWithURL:[self.request URL] statusCode:200];
+        [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+        [self.client URLProtocolDidFinishLoading:self];
+    } else {
         NSArray *components = [[self.request URL] pathComponents];
         NSString *action = [components count] > 1 ? components[1] : nil;
         
         if (action) {
             NSDictionary *headers = [self.request allHTTPHeaderFields];
             NSData *data = [headers[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
-            id JSONObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+            id JSONObject = data ? [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL] : nil;
             
-            response = [[HYBBridge activeBridge] sendAction:action data:JSONObject];
+            [[HYBBridge activeBridge] dispatchAction:action data:JSONObject completion:^(NSHTTPURLResponse *response) {
+                [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+                [self.client URLProtocolDidFinishLoading:self];
+            }];
         } else {
-            response = [NSHTTPURLResponse hyb_responseWithURL:[self.request URL] statusCode:404];
+            NSHTTPURLResponse *response = [NSHTTPURLResponse hyb_responseWithURL:[self.request URL] statusCode:404];
+            [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+            [self.client URLProtocolDidFinishLoading:self];
         }
     }
-    
-    if (!response) {
-        response = [NSHTTPURLResponse hyb_responseWithURL:[self.request URL] statusCode:200];
-    }
-    
-    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-    [self.client URLProtocolDidFinishLoading:self];
 }
 
 - (void)stopLoading {
