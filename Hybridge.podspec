@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
                    DESC
   s.homepage     = "https://github.com/telefonicaid/tdigital-hybridge"
   
-  s.license      = { :type => "Affero GNU GPL v3", :file => "LICENSE" }
+  s.license      = { :type => "Affero GNU GPL v3", :file => "LICENSE.txt" }
 
   s.authors  = { 'David Garcia' => 'dgs30@tid.es', 'Guillermo Gonzalez' => 'gonzalezreal@icloud.com' }
 
