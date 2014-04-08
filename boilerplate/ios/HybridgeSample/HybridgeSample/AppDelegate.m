@@ -18,7 +18,6 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // CHANGE ME BEFORE MERGE: set the final appropriate URL for this resource
     NSURL *url = [NSURL URLWithString:@"http://telefonicaid.github.io/tdigital-hybridge/hybridge.html"];
     WebViewController *webViewController = [[WebViewController alloc] initWithURL:url];
     

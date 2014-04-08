@@ -12,6 +12,7 @@
 
 #import "NSString+Hybridge.h"
 #import "NSHTTPURLResponse+Hybridge.h"
+#import "UIWebView+Hybridge.h"
 
 static SEL HYBSelectorWithAction(NSString *action) {
     static dispatch_once_t onceToken;
@@ -64,6 +65,7 @@ static NSHTTPURLResponse *HYBSendAction(NSString *action, NSDictionary *data, NS
 @interface HYBBridge ()
 
 @property (strong, nonatomic) dispatch_queue_t queue;
+@property (weak, nonatomic) UIWebView *webView;
 
 @end
 
@@ -109,6 +111,9 @@ static HYBBridge *activeBridge;
 
 - (NSString *)prepareWebView:(UIWebView *)webView {
     NSParameterAssert(webView);
+    
+    self.webView = webView;
+    
     static NSString * const kFormat = @"window.HybridgeGlobal || setTimeout(function() {"
                                       @"	window.HybridgeGlobal = {"
                                       @"		isReady:true,"
@@ -119,8 +124,8 @@ static HYBBridge *activeBridge;
                                       @"	(window.document.getElementById('hybridgeTrigger') || {}).className = 'switch';"
                                       @"}, 0);";
     
-    NSArray *actions = [self.delegate bridgeActions:self];
-    NSString *actionsString = [NSString hyb_JSONStringWithObject:actions ? : @[]];
+    NSArray *actions = [@[@"init"] arrayByAddingObjectsFromArray:[self.delegate bridgeActions:self]];
+    NSString *actionsString = [NSString hyb_JSONStringWithObject:actions];
     
     NSArray *events = @[HYBEventPause, HYBEventResume, HYBEventMessage, HYBEventReady];
     NSString *eventsString = [NSString hyb_JSONStringWithObject:events];
@@ -133,11 +138,24 @@ static HYBBridge *activeBridge;
     NSParameterAssert(action);
     NSParameterAssert(completion);
     
-    NSObject<HYBBridgeDelegate> *delegate = self.delegate;
-    dispatch_async(self.queue, ^{
-        NSHTTPURLResponse *response = HYBSendAction(action, data, delegate);
+    // Automatically respond to 'init' actions. Dispatch other actions to the delegate.
+    
+    if ([action isEqualToString:@"init"] && self.webView) {
+        UIWebView *webView = self.webView;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [webView hyb_fireEvent:HYBEventReady data:nil];
+        });
+        
+        NSHTTPURLResponse *response = [NSHTTPURLResponse hyb_responseWithAction:action statusCode:200];
         completion(response);
-    });
+    } else {
+        NSObject<HYBBridgeDelegate> *delegate = self.delegate;
+        dispatch_async(self.queue, ^{
+            NSHTTPURLResponse *response = HYBSendAction(action, data, delegate);
+            completion(response);
+        });
+    }
 }
 
 @end

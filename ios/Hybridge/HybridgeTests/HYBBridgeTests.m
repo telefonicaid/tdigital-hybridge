@@ -48,19 +48,19 @@
                            @"	window.HybridgeGlobal = {"
                            @"		isReady:true,"
                            @"		version:1,"
-                           @"		actions:[\"test\",\"something\"],"
+                           @"		actions:[\"init\",\"test\",\"something\"],"
                            @"		events:[\"pause\",\"resume\",\"message\",\"ready\"]"
                            @"	};"
-                           @"	window.$ && $('#hybridgeTrigger').toggleClass('switch');"
-                           @"}, 0)";
+                           @"	(window.document.getElementById('hybridgeTrigger') || {}).className = 'switch';"
+                           @"}, 0);";
     
-    [[[webView expect] andReturn:@"ok"] stringByEvaluatingJavaScriptFromString:javascript];
+    [[[webView expect] andReturn:@"true"] stringByEvaluatingJavaScriptFromString:javascript];
     
     HYBBridge *bridge = [HYBBridge new];
     bridge.delegate = self;
     
     NSString *result = [bridge prepareWebView:webView];
-    XCTAssertEqualObjects(@"ok", result, @"should return the value returned by the web view");
+    XCTAssertEqualObjects(@"true", result, @"should return the value returned by the web view");
 }
 
 - (void)testActionDispatch {

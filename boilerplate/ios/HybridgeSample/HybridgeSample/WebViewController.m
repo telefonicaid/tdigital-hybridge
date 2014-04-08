@@ -24,23 +24,35 @@
 #pragma mark - HYBBridgeDelegate
 
 - (NSArray *)bridgeActions:(HYBBridge *)bridge {
-    // TODO: implement
-    return @[@"init", @"someAction", @"someOtherAction"];
+    return @[@"some_action", @"some_other_action"];
 }
 
-- (void)handleInitWithData:(NSDictionary *)data {
-    NSLog(@"init");
+/* 
+ If you name your actions using snake_case (i.e. 'your_action'), the bridge will look for a
+ a method with the signature `- (void)handle<YourAction>WithData:(NSDictionary *)data` to handle
+ that action.
+ */
+
+- (void)handleSomeActionWithData:(NSDictionary *)data {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
     
-    if ([data[@"initialized"] boolValue]) {
-        [self.webView hyb_fireEvent:HYBEventReady data:nil];
-    }
+    // Send a message event back to the web view
+    [self.webView hyb_fireEvent:HYBEventMessage data:@{@"method": NSStringFromSelector(_cmd)}];
 }
+
+- (void)handleSomeOtherActionWithData:(NSDictionary *)data {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    // Send a message event back to the web view
+    [self.webView hyb_fireEvent:HYBEventMessage data:@{@"method": NSStringFromSelector(_cmd)}];
+}
+
+/* If you wish to handle actions in a more generic way, you can implement:
 
 - (NSHTTPURLResponse *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data {
-    NSLog(@"action: %@ data: %@", action, data);
-    // For the sake of the sample, we send "message" events with the action data
-    [self.webView hyb_fireEvent:HYBEventMessage data:data];
+    // Handle actions here
     return nil;
 }
+ */
 
 @end
