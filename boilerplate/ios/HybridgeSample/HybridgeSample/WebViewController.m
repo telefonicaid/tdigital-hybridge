@@ -25,7 +25,7 @@
 
 - (NSArray *)bridgeActions:(HYBBridge *)bridge {
     // TODO: implement
-    return @[@"init", @"greetings"];
+    return @[@"init", @"someAction", @"someOtherAction"];
 }
 
 - (void)handleInitWithData:(NSDictionary *)data {
@@ -38,6 +38,8 @@
 
 - (NSHTTPURLResponse *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data {
     NSLog(@"action: %@ data: %@", action, data);
+    // For the sake of the sample, we send "message" events with the action data
+    [self.webView hyb_fireEvent:HYBEventMessage data:data];
     return nil;
 }
 

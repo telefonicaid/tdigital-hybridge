@@ -20,8 +20,6 @@
 		99801D4918F291100027FC7A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99801D4718F291100027FC7A /* InfoPlist.strings */; };
 		99801D4B18F291100027FC7A /* HybridgeSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99801D4A18F291100027FC7A /* HybridgeSampleTests.m */; };
 		99801D5618F295670027FC7A /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99801D5518F295670027FC7A /* WebViewController.m */; };
-		99801D5918F296C30027FC7A /* flip.css in Resources */ = {isa = PBXBuildFile; fileRef = 99801D5718F296C30027FC7A /* flip.css */; };
-		99801D5A18F296C30027FC7A /* hybridge.html in Resources */ = {isa = PBXBuildFile; fileRef = 99801D5818F296C30027FC7A /* hybridge.html */; };
 		B785C3222F884EA28C6EA1BA /* libPods-HybridgeSample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3120090FCC9B40F4BA0C73DE /* libPods-HybridgeSample.a */; };
 /* End PBXBuildFile section */
 
@@ -55,8 +53,6 @@
 		99801D4A18F291100027FC7A /* HybridgeSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HybridgeSampleTests.m; sourceTree = "<group>"; };
 		99801D5418F295670027FC7A /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		99801D5518F295670027FC7A /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
-		99801D5718F296C30027FC7A /* flip.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = flip.css; sourceTree = "<group>"; };
-		99801D5818F296C30027FC7A /* hybridge.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = hybridge.html; sourceTree = "<group>"; };
 		C434E462390044FABE0DB5F7 /* Pods-HybridgeSample.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HybridgeSample.xcconfig"; path = "Pods/Pods-HybridgeSample.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,8 +120,6 @@
 				99801D2C18F2910F0027FC7A /* AppDelegate.m */,
 				99801D5418F295670027FC7A /* WebViewController.h */,
 				99801D5518F295670027FC7A /* WebViewController.m */,
-				99801D5718F296C30027FC7A /* flip.css */,
-				99801D5818F296C30027FC7A /* hybridge.html */,
 				99801D3718F291100027FC7A /* Images.xcassets */,
 				99801D2318F2910F0027FC7A /* Supporting Files */,
 			);
@@ -241,8 +235,6 @@
 			files = (
 				99801D3818F291100027FC7A /* Images.xcassets in Resources */,
 				99801D2718F2910F0027FC7A /* InfoPlist.strings in Resources */,
-				99801D5A18F296C30027FC7A /* hybridge.html in Resources */,
-				99801D5918F296C30027FC7A /* flip.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

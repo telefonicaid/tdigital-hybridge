@@ -109,7 +109,6 @@ static HYBBridge *activeBridge;
 
 - (NSString *)prepareWebView:(UIWebView *)webView {
     NSParameterAssert(webView);
-    
     static NSString * const kFormat = @"window.HybridgeGlobal || setTimeout(function() {"
                                       @"	window.HybridgeGlobal = {"
                                       @"		isReady:true,"
@@ -117,8 +116,8 @@ static HYBBridge *activeBridge;
                                       @"		actions:%@,"
                                       @"		events:%@"
                                       @"	};"
-                                      @"	window.$ && $('#hybridgeTrigger').toggleClass('switch');"
-                                      @"}, 0)";
+                                      @"	(window.document.getElementById('hybridgeTrigger') || {}).className = 'switch';"
+                                      @"}, 0);";
     
     NSArray *actions = [self.delegate bridgeActions:self];
     NSString *actionsString = [NSString hyb_JSONStringWithObject:actions ? : @[]];
