@@ -33,3 +33,6 @@ Pods
 */*/bin/
 */*/gen/
 */*/build/
+
+.idea
+
