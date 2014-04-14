@@ -473,7 +473,7 @@ define([
     send: _send,
     events: _events,
     actions: _actions,
-    errors: _errors
+    errors: _errors,
     ready: _ready
   };
 
