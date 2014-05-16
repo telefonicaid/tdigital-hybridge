@@ -74,15 +74,21 @@
     [request addValue:@"{\"foo\":\"bar\"}" forHTTPHeaderField:@"data"];
     
     NSHTTPURLResponse * __block response = nil;
+    NSData * __block resultData = nil;
+    
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *r, NSData *data, NSError *error) {
                                response = (NSHTTPURLResponse *)r;
+                               resultData = data;
                            }];
     HYBAssertEventually(response, @"should complete with a response");
     
     XCTAssertTrue(self.didReceiveActionCalled, @"should call the delegate");
     XCTAssertEqual((NSInteger)200, [response statusCode], @"should return 200 OK");
+    
+    NSDictionary *result = [NSJSONSerialization JSONObjectWithData:resultData options:0 error:NULL];
+    XCTAssertEqualObjects((@{@"result": @1}), result, @"should return the dictionary returned by the delegate");
 }
 
 - (void)testActionDispatchWithMethodHandler {
@@ -96,15 +102,21 @@
     [request addValue:@"{\"bar\":\"foo\"}" forHTTPHeaderField:@"data"];
     
     NSHTTPURLResponse * __block response = nil;
+    NSData * __block resultData = nil;
+    
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *r, NSData *data, NSError *error) {
                                response = (NSHTTPURLResponse *)r;
+                               resultData = data;
                            }];
     HYBAssertEventually(response, @"should complete with a response");
     
     XCTAssertTrue(self.handlerCalled, @"should call the handler method");
     XCTAssertEqual((NSInteger)200, [response statusCode], @"should return 200 OK");
+    
+    NSDictionary *result = [NSJSONSerialization JSONObjectWithData:resultData options:0 error:NULL];
+    XCTAssertEqualObjects((@{@"result": @2}), result, @"should return the dictionary returned by the delegate");
 }
 
 - (void)testUnhandledAction {
@@ -129,7 +141,7 @@
     return @[@"test", @"something"];
 }
 
-- (NSHTTPURLResponse *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data {
+- (NSDictionary *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data {
     XCTAssertTrue([NSThread isMainThread], @"should be called in the main thread");
     XCTAssertEqualObjects(@"test", action, @"should receive a 'test' action");
     
@@ -137,16 +149,19 @@
     XCTAssertEqualObjects(expectedData, data, @"should receive the correct data");
     
     self.didReceiveActionCalled = YES;
-    return nil;
+    
+    return @{@"result": @1};
 }
 
-- (void)handleSomethingWithData:(NSDictionary *)data {
+- (NSDictionary *)handleSomethingWithData:(NSDictionary *)data {
     XCTAssertTrue([NSThread isMainThread], @"should be called in the main thread");
     
     NSDictionary *expectedData = @{@"bar": @"foo"};
     XCTAssertEqualObjects(expectedData, data, @"should receive the correct data");
     
     self.handlerCalled = YES;
+    
+    return @{@"result": @2};
 }
 
 @end

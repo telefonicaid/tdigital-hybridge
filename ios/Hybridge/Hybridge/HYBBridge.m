@@ -41,10 +41,16 @@ static SEL HYBSelectorWithAction(NSString *action) {
     return NSSelectorFromString(selectorName);
 }
 
-static NSHTTPURLResponse *HYBSendAction(NSString *action, NSDictionary *data, NSObject<HYBBridgeDelegate> *delegate) {
+static NSDictionary *HYBSendAction(NSString *action,
+                                   NSDictionary *data,
+                                   NSObject<HYBBridgeDelegate> *delegate,
+                                   NSHTTPURLResponse *__autoreleasing *response)
+{
     SEL selector = HYBSelectorWithAction(action);
     
     if ([delegate respondsToSelector:selector]) {
+        *response = [NSHTTPURLResponse hyb_responseWithAction:action statusCode:200];
+        
         NSMethodSignature *methodSignature = [delegate methodSignatureForSelector:selector];
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
         invocation.target = delegate;
@@ -53,13 +59,16 @@ static NSHTTPURLResponse *HYBSendAction(NSString *action, NSDictionary *data, NS
         
 		[invocation invoke];
         
-		return [NSHTTPURLResponse hyb_responseWithAction:action statusCode:200];
+        __unsafe_unretained id result = nil;
+		[invocation getReturnValue:&result];
+		return result;
     } else if ([delegate respondsToSelector:@selector(bridgeDidReceiveAction:data:)]) {
-        NSHTTPURLResponse *response = [delegate bridgeDidReceiveAction:action data:data];
-        return response ? : [NSHTTPURLResponse hyb_responseWithAction:action statusCode:200];
+        *response = [NSHTTPURLResponse hyb_responseWithAction:action statusCode:200];
+        return [delegate bridgeDidReceiveAction:action data:data];
     }
     
-    return [NSHTTPURLResponse hyb_responseWithAction:action statusCode:404];
+    *response = [NSHTTPURLResponse hyb_responseWithAction:action statusCode:404];
+    return nil;
 }
 
 @interface HYBBridge ()
@@ -134,7 +143,10 @@ static HYBBridge *activeBridge;
     return [webView stringByEvaluatingJavaScriptFromString:javascript];
 }
 
-- (void)dispatchAction:(NSString *)action data:(NSDictionary *)data completion:(void (^)(NSHTTPURLResponse *))completion {
+- (void)dispatchAction:(NSString *)action
+                  data:(NSDictionary *)data
+            completion:(void (^)(NSHTTPURLResponse *, NSData *))completion
+{
     NSParameterAssert(action);
     NSParameterAssert(completion);
     
@@ -148,12 +160,25 @@ static HYBBridge *activeBridge;
         });
         
         NSHTTPURLResponse *response = [NSHTTPURLResponse hyb_responseWithAction:action statusCode:200];
-        completion(response);
+        completion(response, nil);
     } else {
         NSObject<HYBBridgeDelegate> *delegate = self.delegate;
         dispatch_async(self.queue, ^{
-            NSHTTPURLResponse *response = HYBSendAction(action, data, delegate);
-            completion(response);
+            NSHTTPURLResponse *response = nil;
+            NSDictionary *result = HYBSendAction(action, data, delegate, &response);
+            NSData *resultData = nil;
+            
+            if (result) {
+                NSError *error = nil;
+                resultData = [NSJSONSerialization dataWithJSONObject:result
+                                                             options:0
+                                                               error:&error];
+                if (error) {
+                    NSLog(@"%s JSON serialization error: %@", __PRETTY_FUNCTION__, error);
+                }
+            }
+            
+            completion(response, resultData);
         });
     }
 }

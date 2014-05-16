@@ -38,8 +38,13 @@ static NSString * const kHTTPOptionsMethod = @"OPTIONS";
             NSData *data = [headers[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
             id JSONObject = data ? [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL] : nil;
             
-            [[HYBBridge activeBridge] dispatchAction:action data:JSONObject completion:^(NSHTTPURLResponse *response) {
+            [[HYBBridge activeBridge] dispatchAction:action data:JSONObject completion:^(NSHTTPURLResponse *response, NSData *data) {
                 [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+                
+                if (data) {
+                    [self.client URLProtocol:self didLoadData:data];
+                }
+                
                 [self.client URLProtocolDidFinishLoading:self];
             }];
         } else {

@@ -60,9 +60,9 @@
  
  When this method is called, the bridge will ask its delegate to handle the action.
  
- If the delegate object implements a `- (void)handle<Action>WithData:(NSDictionary *)data` method,
- the bridge will call this method. The bridge assumes that action names are in snake_case, that is,
- if it receives the action 'go_to_detail' it will look for a method named
+ If the delegate object implements a `- (NSDictionary *)handle<Action>WithData:(NSDictionary *)data`
+ method, the bridge will call this method. The bridge assumes that action names are in snake_case,
+ that is, if it receives the action 'go_to_detail' it will look for a method named
  `-handleGoToDetailWithData:`.
  
  If a method is not found, the bridge will try `-bridge:didReceiveAction:data:`. If the delegate
@@ -73,7 +73,9 @@
  @param data An `NSDictionary` containing data attached to the action.
  @param completion A block that will be executed after the action has been dispatched.
  */
-- (void)dispatchAction:(NSString *)action data:(NSDictionary *)data completion:(void (^)(NSHTTPURLResponse *))completion;
+- (void)dispatchAction:(NSString *)action
+                  data:(NSDictionary *)data
+            completion:(void (^)(NSHTTPURLResponse *, NSData *))completion;
 
 @end
 
@@ -97,8 +99,8 @@
  @param action The action name.
  @param data An `NSDictionary` containing data attached to the action.
  
- @return `nil` if the action was handled correctly, otherwise a `NSHTTPURLResponse` initialized with the appropiate status code.
+ @return A JSON dictionary.
  */
-- (NSHTTPURLResponse *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data;
+- (NSDictionary *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data;
 
 @end
