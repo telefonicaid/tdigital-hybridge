@@ -77,8 +77,24 @@
 
 #pragma mark - UIWebViewDelegate
 
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    if ([self.delegate respondsToSelector:@selector(webControllerDidStartLoad:)]) {
+        [self.delegate webControllerDidStartLoad:self];
+    }
+}
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     [self.bridge prepareWebView:webView];
+    
+    if ([self.delegate respondsToSelector:@selector(webControllerDidFinishLoad:)]) {
+        [self.delegate webControllerDidFinishLoad:self];
+    }
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    if ([self.delegate respondsToSelector:@selector(webController:didFailLoadWithError:)]) {
+        [self.delegate webController:self didFailLoadWithError:error];
+    }
 }
 
 @end
