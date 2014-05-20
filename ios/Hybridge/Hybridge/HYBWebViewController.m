@@ -35,6 +35,7 @@
     
     if (self) {
         _bridge = [[HYBBridge alloc] init];
+        _bridge.delegate = self;
         _URL = url;
     }
     
