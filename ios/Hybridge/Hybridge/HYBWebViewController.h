@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol HYBWebViewControllerDelegate;
 @class HYBBridge;
 
 /**
@@ -16,20 +15,15 @@
  */
 @interface HYBWebViewController : UIViewController <UIWebViewDelegate>
 
-@property (weak, nonatomic) id<HYBWebViewControllerDelegate> delegate;
 @property (strong, nonatomic, readonly) UIWebView *webView;
 @property (strong, nonatomic, readonly) HYBBridge *bridge;
 
 - (id)initWithURL:(NSURL *)url;
 
-@end
+- (void)webViewDidStartLoad;
 
-@protocol HYBWebViewControllerDelegate <NSObject>
+- (void)webViewDidFinishLoad;
 
-@optional
-
-- (void)webControllerDidStartLoad:(HYBWebViewController *)controller;
-- (void)webControllerDidFinishLoad:(HYBWebViewController *)controller;
-- (void)webController:(HYBWebViewController *)controller didFailLoadWithError:(NSError *)error;
+- (void)webViewDidFailLoadWithError:(NSError *)error;
 
 @end
