@@ -48,7 +48,7 @@
                            @"	window.HybridgeGlobal = {"
                            @"		isReady:true,"
                            @"		version:1,"
-                           @"		actions:[\"init\",\"test\",\"something\"],"
+                           @"		actions:[\"init\",\"test\",\"do_something\"],"
                            @"		events:[\"pause\",\"resume\",\"message\",\"ready\"]"
                            @"	};"
                            @"	(window.document.getElementById('hybridgeTrigger') || {}).className = 'switch';"
@@ -97,7 +97,7 @@
     
     [HYBBridge setActiveBridge:bridge];
     
-    NSURL *url = [NSURL URLWithString:@"http://hybridge/something"];
+    NSURL *url = [NSURL URLWithString:@"http://hybridge/do_something"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request addValue:@"{\"bar\":\"foo\"}" forHTTPHeaderField:@"data"];
     
@@ -138,7 +138,7 @@
 #pragma mark - HYBBridgeDelegate
 
 - (NSArray *)bridgeActions:(HYBBridge *)bridge {
-    return @[@"test", @"something"];
+    return @[@"test", @"do_something"];
 }
 
 - (NSDictionary *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data {
@@ -153,7 +153,7 @@
     return @{@"result": @1};
 }
 
-- (NSDictionary *)handleSomethingWithData:(NSDictionary *)data {
+- (NSDictionary *)handleDoSomethingWithData:(NSDictionary *)data {
     XCTAssertTrue([NSThread isMainThread], @"should be called in the main thread");
     
     NSDictionary *expectedData = @{@"bar": @"foo"};

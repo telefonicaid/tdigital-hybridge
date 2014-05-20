@@ -99,4 +99,10 @@
     [self webViewDidFailLoadWithError:error];
 }
 
+#pragma mark - HYBBridgeDelegate
+
+- (NSArray *)bridgeActions:(HYBBridge *)bridge {
+    return nil;
+}
+
 @end
