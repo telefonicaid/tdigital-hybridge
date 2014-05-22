@@ -30,12 +30,21 @@
     self.webView.delegate = nil;
 }
 
-- (id)initWithURL:(NSURL *)url {
-    self = [super initWithNibName:nil bundle:nil];
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     if (self) {
         _bridge = [[HYBBridge alloc] init];
         _bridge.delegate = self;
+    }
+    
+    return self;
+}
+
+- (id)initWithURL:(NSURL *)url {
+    self = [self initWithNibName:nil bundle:nil];
+    
+    if (self) {
         _URL = url;
     }
     
