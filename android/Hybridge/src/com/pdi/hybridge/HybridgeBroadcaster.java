@@ -48,15 +48,11 @@ public class HybridgeBroadcaster extends Observable {
 
     public void initJs(WebView view, JSONArray actions, JSONArray events) {
         runJsInWebView(view, "window.HybridgeGlobal || setTimeout(function () {"
-                + "window.HybridgeGlobal = {" + //
-                "  isReady : true" + //
-                ", version : " + HybridgeConst.VERSION + //
-                ", actions : " + actions.toString() + //
-                ", events : " + events.toString() + //
-                "};" //
-                + "window.$ && $('#hybridgeTrigger').toggleClass('switch');" + //
-                "},0)" //
-        );
+                + "window.HybridgeGlobal = {" + "  isReady : true" + ", version : "
+                + HybridgeConst.VERSION + ", actions : " + actions.toString() + ", events : "
+                + events.toString() + "};"
+                + "(window.document.getElementById('hybridgeTrigger') || {}).className = 'switch';"
+                + "},0)");
         isInitialized = true;
     }
 
