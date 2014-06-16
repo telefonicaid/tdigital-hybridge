@@ -17,37 +17,38 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Observable;
-import java.util.Observer;
 
 public class HybridgeBroadcaster extends Observable {
 
-    private static SparseArray<HybridgeBroadcaster> mClients =
+    /**
+     * Keeps track of the current HybridgeBroadcaster instances in the app based in each WebView
+     * hash
+     */
+    private static SparseArray<HybridgeBroadcaster> sClients =
             new SparseArray<HybridgeBroadcaster>();
 
     private boolean mIsInitialized = false;
-
-    private WebView mClient;
 
     private final String TAG = "HybridgeBroadcaster";
 
     private StringBuffer mJsBuffer;
 
-    private SparseArray<WebView> mCurrents;
-
     public HybridgeBroadcaster(WebView client) {
-        mClient = client;
-        mCurrents = new SparseArray<WebView>();
         mJsBuffer = new StringBuffer("");
     }
 
     public static HybridgeBroadcaster getInstance(WebView client) {
         final int hash = client.hashCode();
-        HybridgeBroadcaster instance = mClients.get(hash);
+        HybridgeBroadcaster instance = sClients.get(hash);
         if (instance == null) {
             instance = new HybridgeBroadcaster(client);
-            mClients.put(hash, instance);
+            sClients.put(hash, instance);
         }
         return instance;
+    }
+
+    public static void destroy(WebView client) {
+        sClients.remove(client.hashCode());
     }
 
     public void initJs(WebView view, JSONArray actions, JSONArray events) {
@@ -120,21 +121,5 @@ public class HybridgeBroadcaster extends Observable {
         this.setChanged();
         this.notifyObservers(data);
         Log.d(TAG, data.toString());
-    }
-
-    @Override
-    public void addObserver(Observer observer) {
-        super.addObserver(observer);
-        /*
-         * final int hashCode = observer.hashCode(); final WebView current =
-         * mCurrents.get(hashCode); if (current == null) { mCurrents.put(hashCode, (WebView)
-         * observer); }
-         */
-    }
-
-    @Override
-    public void deleteObserver(Observer observer) {
-        super.deleteObserver(observer);
-        // mCurrents.remove(observer.hashCode());
     }
 }
