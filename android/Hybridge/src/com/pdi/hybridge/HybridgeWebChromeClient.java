@@ -45,7 +45,8 @@ public class HybridgeWebChromeClient extends WebChromeClient {
         try {
             json = new JSONObject(defValue);
             Log.v(mTag, "JSON parsed (Action " + action + ") : " + json.toString());
-            executeJSONTask(action, json, result, HybridgeBroadcaster.getInstance(view),
+            executeJSONTask(action, json, result,
+                    HybridgeBroadcaster.HybridgeBroadcasterFactory.getInstance(view),
                     (Activity) view.getContext());
         } catch (final JSONException e) {
             result.cancel();

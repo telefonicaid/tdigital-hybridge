@@ -20,23 +20,13 @@ import java.util.Observable;
 
 public class HybridgeBroadcaster extends Observable {
 
-    /**
-     * Keeps track of the current HybridgeBroadcaster instances in the app based in each WebView
-     * hash
-     */
-    private static SparseArray<HybridgeBroadcaster> sClients;
-    static {
-        // static initialization
-        sClients = new SparseArray<HybridgeBroadcaster>();
-    }
-
     private boolean mIsInitialized = false;
 
     private final String TAG = "HybridgeBroadcaster";
 
     private StringBuffer mJsBuffer;
 
-    public HybridgeBroadcaster() {
+    private HybridgeBroadcaster() {
         mJsBuffer = new StringBuffer("");
     }
 
@@ -113,21 +103,34 @@ public class HybridgeBroadcaster extends Observable {
         Log.d(TAG, data.toString());
     }
 
-    /*
-     * Static Factory Methods
+    /**
+     * Factory class for HybridgeBroadcaster instantiation
+     * 
+     * @author TID
      */
+    public static class HybridgeBroadcasterFactory {
 
-    public static HybridgeBroadcaster getInstance(WebView client) {
-        final int hash = client.hashCode();
-        HybridgeBroadcaster instance = sClients.get(hash);
-        if (instance == null) {
-            instance = new HybridgeBroadcaster();
-            sClients.put(hash, instance);
+        /**
+         * Keeps track of the current HybridgeBroadcaster instances in the app based in each WebView
+         * hash
+         */
+        private static SparseArray<HybridgeBroadcaster> sClients;
+        static {
+            sClients = new SparseArray<HybridgeBroadcaster>();
         }
-        return instance;
-    }
 
-    public static void destroy(WebView client) {
-        sClients.remove(client.hashCode());
+        public static HybridgeBroadcaster getInstance(WebView client) {
+            final int hash = client.hashCode();
+            HybridgeBroadcaster instance = sClients.get(hash);
+            if (instance == null) {
+                instance = new HybridgeBroadcaster();
+                sClients.put(hash, instance);
+            }
+            return instance;
+        }
+
+        public static void destroy(WebView client) {
+            sClients.remove(client.hashCode());
+        }
     }
 }
