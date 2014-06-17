@@ -16,6 +16,7 @@ import com.pdi.hybridge.HybridgeConst.Event;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.Observable;
 
 public class HybridgeBroadcaster extends Observable {
@@ -114,16 +115,16 @@ public class HybridgeBroadcaster extends Observable {
          * Keeps track of the current HybridgeBroadcaster instances in the app based in each WebView
          * hash
          */
-        private static SparseArray<HybridgeBroadcaster> sClients;
+        private static SparseArray<WeakReference<HybridgeBroadcaster>> sClients;
         static {
-            sClients = new SparseArray<HybridgeBroadcaster>();
+            sClients = new SparseArray<WeakReference<HybridgeBroadcaster>>();
         }
 
-        public static HybridgeBroadcaster getInstance(WebView client) {
+        public static WeakReference<HybridgeBroadcaster> getInstance(WebView client) {
             final int hash = client.hashCode();
-            HybridgeBroadcaster instance = sClients.get(hash);
+            WeakReference<HybridgeBroadcaster> instance = sClients.get(hash);
             if (instance == null) {
-                instance = new HybridgeBroadcaster();
+                instance = new WeakReference<HybridgeBroadcaster>(new HybridgeBroadcaster());
                 sClients.put(hash, instance);
             }
             return instance;

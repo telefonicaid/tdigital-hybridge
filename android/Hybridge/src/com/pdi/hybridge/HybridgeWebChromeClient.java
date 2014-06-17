@@ -17,6 +17,7 @@ import android.webkit.WebView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
@@ -60,7 +61,7 @@ public class HybridgeWebChromeClient extends WebChromeClient {
             "unchecked", "rawtypes"
     })
     private void executeJSONTask(String action, JSONObject json, JsPromptResult result,
-            HybridgeBroadcaster hybridge, Activity activity) {
+            WeakReference<HybridgeBroadcaster> hybridge, Activity activity) {
         final Class clazz = mActions.get(action);
         if (clazz != null) {
             AsyncTask task = null;
