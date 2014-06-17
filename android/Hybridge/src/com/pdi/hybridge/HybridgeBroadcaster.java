@@ -24,8 +24,11 @@ public class HybridgeBroadcaster extends Observable {
      * Keeps track of the current HybridgeBroadcaster instances in the app based in each WebView
      * hash
      */
-    private static SparseArray<HybridgeBroadcaster> sClients =
-            new SparseArray<HybridgeBroadcaster>();
+    private static SparseArray<HybridgeBroadcaster> sClients;
+    static {
+        // static initialization
+        sClients = new SparseArray<HybridgeBroadcaster>();
+    }
 
     private boolean mIsInitialized = false;
 
@@ -35,20 +38,6 @@ public class HybridgeBroadcaster extends Observable {
 
     public HybridgeBroadcaster() {
         mJsBuffer = new StringBuffer("");
-    }
-
-    public static HybridgeBroadcaster getInstance(WebView client) {
-        final int hash = client.hashCode();
-        HybridgeBroadcaster instance = sClients.get(hash);
-        if (instance == null) {
-            instance = new HybridgeBroadcaster();
-            sClients.put(hash, instance);
-        }
-        return instance;
-    }
-
-    public static void destroy(WebView client) {
-        sClients.remove(client.hashCode());
     }
 
     public void initJs(WebView view, JSONArray actions, JSONArray events) {
@@ -122,5 +111,23 @@ public class HybridgeBroadcaster extends Observable {
         this.setChanged();
         this.notifyObservers(data);
         Log.d(TAG, data.toString());
+    }
+
+    /*
+     * Static Factory Methods
+     */
+
+    public static HybridgeBroadcaster getInstance(WebView client) {
+        final int hash = client.hashCode();
+        HybridgeBroadcaster instance = sClients.get(hash);
+        if (instance == null) {
+            instance = new HybridgeBroadcaster();
+            sClients.put(hash, instance);
+        }
+        return instance;
+    }
+
+    public static void destroy(WebView client) {
+        sClients.remove(client.hashCode());
     }
 }
