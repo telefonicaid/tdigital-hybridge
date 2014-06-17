@@ -33,7 +33,7 @@ public class HybridgeBroadcaster extends Observable {
 
     private StringBuffer mJsBuffer;
 
-    public HybridgeBroadcaster(WebView client) {
+    public HybridgeBroadcaster() {
         mJsBuffer = new StringBuffer("");
     }
 
@@ -41,7 +41,7 @@ public class HybridgeBroadcaster extends Observable {
         final int hash = client.hashCode();
         HybridgeBroadcaster instance = sClients.get(hash);
         if (instance == null) {
-            instance = new HybridgeBroadcaster(client);
+            instance = new HybridgeBroadcaster();
             sClients.put(hash, instance);
         }
         return instance;
@@ -56,7 +56,8 @@ public class HybridgeBroadcaster extends Observable {
                 + "window.HybridgeGlobal = {" + "  isReady : true" + ", version : "
                 + HybridgeConst.VERSION + ", actions : " + actions.toString() + ", events : "
                 + events.toString() + "};"
-                + "window.$ && $('#hybridgeTrigger').toggleClass('switch');" + "},0)");
+                + "(window.document.getElementById('hybridgeTrigger') || {}).className = 'switch';"
+                + "},0)");
         mIsInitialized = true;
     }
 
