@@ -104,34 +104,30 @@ public class HybridgeBroadcaster extends Observable {
         Log.d(TAG, data.toString());
     }
 
-    /**
-     * Factory class for HybridgeBroadcaster instantiation
-     * 
-     * @author TID
+    /*
+     * Factory methods for HybridgeBroadcaster instantiation
      */
-    public static class HybridgeBroadcasterFactory {
 
-        /**
-         * Keeps track of the current HybridgeBroadcaster instances in the app based in each WebView
-         * hash
-         */
-        private static SparseArray<WeakReference<HybridgeBroadcaster>> sClients;
-        static {
-            sClients = new SparseArray<WeakReference<HybridgeBroadcaster>>();
-        }
+    /**
+     * Keeps track of the current HybridgeBroadcaster instances in the app based in each WebView
+     * hash
+     */
+    private static SparseArray<WeakReference<HybridgeBroadcaster>> sClients;
+    static {
+        sClients = new SparseArray<WeakReference<HybridgeBroadcaster>>();
+    }
 
-        public static WeakReference<HybridgeBroadcaster> getInstance(WebView client) {
-            final int hash = client.hashCode();
-            WeakReference<HybridgeBroadcaster> instance = sClients.get(hash);
-            if (instance == null) {
-                instance = new WeakReference<HybridgeBroadcaster>(new HybridgeBroadcaster());
-                sClients.put(hash, instance);
-            }
-            return instance;
+    public static HybridgeBroadcaster getInstance(WebView client) {
+        final int hash = client.hashCode();
+        WeakReference<HybridgeBroadcaster> instance = sClients.get(hash);
+        if (instance == null || instance.get() == null) {
+            instance = new WeakReference<HybridgeBroadcaster>(new HybridgeBroadcaster());
+            sClients.put(hash, instance);
         }
+        return instance.get();
+    }
 
-        public static void destroy(WebView client) {
-            sClients.remove(client.hashCode());
-        }
+    public static void destroy(WebView client) {
+        sClients.remove(client.hashCode());
     }
 }
