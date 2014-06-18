@@ -35,7 +35,10 @@ public class HybridgeWebViewClient extends WebViewClient {
 
     @Override
     public void onPageFinished(WebView view, String url) {
-        HybridgeBroadcaster.getInstance(view).initJs(view, mActions, mEvents);
+        super.onPageFinished(view, url);
+        final HybridgeBroadcaster hybridge = HybridgeBroadcaster.getInstance(view);
+        if (hybridge != null) {
+            hybridge.initJs(view, mActions, mEvents);
+        }
     }
-
 }

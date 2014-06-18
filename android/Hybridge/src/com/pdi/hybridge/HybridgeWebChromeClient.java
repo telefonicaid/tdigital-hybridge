@@ -61,7 +61,7 @@ public class HybridgeWebChromeClient extends WebChromeClient {
     private void executeJSONTask(String action, JSONObject json, JsPromptResult result,
             HybridgeBroadcaster hybridge, Activity activity) {
         final Class clazz = mActions.get(action);
-        if (clazz != null) {
+        if (clazz != null && hybridge != null) {
             AsyncTask task = null;
             try {
                 task =
