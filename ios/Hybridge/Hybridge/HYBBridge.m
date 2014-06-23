@@ -131,7 +131,7 @@ static HYBBridge *activeBridge;
                                       @"		events:%@"
                                       @"	};"
                                       @"	(window.document.getElementById('hybridgeTrigger') || {}).className = 'switch';"
-                                      @"}, 100);";
+                                      @"}, 500);";
     
     NSArray *actions = [@[@"init"] arrayByAddingObjectsFromArray:[self.delegate bridgeActions:self]];
     NSString *actionsString = [NSString hyb_JSONStringWithObject:actions];
