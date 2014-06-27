@@ -161,28 +161,62 @@ public void update(Observable observable, Object data) {
 **[[⬆]](#index)**
 
 ### <a name='usage_ios'>iOS</a>
-* Compile the sources and copy the Hybridge static lib in your project `HYBHybridge.h` and `libHybridge.a`.
-* Import `HYBHybridge.h` in your *UIWebView* controller.
-* Bind the Hybridge singleton:
+#### Installation
+Add the following to your `Podfile` and run `$ pod install`.
 
-```objective-c
-_hybridge = [HYBHybridge sharedInstance]
+``` ruby
+pod 'Hybridge'
 ```
-* Implements your native `actions` in *blocks* with the handler `HybridgeHandlerBlock_t`:
 
-```objective-c
-HybridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
-    NSDictionary *params = [_parser objectWithString:data];
-    // Handle download with data from Javascript request
-    ...
-};
-```
-* You'll parse the JSON `data` sent from Javascript as seen in the previous code snippet.
-* Finally, subscribe each of your `actions` to the Hybridge by binding to the name you'll use to invoke it from Javascript.
+If you don't have CocoaPods installed or integrated into your project, you can learn how to do so [here](http://cocoapods.org).
 
-```objective-c
-[_hybridge subscribeAction:@"download" withHandler:downloadHandler];
+#### Creating a Web View Controller
+Hybridge provides `HYBWebViewController`, a convenience view controller that hosts both a web view and a bridge object to communicate with it. Users are encouraged to subclass `HYBWebViewController` and specify any supported bridge actions.
+
+```objc
+#import <Hybridge/Hybridge.h>
+
+@interface MyWebViewController : HYBWebViewController
+@end
 ```
+
+```objc
+...
+- (NSArray *)bridgeActions:(HYBBridge *)bridge {
+    return @[@"some_action", @"some_other_action"];
+}
+```
+
+There are two different ways to handle bridge actions:
+
+1. Override `-bridgeDidReceiveAction:data:`
+
+- (NSDictionary *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data {
+    if ([action isEqualToString:@"some_action"]) {
+        // Handle 'some_action'
+    } else if ([action isEqualToString:@"some_other_action"]) {
+        // Handle 'some_other_action'
+    }
+    
+    // Return a JSON dictionary or `nil`
+    return nil;
+}
+
+2. Implement a method with a special signature for each supported action. The bridge will look for methods with the signature `- (NSDictionary *)handle<YourActionInCamelCase>WithData:(NSDictionary *)data`
+
+```objc
+- (NSDictionary *)handleSomeActionWithData:(NSDictionary *)data {
+    // Handle 'some_action'
+    return @{ @"foo": @"bar" };
+}
+
+- (NSDictionary *)handleSomeOtherActionWithData:(NSDictionary *)data {
+    // Handle 'some_other_action'
+    return nil;
+}
+```
+
+Note the **CamelCase** in the method signature. If your action is named `some_action`, this becomes `SomeAction` in the method signature.
 
 **[[⬆]](#index)**
 
@@ -212,9 +246,10 @@ HybridgeBroadcaster.getInstance().fireJavascriptEvent(webView, Event.READY, json
 ```
 
 ### <a name='events_ios'>iOS</a>
-Use *Hybridge* singleton to trigger events in Javascript:
-```objective-c
-[_hybridge fireEventInWebView:kHybridgeEventReady data:@"{foo : \"data\"}" web:self.webview]
+Hybridge provides an `UIWebView` category that sports a convenience method to trigger events on the Javascript side. 
+
+```objc
+[self.webView hyb_fireEvent:HYBEventMessage data:@{ @"foo": @"bar" }];
 ```
 
 ### <a name='events_javascript'>Javascript</a>
