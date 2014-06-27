@@ -29,8 +29,8 @@
 
 /* 
  If you name your actions using snake_case (i.e. 'your_action'), the bridge will look for a
- a method with the signature `- (void)handle<YourAction>WithData:(NSDictionary *)data` to handle
- that action.
+ a method with the signature `- (NSDictionary *)handle<YourAction>WithData:(NSDictionary *)data`
+ to handle that action.
  */
 
 - (NSDictionary *)handleSomeActionWithData:(NSDictionary *)data {
@@ -59,6 +59,6 @@
     // Handle actions here
     return nil;
 }
- */
+*/
 
 @end
