@@ -52,7 +52,7 @@
                            @"		events:[\"pause\",\"resume\",\"message\",\"ready\"]"
                            @"	};"
                            @"	(window.document.getElementById('hybridgeTrigger') || {}).className = 'switch';"
-                           @"}, 0);";
+                           @"}, 500);";
     
     [[[webView expect] andReturn:@"true"] stringByEvaluatingJavaScriptFromString:javascript];
     
