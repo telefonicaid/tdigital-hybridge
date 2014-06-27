@@ -191,6 +191,7 @@ There are two different ways to handle bridge actions:
 
 1. Override `-bridgeDidReceiveAction:data:`
 
+```objc
 - (NSDictionary *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data {
     if ([action isEqualToString:@"some_action"]) {
         // Handle 'some_action'
@@ -201,6 +202,7 @@ There are two different ways to handle bridge actions:
     // Return a JSON dictionary or `nil`
     return nil;
 }
+```
 
 2. Implement a method with a special signature for each supported action. The bridge will look for methods with the signature `- (NSDictionary *)handle<YourActionInCamelCase>WithData:(NSDictionary *)data`
 
