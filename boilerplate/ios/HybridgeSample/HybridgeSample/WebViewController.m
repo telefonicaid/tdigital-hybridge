@@ -33,23 +33,29 @@
  that action.
  */
 
-- (void)handleSomeActionWithData:(NSDictionary *)data {
+- (NSDictionary *)handleSomeActionWithData:(NSDictionary *)data {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
     // Send a message event back to the web view
     [self.webView hyb_fireEvent:HYBEventMessage data:@{@"method": NSStringFromSelector(_cmd)}];
+    
+    return @{
+               @"foo": @"bar"
+    };
 }
 
-- (void)handleSomeOtherActionWithData:(NSDictionary *)data {
+- (NSDictionary *)handleSomeOtherActionWithData:(NSDictionary *)data {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
     // Send a message event back to the web view
     [self.webView hyb_fireEvent:HYBEventMessage data:@{@"method": NSStringFromSelector(_cmd)}];
+    
+    return nil;
 }
 
 /* If you wish to handle actions in a more generic way, you can implement:
 
-- (NSHTTPURLResponse *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data {
+- (NSDictionary *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data {
     // Handle actions here
     return nil;
 }
