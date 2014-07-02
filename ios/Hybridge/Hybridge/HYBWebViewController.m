@@ -68,7 +68,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:self.URL]];
+    if (self.URL) {
+        [self.webView loadRequest:[NSURLRequest requestWithURL:self.URL]];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
