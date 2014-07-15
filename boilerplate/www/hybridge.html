@@ -72,7 +72,7 @@
 
         // 'ready' callback, entry point for HyBridge action-event communication
         var processInit = function (event) {
-          statusWrapper.text('Hybridge (version ' + HybridgeGlobal.version + ') is ON');
+          statusWrapper.text('Hybridge (version ' + HybridgeGlobal.version + '.' + HybridgeGlobal.minVersion + ') is ON');
           Hybridge.removeListener(Hybridge.events.ready, processInit);
 
           // Create a listbox with the implemented events
@@ -109,7 +109,7 @@
         Hybridge.addListener(Hybridge.events.ready, processInit);
 
         Hybridge.init({
-            'environment' : 'ios',
+            'environment' : 'android',
             'logger': logger
         });
       }

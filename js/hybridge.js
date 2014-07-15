@@ -30,7 +30,7 @@ define([
   var READY_EVENT = 'ready';
   var INIT_ACTION = 'init';
 
-  var version = 1, initialized = false,
+  var version = 1, minVersion = 2, initialized = false,
     xhr, method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
     initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
 
@@ -76,7 +76,8 @@ define([
     _send({
       'action' : INIT_ACTION,
       'initialized' : deferredGlobal.initialized,
-      'version' : version
+      'version' : version,
+      'minVersion' : minVersion,
     });
   }
 
@@ -330,7 +331,8 @@ define([
     window.HybridgeGlobal || setTimeout(function() {
         window.HybridgeGlobal = {
           isReady: true,
-          version: 1,
+          version: version,
+          minVersion: minVersion,
           actions: [INIT_ACTION, 'message'],
           events: [READY_EVENT, 'message']
         };
@@ -464,6 +466,7 @@ define([
   var Hybridge = {
     init: _init,
     version: version,
+    minVersion: minVersion,
     isNative: _isNative,
     isEnabled: _isEnabled,
     addListener: _addListener,
