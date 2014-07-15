@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.Observable;
+import java.util.Observer;
 
 public class HybridgeBroadcaster extends Observable {
 
@@ -104,6 +105,16 @@ public class HybridgeBroadcaster extends Observable {
         Log.d(TAG, data.toString());
     }
 
+    @Override
+    public void addObserver(Observer observer) {
+        super.addObserver(observer);
+    }
+
+    @Override
+    public void deleteObserver(Observer observer) {
+        super.deleteObserver(observer);
+    }
+
     /*
      * Factory methods for HybridgeBroadcaster instantiation
      */
@@ -117,7 +128,7 @@ public class HybridgeBroadcaster extends Observable {
         sClients = new SparseArray<WeakReference<HybridgeBroadcaster>>();
     }
 
-    public static HybridgeBroadcaster getInstance(WebView client) {
+    public static synchronized HybridgeBroadcaster getInstance(WebView client) {
         final int hash = client.hashCode();
         WeakReference<HybridgeBroadcaster> instance = sClients.get(hash);
         if (instance == null || instance.get() == null) {
