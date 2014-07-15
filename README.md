@@ -206,9 +206,9 @@ You can communicate to Javascript from Android/iOS by triggering any of the defi
 * **message**: Send arbitrary data when required.
 
 ### <a name='events_android'>Android</a>
-Use *HybridgeBroadcaster* singleton to trigger events in Javascript:
+Use *HybridgeBroadcaster* instance to trigger events in Javascript:
 ```java
-HybridgeBroadcaster.getInstance().fireJavascriptEvent(webView, Event.READY, jsonData);
+HybridgeBroadcaster.getInstance(mWebView).fireJavascriptEvent(webView, Event.READY, jsonData);
 ```
 
 ### <a name='events_ios'>iOS</a>
