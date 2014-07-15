@@ -7,7 +7,7 @@ Yet another javascript / mobile native simple bridge for hybrid apps, back and f
   1. [Why?](#why)
   1. [Installation](#installation)
    * [Javascript](#installation_javascript)
-   * [Android](#installation_javascript)
+   * [Android](#installation_android)
    * [iOS](#installation_ios)
   1. [Usage](#usage)
    * [Javascript](#usage_javascript)
@@ -42,6 +42,11 @@ Since v1.2.0, `hybridge` is available in [bower](http://bower.io/). Bower will i
 bower install --save hybridge
 ```
 
+Add it to your HTML
+```html
+<script type="text/javascript" src="bower_components/hybridge/js/hybridge.js"></script>
+```
+
 You can manually download the javascript [js/hybridge.js](js/hybridge.js) and use the traditional way.
 
 Hybridge works in both an AMD/Vanilla javascript fashion. For vanilla javascript, it's available in `window.Hybridge` variable.
@@ -50,8 +55,17 @@ You'll also need [JQuery](http://jquery.com) (version 1.8.3 or newer) for the Ja
 
 ### <a name='installation_android'>Android</a>
 
+You can build your own Hybridge, but you can start with the latest version included at [hybridge.jar](boilerplate/android/HybridgeBoilerplate/libs/hybridge-1.2.0.jar) in the boilerplate code.
+
 ### <a name='installation_ios'>iOS</a>
 
+Add the following to your `Podfile` and run `$ pod install`.
+
+``` ruby
+pod 'Hybridge'
+```
+
+If you don't have CocoaPods installed or integrated into your project, you can learn how to do so [here](http://cocoapods.org).
 
 **[[⬆]](#index)**
 
@@ -176,14 +190,6 @@ public void update(Observable observable, Object data) {
 **[[⬆]](#index)**
 
 ### <a name='usage_ios'>iOS</a>
-#### Installation
-Add the following to your `Podfile` and run `$ pod install`.
-
-``` ruby
-pod 'Hybridge'
-```
-
-If you don't have CocoaPods installed or integrated into your project, you can learn how to do so [here](http://cocoapods.org).
 
 #### Creating a Web View Controller
 Hybridge provides `HYBWebViewController`, a convenience view controller that hosts both a web view and a bridge object to communicate with it. Users are encouraged to subclass `HYBWebViewController` and specify any supported bridge actions.
