@@ -1,5 +1,5 @@
 /*!
- * tdigital-hybridge - v0.0.1
+ * tdigital-hybridge - v1.2.0
  * Bridge for mobile hybrid application between Javascript and native environment
  * (iOS & Android) in an AMD fashion.
  *
