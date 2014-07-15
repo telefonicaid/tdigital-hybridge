@@ -139,21 +139,21 @@ webView.setWebViewClient(new HybridgeWebViewClient(JsActionImpl.values()));
 webView.setWebChromeClient(new HybridgeWebChromeClient(JsActionImpl.values()));
 ```
 
-* Implement `Observable` in your WebView and subscribe it in order to notificate Javascript the events received from `HybridgeBroadcaster`:
+* Implement `Observable` in your WebView fragment and subscribe it in order to notificate Javascript the events received from `HybridgeBroadcaster`:
 ```java
-HybridgeBroadcaster.getInstance().addObserver(this);
+HybridgeBroadcaster.getInstance(mWebView).addObserver(this);
 ...
 @Override
 public void update(Observable observable, Object data) {
     JSONObject json = (JSONObject) data;
     if (json.has(HybridgeConst.EVENT_NAME)) {
         try {
-            HybridgeBroadcaster.getInstance().fireJavascriptEvent(mWebView, (Event) json.get(HybridgeConst.EVENT_NAME), json);
+            HybridgeBroadcaster.getInstance(mWebView).fireJavascriptEvent(mWebView, (Event) json.get(HybridgeConst.EVENT_NAME), json);
         } catch (JSONException e) {
             Log.e(mTag, "Problem with JSON object " + e.getMessage());
         }
     } else {
-        HybridgeBroadcaster.getInstance().fireMessage(mWebView, json);
+        HybridgeBroadcaster.getInstance(mWebView).fireMessage(mWebView, json);
     }
 }
 ```
@@ -206,9 +206,9 @@ You can communicate to Javascript from Android/iOS by triggering any of the defi
 * **message**: Send arbitrary data when required.
 
 ### <a name='events_android'>Android</a>
-Use *HybridgeBroadcaster* singleton to trigger events in Javascript:
+Use *HybridgeBroadcaster* instance to trigger events in Javascript:
 ```java
-HybridgeBroadcaster.getInstance().fireJavascriptEvent(webView, Event.READY, jsonData);
+HybridgeBroadcaster.getInstance(mWebView).fireJavascriptEvent(webView, Event.READY, jsonData);
 ```
 
 ### <a name='events_ios'>iOS</a>
@@ -265,10 +265,10 @@ let's enumerate the available methods and properties from the Hybridge Javascrip
  Returns a [JQuery](http://jquery.com) [Promise](http://api.jquery.com/Types/#Promise) containing data returned from native or custom error.
  You can add a second function parameter `fallback` in case something goes wrong and you want to supply aditional user feedback as well as update your UI.
 * **ready(callback:Function)**
- Function that executes the callback function once Hybridge has become enabled. If Hybridge was enabled at calling time, 
+ Function that executes the callback function once Hybridge has become enabled. If Hybridge was enabled at calling time,
  the callback is executed inmediatly. The main difference with `addListener('ready', handler)` event subscription
  is that the event handler never becomes executed when the subscription happens and Hybridge was enabled
- 
+
 
 ### <a name='api_properties'>Properties</a>
 * **errors** Container object of customs errors returned by the Hybridge:
