@@ -27,8 +27,12 @@ define([
 
   'use strict';
 
-  var version = 1, xhr, method, logger, environment, debug, mockResponses, initialized = false,
-    _events = [], _errors, initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
+  var READY_EVENT = 'ready';
+  var INIT_ACTION = 'init';
+
+  var version = 1, initialized = false,
+    xhr, method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
+    initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
 
   /**
    * Sets init configuration (native environment, logger)
@@ -44,6 +48,7 @@ define([
      */
     if (debug) {
      _getLogger().info('Fixing bridge for debug mode');
+     _mockHybridgeGlobal();
     }
     /**
      * Sets up the bridge in iOS environment
@@ -59,10 +64,6 @@ define([
       _getLogger().info('Fixing bridge for Android, prompt method used');
       method = _sendPrompt;
     }
-    /**
-     * Adds ready event
-     */
-    _events.push('ready');
 
     return initModuleDef.resolve(conf).promise();
   }
@@ -73,7 +74,7 @@ define([
    */
   function _initNative (deferredModule, deferredGlobal) {
     _send({
-      'action' : 'init',
+      'action' : INIT_ACTION,
       'initialized' : deferredGlobal.initialized,
       'version' : version
     });
@@ -138,7 +139,7 @@ define([
    * @return {Boolean}
    */
   function _isEventImplemented (event) {
-    return !!((event && event.type === 'ready') ||
+    return !!((event && event.type === READY_EVENT) ||
       (window.HybridgeGlobal && window.HybridgeGlobal.events && event && event.type &&
       $.inArray(event.type, window.HybridgeGlobal.events) !== -1));
   }
@@ -153,7 +154,10 @@ define([
     var error, warning, details, mock;
     // Is mode debug on
     if (debug) {
-      if (mockResponses && mockResponses[data.action]) {
+      // Fire the ready event as a response for the init action
+      if (data.action == INIT_ACTION) {
+        _fireEvent(READY_EVENT, {});
+      } else if (mockResponses && mockResponses[data.action]) {
         mock = $.extend({}, data, mockResponses[data.action]);
         try {
           return $.Deferred().resolve(
@@ -191,10 +195,10 @@ define([
       // Native bridge is disabled, try fallback function
       else if (fallbackFn) {
         error = _errors.NO_NATIVE_ENABLED;
-        return $.Deferred()
-        .then(null, fallbackFn)
-        .reject({'error' : error})
-        .promise();
+        var def = $.Deferred();
+        def.then(null, fallbackFn);
+        def.reject({'error' : error});
+        return def.promise();
       }
       else {
         error = _errors.NO_FALLBACK;
@@ -231,6 +235,7 @@ define([
 
   /**
    * Provides XHR bridge method for iOS environment
+   * Warning: Fixed to work with JQuery 1.10.2
    * @param  {Object} data
    * @return {Promise}
    */
@@ -319,6 +324,21 @@ define([
   };
 
   /**
+   * Creates a mock for the HybridgeGlobal object, as created by the native app.
+   */
+  var _mockHybridgeGlobal = function () {
+    window.HybridgeGlobal || setTimeout(function() {
+        window.HybridgeGlobal = {
+          isReady: true,
+          version: 1,
+          actions: [INIT_ACTION, 'message'],
+          events: [READY_EVENT, 'message']
+        };
+        (window.document.getElementById('hybridgeTrigger') || {}).className = 'switch';
+      }, 0);
+  };
+
+  /**
    * Enables transitionend hack in to trigger callbacks directly from native
    */
   var _setCSSTrigger = function (callback) {
@@ -346,12 +366,19 @@ define([
    * _events: Hybridge events triggered from native for client handling
    */
   var _attachToGlobal = function () {
-    var event;
-    if (window.HybridgeGlobal.events) {
-      for (var i = 0; i < window.HybridgeGlobal.events.length; i++) {
-        event = window.HybridgeGlobal.events[i];
-        if (_events.indexOf(event) !== -1) {
-          _events.push(event);
+    var event, globalEvents, globalActions;
+    if (window.HybridgeGlobal && (globalEvents = window.HybridgeGlobal.events)) {
+      for (var i = 0; i < globalEvents.length; i++) {
+        event = globalEvents[i];
+        if (!_events[event]) {
+          _events[event] = _createEvent(event);
+        }
+      }
+    }
+    if (window.HybridgeGlobal && (globalActions = window.HybridgeGlobal.actions)) {
+      for (var i in globalActions) {
+        if (globalActions.hasOwnProperty(i)) {
+         _actions.push(globalActions[i]);
         }
       }
     }
@@ -365,11 +392,9 @@ define([
    * Global method used from native to trigger events (scope HybridgeGlobal)
    */
   var _fireEvent = function (type, data) {
-    var event;
-    if (_events.indexOf(type) !== -1) {
-      event = _createEvent(type);
-      event.data = data;
-      return document.dispatchEvent(event);
+    if (_events[type]) {
+      _events[type].data = data;
+      return document.dispatchEvent(_events[type]);
     }
     else {
       _getLogger().error('Hybridge event not defined: ' + type);
@@ -387,8 +412,8 @@ define([
     if (_isEnabled()) {
       cb();
     } else {
-      _addListener('ready', function onReady() {
-        _removeListener('ready', onReady);
+      _addListener(_events.ready, function onReady() {
+        _removeListener(_events.ready, onReady);
         cb();
       });
     }
@@ -447,6 +472,7 @@ define([
     isActionImplemented: _isActionImplemented,
     send: _send,
     events: _events,
+    actions: _actions,
     errors: _errors,
     ready: _ready
   };
@@ -462,6 +488,11 @@ define([
   else {
     _setCSSTrigger(_attachToGlobal);
   }
+
+  /**
+   * Inits ready event
+   */
+  _events.ready = _createEvent(READY_EVENT);
 
   /**
    * Initialize both native and javascript
