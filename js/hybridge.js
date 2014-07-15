@@ -39,7 +39,7 @@
   var READY_EVENT = 'ready';
   var INIT_ACTION = 'init';
 
-  var version = 1, minVersion = 2, initialized = false,
+  var version = 1, versionMinor = 2, initialized = false,
     xhr, method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
     initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
 
@@ -86,7 +86,7 @@
       'action' : INIT_ACTION,
       'initialized' : deferredGlobal.initialized,
       'version' : version,
-      'minVersion' : minVersion,
+      'versionMinor' : versionMinor
     });
   }
 
@@ -341,7 +341,7 @@
         window.HybridgeGlobal = {
           isReady: true,
           version: version,
-          minVersion: minVersion,
+          versionMinor: versionMinor,
           actions: [INIT_ACTION, 'message'],
           events: [READY_EVENT, 'message']
         };
@@ -475,7 +475,7 @@
   var Hybridge = {
     init: _init,
     version: version,
-    minVersion: minVersion,
+    versionMinor: versionMinor,
     isNative: _isNative,
     isEnabled: _isEnabled,
     addListener: _addListener,

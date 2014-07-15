@@ -129,6 +129,7 @@ public class DownloadTask extends AsyncTask<Object, Void, JSONObject> {
 
     private JsPromptResult result;
     private Context context;
+    private HybridgeBroadcaster hybridge;
 
     public DownloadTask(Context context) {
         this.context = context;
@@ -138,6 +139,7 @@ public class DownloadTask extends AsyncTask<Object, Void, JSONObject> {
     protected JSONObject doInBackground(Object... params) {
         JSONObject json = (JSONObject) params[0];
         result = (JsPromptResult) params[1];
+        hybridge = (HybridgeBroadcaster) params[2];
         // Process download
         ...
         return json;
@@ -211,7 +213,7 @@ There are two different ways to handle bridge actions:
     } else if ([action isEqualToString:@"some_other_action"]) {
         // Handle 'some_other_action'
     }
-    
+
     // Return a JSON dictionary or `nil`
     return nil;
 }
@@ -261,7 +263,7 @@ HybridgeBroadcaster.getInstance(mWebView).fireJavascriptEvent(webView, Event.REA
 ```
 
 ### <a name='events_ios'>iOS</a>
-Hybridge provides an `UIWebView` category that sports a convenience method to trigger events on the Javascript side. 
+Hybridge provides an `UIWebView` category that sports a convenience method to trigger events on the Javascript side.
 
 ```objc
 [self.webView hyb_fireEvent:HYBEventMessage data:@{ @"foo": @"bar" }];
