@@ -39,12 +39,12 @@ Hybridge follows [semantic versioning](http://semver.org/). In the `boilerplate`
 
 Since v1.2.0, `hybridge` is available in [bower](http://bower.io/). Bower will install `hybridge` itself and all its dependencies.
 ```sh
-$ bower install --save hybridge
+bower install --save hybridge
 ```
 
 You can manually download the javascript [js/hybridge.js](js/hybridge.js) and use the traditional way.
 
-Hybridge works in an AMD fashion, so you'll need [RequireJS](http://requirejs.org) for the loading.
+Hybridge works in both an AMD/Vanilla javascript fashion. For vanilla javascript, it's available in `window.Hybridge` variable.
 You'll also need [JQuery](http://jquery.com) (version 1.8.3 or newer) for the Javascript part since [Deferred](http://api.jquery.com/category/deferred-object) object is used intensively.
 
 
@@ -71,13 +71,12 @@ Load `hybridge.js` as a module in your AMD code. Simplest setup:
   require.config({
       baseUrl: 'js/lib',
       paths: {
-        jquery: 'jquery',
-        hybridge: 'hybridge'
+        jquery: 'bower_components/jquery/dist/jquery',
+        hybridge: 'bower_components/hybridge/js/hybridge'
       }
   });
 
-  requirejs(['hybridge'],
-    function (Hybridge) {
+  require(['hybridge'], function (Hybridge) {
       Hybridge.init({
         'environment' : 'ios'
         }

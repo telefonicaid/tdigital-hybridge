@@ -21,10 +21,19 @@
  * please contact with contacto@tid.es
  */
 
-define([
-  'jquery'
-], function ($) {
 
+(function (factory) {
+  // Module systems magic dance.
+  if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+    // AMD
+    define(['jquery'], function ($) {
+      return factory($);
+    });
+  } else {
+    //<script>> tag
+    window.Hybridge = factory(window.jQuery);
+  }
+}(function ($) {
   'use strict';
 
   var READY_EVENT = 'ready';
@@ -500,4 +509,4 @@ define([
   $.when(initModuleDef, initGlobalDef).then(_initNative);
 
   return Hybridge;
-});
+}));

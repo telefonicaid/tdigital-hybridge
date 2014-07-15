@@ -12,7 +12,7 @@
     "bridge",
     "hybrid"
   ],
-  "license": "AfferoGPLv3",
+  "license": "AGPLv3",
   "ignore": [
     "android",
     "ios",
@@ -21,7 +21,6 @@
     "*.podspec"
   ],
   "dependencies": {
-    "jquery": "*",
-    "requirejs": "~2.1.0"
+    "jquery": ">=1.8.3"
   }
 }
