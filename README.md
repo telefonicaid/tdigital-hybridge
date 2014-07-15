@@ -45,7 +45,7 @@ $ bower install --save hybridge
 You can manually download the javascript [js/hybridge.js](js/hybridge.js) and use the traditional way.
 
 Hybridge works in an AMD fashion, so you'll need [RequireJS](http://requirejs.org) for the loading.
-You'll also need [JQuery](http://jquery.com) (version 1.5 or newer) for the Javascript part since [Deferred](http://api.jquery.com/category/deferred-object) object is used intensively.
+You'll also need [JQuery](http://jquery.com) (version 1.8.3 or newer) for the Javascript part since [Deferred](http://api.jquery.com/category/deferred-object) object is used intensively.
 
 
 ### <a name='installation_android'>Android</a>
@@ -153,21 +153,21 @@ webView.setWebViewClient(new HybridgeWebViewClient(JsActionImpl.values()));
 webView.setWebChromeClient(new HybridgeWebChromeClient(JsActionImpl.values()));
 ```
 
-* Implement `Observable` in your WebView and subscribe it in order to notificate Javascript the events received from `HybridgeBroadcaster`:
+* Implement `Observable` in your WebView fragment and subscribe it in order to notificate Javascript the events received from `HybridgeBroadcaster`:
 ```java
-HybridgeBroadcaster.getInstance().addObserver(this);
+HybridgeBroadcaster.getInstance(mWebView).addObserver(this);
 ...
 @Override
 public void update(Observable observable, Object data) {
     JSONObject json = (JSONObject) data;
     if (json.has(HybridgeConst.EVENT_NAME)) {
         try {
-            HybridgeBroadcaster.getInstance().fireJavascriptEvent(mWebView, (Event) json.get(HybridgeConst.EVENT_NAME), json);
+            HybridgeBroadcaster.getInstance(mWebView).fireJavascriptEvent(mWebView, (Event) json.get(HybridgeConst.EVENT_NAME), json);
         } catch (JSONException e) {
             Log.e(mTag, "Problem with JSON object " + e.getMessage());
         }
     } else {
-        HybridgeBroadcaster.getInstance().fireMessage(mWebView, json);
+        HybridgeBroadcaster.getInstance(mWebView).fireMessage(mWebView, json);
     }
 }
 ```
@@ -175,28 +175,64 @@ public void update(Observable observable, Object data) {
 **[[⬆]](#index)**
 
 ### <a name='usage_ios'>iOS</a>
-* Compile the sources and copy the Hybridge static lib in your project `HYBHybridge.h` and `libHybridge.a`.
-* Import `HYBHybridge.h` in your *UIWebView* controller.
-* Bind the Hybridge singleton:
+#### Installation
+Add the following to your `Podfile` and run `$ pod install`.
 
-```objective-c
-_hybridge = [HYBHybridge sharedInstance]
+``` ruby
+pod 'Hybridge'
 ```
-* Implements your native `actions` in *blocks* with the handler `HybridgeHandlerBlock_t`:
 
-```objective-c
-HybridgeHandlerBlock_t downloadHandler = ^(NSURLProtocol *url, NSString *data, NSHTTPURLResponse *response) {
-    NSDictionary *params = [_parser objectWithString:data];
-    // Handle download with data from Javascript request
-    ...
-};
-```
-* You'll parse the JSON `data` sent from Javascript as seen in the previous code snippet.
-* Finally, subscribe each of your `actions` to the Hybridge by binding to the name you'll use to invoke it from Javascript.
+If you don't have CocoaPods installed or integrated into your project, you can learn how to do so [here](http://cocoapods.org).
 
-```objective-c
-[_hybridge subscribeAction:@"download" withHandler:downloadHandler];
+#### Creating a Web View Controller
+Hybridge provides `HYBWebViewController`, a convenience view controller that hosts both a web view and a bridge object to communicate with it. Users are encouraged to subclass `HYBWebViewController` and specify any supported bridge actions.
+
+```objc
+#import <Hybridge/Hybridge.h>
+
+@interface MyWebViewController : HYBWebViewController
+@end
 ```
+
+```objc
+...
+- (NSArray *)bridgeActions:(HYBBridge *)bridge {
+    return @[@"some_action", @"some_other_action"];
+}
+```
+
+There are two different ways to handle bridge actions:
+
+1. Override `-bridgeDidReceiveAction:data:`
+
+```objc
+- (NSDictionary *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data {
+    if ([action isEqualToString:@"some_action"]) {
+        // Handle 'some_action'
+    } else if ([action isEqualToString:@"some_other_action"]) {
+        // Handle 'some_other_action'
+    }
+    
+    // Return a JSON dictionary or `nil`
+    return nil;
+}
+```
+
+2. Implement a method with a special signature for each supported action. The bridge will look for methods with the signature `- (NSDictionary *)handle<YourActionInCamelCase>WithData:(NSDictionary *)data`
+
+```objc
+- (NSDictionary *)handleSomeActionWithData:(NSDictionary *)data {
+    // Handle 'some_action'
+    return @{ @"foo": @"bar" };
+}
+
+- (NSDictionary *)handleSomeOtherActionWithData:(NSDictionary *)data {
+    // Handle 'some_other_action'
+    return nil;
+}
+```
+
+Note the **CamelCase** in the method signature. If your action is named `some_action`, this becomes `SomeAction` in the method signature.
 
 **[[⬆]](#index)**
 
@@ -220,15 +256,16 @@ You can communicate to Javascript from Android/iOS by triggering any of the defi
 * **message**: Send arbitrary data when required.
 
 ### <a name='events_android'>Android</a>
-Use *HybridgeBroadcaster* singleton to trigger events in Javascript:
+Use *HybridgeBroadcaster* instance to trigger events in Javascript:
 ```java
-HybridgeBroadcaster.getInstance().fireJavascriptEvent(webView, Event.READY, jsonData);
+HybridgeBroadcaster.getInstance(mWebView).fireJavascriptEvent(webView, Event.READY, jsonData);
 ```
 
 ### <a name='events_ios'>iOS</a>
-Use *Hybridge* singleton to trigger events in Javascript:
-```objective-c
-[_hybridge fireEventInWebView:kHybridgeEventReady data:@"{foo : \"data\"}" web:self.webview]
+Hybridge provides an `UIWebView` category that sports a convenience method to trigger events on the Javascript side. 
+
+```objc
+[self.webView hyb_fireEvent:HYBEventMessage data:@{ @"foo": @"bar" }];
 ```
 
 ### <a name='events_javascript'>Javascript</a>
@@ -278,6 +315,11 @@ let's enumerate the available methods and properties from the Hybridge Javascrip
  Provides the way to communicate from Javascript to native side. An `action` parameter is required in order to execute an implemented native task.
  Returns a [JQuery](http://jquery.com) [Promise](http://api.jquery.com/Types/#Promise) containing data returned from native or custom error.
  You can add a second function parameter `fallback` in case something goes wrong and you want to supply aditional user feedback as well as update your UI.
+* **ready(callback:Function)**
+ Function that executes the callback function once Hybridge has become enabled. If Hybridge was enabled at calling time,
+ the callback is executed inmediatly. The main difference with `addListener('ready', handler)` event subscription
+ is that the event handler never becomes executed when the subscription happens and Hybridge was enabled
+
 
 ### <a name='api_properties'>Properties</a>
 * **errors** Container object of customs errors returned by the Hybridge:
