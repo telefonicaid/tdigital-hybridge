@@ -5,9 +5,10 @@ Yet another javascript / mobile native simple bridge for hybrid apps, back and f
 ## <a name='index'>Index</a>
 
   1. [Why?](#why)
-  1. [Getting Started](#start)
-   * [Dependencies](#dependencies)
-      * [Javascript](#dependencies_javascript)
+  1. [Installation](#installation)
+   * [Javascript](#installation_javascript)
+   * [Android](#installation_android)
+   * [iOS](#installation_ios)
   1. [Usage](#usage)
    * [Javascript](#usage_javascript)
    * [Android](#usage_android)
@@ -31,13 +32,40 @@ Hybridge tries to make easy communication and data exchanging between native (iO
 
 **[[⬆]](#index)**
 
-## <a name='start'>Getting Started</a>
-Firstly, get the code by downloading the zip or cloning the project into your local.
+## <a name='installation'>Installation</a>
+Hybridge follows [semantic versioning](http://semver.org/). In the `boilerplate` directory you can find examples of how to get running in the different platforms.
 
-### <a name='dependencies'>Dependencies</a>
-#### <a name='dependencies_javascript'>Javascript</a>
-Hybridge works in an AMD fashion, so you'll need [RequireJS](http://requirejs.org) for the loading.
+### <a name='installation_javascript'>Javascript</a>
+
+Since v1.2.0, `hybridge` is available in [bower](http://bower.io/). Bower will install `hybridge` itself and all its dependencies.
+```sh
+bower install --save hybridge
+```
+
+Add it to your HTML
+```html
+<script type="text/javascript" src="bower_components/hybridge/js/hybridge.js"></script>
+```
+
+You can manually download the javascript [js/hybridge.js](js/hybridge.js) and use the traditional way.
+
+Hybridge works in both an AMD/Vanilla javascript fashion. For vanilla javascript, it's available in `window.Hybridge` variable.
 You'll also need [JQuery](http://jquery.com) (version 1.8.3 or newer) for the Javascript part since [Deferred](http://api.jquery.com/category/deferred-object) object is used intensively.
+
+
+### <a name='installation_android'>Android</a>
+
+You can build your own Hybridge, but you can start with the latest version included at [hybridge.jar](boilerplate/android/HybridgeBoilerplate/libs/hybridge-1.2.0.jar) in the boilerplate code.
+
+### <a name='installation_ios'>iOS</a>
+
+Add the following to your `Podfile` and run `$ pod install`.
+
+``` ruby
+pod 'Hybridge'
+```
+
+If you don't have CocoaPods installed or integrated into your project, you can learn how to do so [here](http://cocoapods.org).
 
 **[[⬆]](#index)**
 
@@ -57,13 +85,12 @@ Load `hybridge.js` as a module in your AMD code. Simplest setup:
   require.config({
       baseUrl: 'js/lib',
       paths: {
-        jquery: 'jquery',
-        hybridge: 'hybridge'
+        jquery: 'bower_components/jquery/dist/jquery',
+        hybridge: 'bower_components/hybridge/js/hybridge'
       }
   });
 
-  requirejs(['hybridge'],
-    function (Hybridge) {
+  require(['hybridge'], function (Hybridge) {
       Hybridge.init({
         'environment' : 'ios'
         }
@@ -116,6 +143,7 @@ public class DownloadTask extends AsyncTask<Object, Void, JSONObject> {
 
     private JsPromptResult result;
     private Context context;
+    private HybridgeBroadcaster hybridge;
 
     public DownloadTask(Context context) {
         this.context = context;
@@ -125,6 +153,7 @@ public class DownloadTask extends AsyncTask<Object, Void, JSONObject> {
     protected JSONObject doInBackground(Object... params) {
         JSONObject json = (JSONObject) params[0];
         result = (JsPromptResult) params[1];
+        hybridge = (HybridgeBroadcaster) params[2];
         // Process download
         ...
         return json;
@@ -161,14 +190,6 @@ public void update(Observable observable, Object data) {
 **[[⬆]](#index)**
 
 ### <a name='usage_ios'>iOS</a>
-#### Installation
-Add the following to your `Podfile` and run `$ pod install`.
-
-``` ruby
-pod 'Hybridge'
-```
-
-If you don't have CocoaPods installed or integrated into your project, you can learn how to do so [here](http://cocoapods.org).
 
 #### Creating a Web View Controller
 Hybridge provides `HYBWebViewController`, a convenience view controller that hosts both a web view and a bridge object to communicate with it. Users are encouraged to subclass `HYBWebViewController` and specify any supported bridge actions.
@@ -198,7 +219,7 @@ There are two different ways to handle bridge actions:
     } else if ([action isEqualToString:@"some_other_action"]) {
         // Handle 'some_other_action'
     }
-    
+
     // Return a JSON dictionary or `nil`
     return nil;
 }
@@ -248,7 +269,7 @@ HybridgeBroadcaster.getInstance(mWebView).fireJavascriptEvent(webView, Event.REA
 ```
 
 ### <a name='events_ios'>iOS</a>
-Hybridge provides an `UIWebView` category that sports a convenience method to trigger events on the Javascript side. 
+Hybridge provides an `UIWebView` category that sports a convenience method to trigger events on the Javascript side.
 
 ```objc
 [self.webView hyb_fireEvent:HYBEventMessage data:@{ @"foo": @"bar" }];

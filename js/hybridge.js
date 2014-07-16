@@ -1,7 +1,7 @@
 /*!
- * tdigital-hybridge - v0.0.1
+ * tdigital-hybridge - v1.2.0
  * Bridge for mobile hybrid application between Javascript and native environment
- * (iOS & Android) in an AMD fashion.
+ * (iOS & Android)
  *
  * Copyright 2013 Telefonica Investigación y Desarrollo, S.A.U
  * Licensed AfferoGPLv3
@@ -21,16 +21,21 @@
  * please contact with contacto@tid.es
  */
 
-define([
-  'jquery'
-], function ($) {
-
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['jquery'], factory);
+  } else {
+    // Browser globals
+    root.Hybridge = factory(root.jQuery);
+  }
+}(this, function ($) {
   'use strict';
 
   var READY_EVENT = 'ready';
   var INIT_ACTION = 'init';
 
-  var version = 1, initialized = false,
+  var version = 1, versionMinor = 2, initialized = false,
     xhr, method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
     initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
 
@@ -76,7 +81,8 @@ define([
     _send({
       'action' : INIT_ACTION,
       'initialized' : deferredGlobal.initialized,
-      'version' : version
+      'version' : version,
+      'versionMinor' : versionMinor
     });
   }
 
@@ -330,7 +336,8 @@ define([
     window.HybridgeGlobal || setTimeout(function() {
         window.HybridgeGlobal = {
           isReady: true,
-          version: 1,
+          version: version,
+          versionMinor: versionMinor,
           actions: [INIT_ACTION, 'message'],
           events: [READY_EVENT, 'message']
         };
@@ -464,6 +471,7 @@ define([
   var Hybridge = {
     init: _init,
     version: version,
+    versionMinor: versionMinor,
     isNative: _isNative,
     isEnabled: _isEnabled,
     addListener: _addListener,
@@ -500,4 +508,4 @@ define([
   $.when(initModuleDef, initGlobalDef).then(_initNative);
 
   return Hybridge;
-});
+}));

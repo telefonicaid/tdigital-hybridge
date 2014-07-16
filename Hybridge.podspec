@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Hybridge"
-  s.version      = "1.1.0"
+  s.version      = "1.2.0"
   s.summary      = "Yet another javascript / mobile native simple bridge for hybrid apps, back and forth..."
 
   s.description  = <<-DESC
@@ -12,11 +12,11 @@ Pod::Spec.new do |s|
   
   s.license      = { :type => "Affero GNU GPL v3", :file => "LICENSE.txt" }
 
-  s.authors  = { 'David Garcia' => 'dgs30@tid.es', 'Guillermo Gonzalez' => 'gonzalezreal@icloud.com' }
+  s.authors  = { 'David Garcia' => 'davidgarsan@gmail.com', 'Guillermo Gonzalez' => 'gonzalezreal@icloud.com' }
 
   s.platform     = :ios
   s.ios.deployment_target = "6.0"
-  s.source       = { :git => "https://github.com/gonzalezreal/tdigital-hybridge.git", :branch => "refactoring-ios" }
+  s.source       = { :git => "https://github.com/telefonicaid/tdigital-hybridge.git", :tag => "1.2.0" }
 
   s.source_files = "ios/Hybridge/Hybridge/*.{h,m}"
   s.private_header_files = "ios/Hybridge/Hybridge/HYBURLProtocol.h", "ios/Hybridge/Hybridge/NSString+Hybridge.h"

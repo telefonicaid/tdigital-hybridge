@@ -21,9 +21,14 @@
 @property (weak, nonatomic) NSObject<HYBBridgeDelegate> *delegate;
 
 /**
- Returns the native bridge version.
+ Returns the native bridge major version.
  */
-+ (NSInteger)version;
++ (NSInteger)majorVersion;
+
+/**
+ Returns the native bridge minor version.
+ */
++ (NSInteger)minorVersion;
 
 /**
  Sets the active bridge.
