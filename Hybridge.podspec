@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   
   s.license      = { :type => "Affero GNU GPL v3", :file => "LICENSE.txt" }
 
-  s.authors  = { 'David Garcia' => 'dgs30@tid.es', 'Guillermo Gonzalez' => 'gonzalezreal@icloud.com' }
+  s.authors  = { 'David Garcia' => 'davidgarsan@gmail.com', 'Guillermo Gonzalez' => 'gonzalezreal@icloud.com' }
 
   s.platform     = :ios
   s.ios.deployment_target = "6.0"
