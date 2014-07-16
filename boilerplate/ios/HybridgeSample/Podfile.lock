@@ -1,14 +1,14 @@
 PODS:
-  - Hybridge (1.1.0)
+  - Hybridge (1.2.0)
 
 DEPENDENCIES:
-  - Hybridge (from `../../../`)
+  - Hybridge (from `../../..`)
 
 EXTERNAL SOURCES:
   Hybridge:
-    :path: ../../../
+    :path: ../../..
 
 SPEC CHECKSUMS:
-  Hybridge: 5ace862416316c8eaee9df4c1c5b8c6f21b938e8
+  Hybridge: 9c0600c2faf4ba43b2c66b9fbbc714ce7cbfdc8d
 
 COCOAPODS: 0.33.1
