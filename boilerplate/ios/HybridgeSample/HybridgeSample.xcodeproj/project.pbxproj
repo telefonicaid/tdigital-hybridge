@@ -1,0 +1,504 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		99801D1D18F2910F0027FC7A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99801D1C18F2910F0027FC7A /* Foundation.framework */; };
+		99801D1F18F2910F0027FC7A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99801D1E18F2910F0027FC7A /* CoreGraphics.framework */; };
+		99801D2118F2910F0027FC7A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99801D2018F2910F0027FC7A /* UIKit.framework */; };
+		99801D2718F2910F0027FC7A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99801D2518F2910F0027FC7A /* InfoPlist.strings */; };
+		99801D2918F2910F0027FC7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 99801D2818F2910F0027FC7A /* main.m */; };
+		99801D2D18F2910F0027FC7A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 99801D2C18F2910F0027FC7A /* AppDelegate.m */; };
+		99801D3818F291100027FC7A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99801D3718F291100027FC7A /* Images.xcassets */; };
+		99801D3F18F291100027FC7A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99801D3E18F291100027FC7A /* XCTest.framework */; };
+		99801D4018F291100027FC7A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99801D1C18F2910F0027FC7A /* Foundation.framework */; };
+		99801D4118F291100027FC7A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99801D2018F2910F0027FC7A /* UIKit.framework */; };
+		99801D4918F291100027FC7A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99801D4718F291100027FC7A /* InfoPlist.strings */; };
+		99801D4B18F291100027FC7A /* HybridgeSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99801D4A18F291100027FC7A /* HybridgeSampleTests.m */; };
+		99801D5618F295670027FC7A /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99801D5518F295670027FC7A /* WebViewController.m */; };
+		B785C3222F884EA28C6EA1BA /* libPods-HybridgeSample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3120090FCC9B40F4BA0C73DE /* libPods-HybridgeSample.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		99801D4218F291100027FC7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99801D1118F2910F0027FC7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 99801D1818F2910F0027FC7A;
+			remoteInfo = HybridgeSample;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3120090FCC9B40F4BA0C73DE /* libPods-HybridgeSample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HybridgeSample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		99801D1918F2910F0027FC7A /* HybridgeSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HybridgeSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		99801D1C18F2910F0027FC7A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		99801D1E18F2910F0027FC7A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		99801D2018F2910F0027FC7A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		99801D2418F2910F0027FC7A /* HybridgeSample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HybridgeSample-Info.plist"; sourceTree = "<group>"; };
+		99801D2618F2910F0027FC7A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		99801D2818F2910F0027FC7A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		99801D2A18F2910F0027FC7A /* HybridgeSample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HybridgeSample-Prefix.pch"; sourceTree = "<group>"; };
+		99801D2B18F2910F0027FC7A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		99801D2C18F2910F0027FC7A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		99801D3718F291100027FC7A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		99801D3D18F291100027FC7A /* HybridgeSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HybridgeSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		99801D3E18F291100027FC7A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		99801D4618F291100027FC7A /* HybridgeSampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HybridgeSampleTests-Info.plist"; sourceTree = "<group>"; };
+		99801D4818F291100027FC7A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		99801D4A18F291100027FC7A /* HybridgeSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HybridgeSampleTests.m; sourceTree = "<group>"; };
+		99801D5418F295670027FC7A /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		99801D5518F295670027FC7A /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		C434E462390044FABE0DB5F7 /* Pods-HybridgeSample.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HybridgeSample.xcconfig"; path = "Pods/Pods-HybridgeSample.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		99801D1618F2910F0027FC7A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99801D1F18F2910F0027FC7A /* CoreGraphics.framework in Frameworks */,
+				99801D2118F2910F0027FC7A /* UIKit.framework in Frameworks */,
+				99801D1D18F2910F0027FC7A /* Foundation.framework in Frameworks */,
+				B785C3222F884EA28C6EA1BA /* libPods-HybridgeSample.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99801D3A18F291100027FC7A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99801D3F18F291100027FC7A /* XCTest.framework in Frameworks */,
+				99801D4118F291100027FC7A /* UIKit.framework in Frameworks */,
+				99801D4018F291100027FC7A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		99801D1018F2910F0027FC7A = {
+			isa = PBXGroup;
+			children = (
+				99801D2218F2910F0027FC7A /* HybridgeSample */,
+				99801D4418F291100027FC7A /* HybridgeSampleTests */,
+				99801D1B18F2910F0027FC7A /* Frameworks */,
+				99801D1A18F2910F0027FC7A /* Products */,
+				C434E462390044FABE0DB5F7 /* Pods-HybridgeSample.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		99801D1A18F2910F0027FC7A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				99801D1918F2910F0027FC7A /* HybridgeSample.app */,
+				99801D3D18F291100027FC7A /* HybridgeSampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		99801D1B18F2910F0027FC7A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				99801D1C18F2910F0027FC7A /* Foundation.framework */,
+				99801D1E18F2910F0027FC7A /* CoreGraphics.framework */,
+				99801D2018F2910F0027FC7A /* UIKit.framework */,
+				99801D3E18F291100027FC7A /* XCTest.framework */,
+				3120090FCC9B40F4BA0C73DE /* libPods-HybridgeSample.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		99801D2218F2910F0027FC7A /* HybridgeSample */ = {
+			isa = PBXGroup;
+			children = (
+				99801D2B18F2910F0027FC7A /* AppDelegate.h */,
+				99801D2C18F2910F0027FC7A /* AppDelegate.m */,
+				99801D5418F295670027FC7A /* WebViewController.h */,
+				99801D5518F295670027FC7A /* WebViewController.m */,
+				99801D3718F291100027FC7A /* Images.xcassets */,
+				99801D2318F2910F0027FC7A /* Supporting Files */,
+			);
+			path = HybridgeSample;
+			sourceTree = "<group>";
+		};
+		99801D2318F2910F0027FC7A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				99801D2418F2910F0027FC7A /* HybridgeSample-Info.plist */,
+				99801D2518F2910F0027FC7A /* InfoPlist.strings */,
+				99801D2818F2910F0027FC7A /* main.m */,
+				99801D2A18F2910F0027FC7A /* HybridgeSample-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		99801D4418F291100027FC7A /* HybridgeSampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				99801D4A18F291100027FC7A /* HybridgeSampleTests.m */,
+				99801D4518F291100027FC7A /* Supporting Files */,
+			);
+			path = HybridgeSampleTests;
+			sourceTree = "<group>";
+		};
+		99801D4518F291100027FC7A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				99801D4618F291100027FC7A /* HybridgeSampleTests-Info.plist */,
+				99801D4718F291100027FC7A /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		99801D1818F2910F0027FC7A /* HybridgeSample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99801D4E18F291100027FC7A /* Build configuration list for PBXNativeTarget "HybridgeSample" */;
+			buildPhases = (
+				ECD114C2A7DE442998F017F8 /* Check Pods Manifest.lock */,
+				99801D1518F2910F0027FC7A /* Sources */,
+				99801D1618F2910F0027FC7A /* Frameworks */,
+				99801D1718F2910F0027FC7A /* Resources */,
+				C49777CD2ED34275891E9FEA /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HybridgeSample;
+			productName = HybridgeSample;
+			productReference = 99801D1918F2910F0027FC7A /* HybridgeSample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		99801D3C18F291100027FC7A /* HybridgeSampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99801D5118F291100027FC7A /* Build configuration list for PBXNativeTarget "HybridgeSampleTests" */;
+			buildPhases = (
+				99801D3918F291100027FC7A /* Sources */,
+				99801D3A18F291100027FC7A /* Frameworks */,
+				99801D3B18F291100027FC7A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				99801D4318F291100027FC7A /* PBXTargetDependency */,
+			);
+			name = HybridgeSampleTests;
+			productName = HybridgeSampleTests;
+			productReference = 99801D3D18F291100027FC7A /* HybridgeSampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		99801D1118F2910F0027FC7A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Telefonica I+D";
+				TargetAttributes = {
+					99801D3C18F291100027FC7A = {
+						TestTargetID = 99801D1818F2910F0027FC7A;
+					};
+				};
+			};
+			buildConfigurationList = 99801D1418F2910F0027FC7A /* Build configuration list for PBXProject "HybridgeSample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 99801D1018F2910F0027FC7A;
+			productRefGroup = 99801D1A18F2910F0027FC7A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				99801D1818F2910F0027FC7A /* HybridgeSample */,
+				99801D3C18F291100027FC7A /* HybridgeSampleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		99801D1718F2910F0027FC7A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99801D3818F291100027FC7A /* Images.xcassets in Resources */,
+				99801D2718F2910F0027FC7A /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99801D3B18F291100027FC7A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99801D4918F291100027FC7A /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C49777CD2ED34275891E9FEA /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-HybridgeSample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ECD114C2A7DE442998F017F8 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		99801D1518F2910F0027FC7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99801D2D18F2910F0027FC7A /* AppDelegate.m in Sources */,
+				99801D5618F295670027FC7A /* WebViewController.m in Sources */,
+				99801D2918F2910F0027FC7A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99801D3918F291100027FC7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99801D4B18F291100027FC7A /* HybridgeSampleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		99801D4318F291100027FC7A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 99801D1818F2910F0027FC7A /* HybridgeSample */;
+			targetProxy = 99801D4218F291100027FC7A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		99801D2518F2910F0027FC7A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				99801D2618F2910F0027FC7A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		99801D4718F291100027FC7A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				99801D4818F291100027FC7A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		99801D4C18F291100027FC7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		99801D4D18F291100027FC7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		99801D4F18F291100027FC7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C434E462390044FABE0DB5F7 /* Pods-HybridgeSample.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HybridgeSample/HybridgeSample-Prefix.pch";
+				INFOPLIST_FILE = "HybridgeSample/HybridgeSample-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		99801D5018F291100027FC7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C434E462390044FABE0DB5F7 /* Pods-HybridgeSample.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HybridgeSample/HybridgeSample-Prefix.pch";
+				INFOPLIST_FILE = "HybridgeSample/HybridgeSample-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		99801D5218F291100027FC7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/HybridgeSample.app/HybridgeSample";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HybridgeSample/HybridgeSample-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "HybridgeSampleTests/HybridgeSampleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		99801D5318F291100027FC7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/HybridgeSample.app/HybridgeSample";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HybridgeSample/HybridgeSample-Prefix.pch";
+				INFOPLIST_FILE = "HybridgeSampleTests/HybridgeSampleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		99801D1418F2910F0027FC7A /* Build configuration list for PBXProject "HybridgeSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99801D4C18F291100027FC7A /* Debug */,
+				99801D4D18F291100027FC7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		99801D4E18F291100027FC7A /* Build configuration list for PBXNativeTarget "HybridgeSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99801D4F18F291100027FC7A /* Debug */,
+				99801D5018F291100027FC7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		99801D5118F291100027FC7A /* Build configuration list for PBXNativeTarget "HybridgeSampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99801D5218F291100027FC7A /* Debug */,
+				99801D5318F291100027FC7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 99801D1118F2910F0027FC7A /* Project object */;
+}

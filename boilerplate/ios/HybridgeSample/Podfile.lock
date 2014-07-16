@@ -1,0 +1,14 @@
+PODS:
+  - Hybridge (1.2.0)
+
+DEPENDENCIES:
+  - Hybridge (from `../../..`)
+
+EXTERNAL SOURCES:
+  Hybridge:
+    :path: ../../..
+
+SPEC CHECKSUMS:
+  Hybridge: 9c0600c2faf4ba43b2c66b9fbbc714ce7cbfdc8d
+
+COCOAPODS: 0.33.1

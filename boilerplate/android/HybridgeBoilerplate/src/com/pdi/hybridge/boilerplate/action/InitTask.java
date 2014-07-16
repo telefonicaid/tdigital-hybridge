@@ -6,9 +6,6 @@
 
 package com.pdi.hybridge.boilerplate.action;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -19,27 +16,32 @@ import com.pdi.hybridge.HybridgeBroadcaster;
 import com.pdi.hybridge.HybridgeConst;
 import com.pdi.hybridge.boilerplate.MainActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class InitTask extends AsyncTask<Object, Void, JSONObject> {
 
     private final String mTag = "InitTask";
-    private JsPromptResult result;
-    private Context context;
+    private JsPromptResult mResult;
+    private Context mContext;
+    private HybridgeBroadcaster mHybridge;
 
     public InitTask(Activity activity) {
-        this.context = activity.getApplicationContext();
+        mContext = activity.getApplicationContext();
     }
 
     @Override
     protected JSONObject doInBackground(Object... params) {
-        JSONObject json = (JSONObject) params[0];
-        result = (JsPromptResult) params[1];
+        final JSONObject json = (JSONObject) params[0];
+        mResult = (JsPromptResult) params[1];
+        mHybridge = (HybridgeBroadcaster) params[2];
 
         try {
             if (json.has(MainActivity.JSON_KEY_INIT)) {
                 json.put(HybridgeConst.EVENT_NAME, HybridgeConst.Event.READY);
-                HybridgeBroadcaster.getInstance().updateState(json);
+                mHybridge.updateState(json);
             }
-        } catch (JSONException e) {
+        } catch (final JSONException e) {
             Log.e(mTag, "Download: Problem with JSON object " + e.getMessage());
         }
 
@@ -53,7 +55,7 @@ public class InitTask extends AsyncTask<Object, Void, JSONObject> {
 
     @Override
     protected void onPostExecute(JSONObject json) {
-        result.confirm(json.toString());
+        mResult.confirm(json.toString());
     }
 
 }

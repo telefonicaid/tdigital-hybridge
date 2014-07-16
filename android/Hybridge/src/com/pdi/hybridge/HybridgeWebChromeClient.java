@@ -6,12 +6,6 @@
 
 package com.pdi.hybridge;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -20,32 +14,40 @@ import android.webkit.JsPromptResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+
 public class HybridgeWebChromeClient extends WebChromeClient {
 
     protected String mTag = "HybridgeWebChromeClient";
 
     @SuppressWarnings("rawtypes")
-    protected HashMap<String, Class> actions;
+    protected HashMap<String, Class> mActions;
 
     @SuppressWarnings("rawtypes")
     @SuppressLint("DefaultLocale")
-    public HybridgeWebChromeClient(JsAction[] actions) {	
-        this.actions = new HashMap<String, Class>(actions.length);
-        for (JsAction action : actions) {
-            this.actions.put(action.toString().toLowerCase(), action.getTask());
+    public HybridgeWebChromeClient(JsAction[] actions) {
+        mActions = new HashMap<String, Class>(actions.length);
+        for (final JsAction action : actions) {
+            mActions.put(action.toString().toLowerCase(), action.getTask());
         }
     }
 
     @Override
-    public final boolean onJsPrompt(WebView view, String url, String msg, String defValue, JsPromptResult result) {
-        String action = msg;
+    public final boolean onJsPrompt(WebView view, String url, String msg, String defValue,
+            JsPromptResult result) {
+        final String action = msg;
         JSONObject json = null;
         Log.v(mTag, "Hybridge action: " + action);
         try {
             json = new JSONObject(defValue);
             Log.v(mTag, "JSON parsed (Action " + action + ") : " + json.toString());
-            executeJSONTask(action, json, result, (Activity) view.getContext());
-        } catch (JSONException e) {
+            executeJSONTask(action, json, result, HybridgeBroadcaster.getInstance(view),
+                    (Activity) view.getContext());
+        } catch (final JSONException e) {
             result.cancel();
             Log.e(mTag, e.getMessage());
         }
@@ -53,29 +55,33 @@ public class HybridgeWebChromeClient extends WebChromeClient {
     }
 
     @SuppressLint("DefaultLocale")
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    private void executeJSONTask(String action, JSONObject json, JsPromptResult result, Activity activity) {
-        Class clazz = this.actions.get(action);
-        if (clazz != null) {
+    @SuppressWarnings({
+            "unchecked", "rawtypes"
+    })
+    private void executeJSONTask(String action, JSONObject json, JsPromptResult result,
+            HybridgeBroadcaster hybridge, Activity activity) {
+        final Class clazz = mActions.get(action);
+        if (clazz != null && hybridge != null) {
             AsyncTask task = null;
             try {
-                task = (AsyncTask<JSONObject, Void, JSONObject>) 
-                        clazz.getDeclaredConstructor
-                        ( new Class[] { android.app.Activity.class } )
-                        .newInstance(activity);
-            } catch (InstantiationException e) {
+                task =
+                        (AsyncTask<JSONObject, Void, JSONObject>) clazz.getDeclaredConstructor(
+                                new Class[] {
+                                    android.app.Activity.class
+                                }).newInstance(activity);
+            } catch (final InstantiationException e) {
                 e.printStackTrace();
-            } catch (IllegalAccessException e) {
+            } catch (final IllegalAccessException e) {
                 e.printStackTrace();
-            } catch (IllegalArgumentException e) {
+            } catch (final IllegalArgumentException e) {
                 e.printStackTrace();
-            } catch (InvocationTargetException e) {
+            } catch (final InvocationTargetException e) {
                 e.printStackTrace();
-            } catch (NoSuchMethodException e) {
+            } catch (final NoSuchMethodException e) {
                 e.printStackTrace();
             }
             Log.v(mTag, "Execute action " + action);
-            task.execute(json, result);
+            task.execute(json, result, hybridge);
         } else {
             result.confirm(json.toString());
             Log.d(mTag, "Hybridge action not implemented: " + action);

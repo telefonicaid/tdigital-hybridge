@@ -6,44 +6,39 @@
 
 package com.pdi.hybridge;
 
-import org.json.JSONArray;
-
 import android.annotation.SuppressLint;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.pdi.hybridge.HybridgeConst.Event;
 
+import org.json.JSONArray;
+
 public class HybridgeWebViewClient extends WebViewClient {
 
-    protected JSONArray actions;
-    protected JSONArray events;
-    protected HybridgeBroadcaster broadcast;
+    protected JSONArray mActions;
+    protected JSONArray mEvents;
 
     @SuppressLint("DefaultLocale")
-    public HybridgeWebViewClient(JsAction[] actions) {	
-        this.actions = new JSONArray();
-        for (JsAction action : actions) {
-            this.actions.put(action.toString().toLowerCase());
+    public HybridgeWebViewClient(JsAction[] actions) {
+        mActions = new JSONArray();
+        for (final JsAction action : actions) {
+            this.mActions.put(action.toString().toLowerCase());
         }
 
-        this.events = new JSONArray();
-        Event[] events = HybridgeConst.Event.values();
-        for (Event event : events) {
-            this.events.put(event.getJsName());
+        mEvents = new JSONArray();
+        final Event[] events = HybridgeConst.Event.values();
+        for (final Event event : events) {
+            this.mEvents.put(event.getJsName());
         }
-        this.broadcast = HybridgeBroadcaster.getInstance();
     }
 
     @Override
-    public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-        return super.shouldInterceptRequest(view, url);
-    }
-
-    @Override  
     public void onPageFinished(WebView view, String url) {
-        this.broadcast.initJs(view, actions, events);  
+        super.onPageFinished(view, url);
+        final HybridgeBroadcaster hybridge = HybridgeBroadcaster.getInstance(view);
+        if (hybridge != null) {
+            hybridge.initJs(view, mActions, mEvents);
+        }
     }
-
 }
