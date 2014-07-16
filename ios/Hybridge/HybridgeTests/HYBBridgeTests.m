@@ -31,11 +31,11 @@
 }
 
 - (void)testVersion {
-    XCTAssertEqual((NSInteger)1, [HYBBridge version], @"should return the right version");
+    XCTAssertEqual((NSInteger)1, [HYBBridge majorVersion], @"should return the right major version");
 }
 
 - (void)testVersionMinor {
-    XCTAssertEqual((NSInteger)2, [HYBBridge versionMinor], @"should return the right minor version");
+    XCTAssertEqual((NSInteger)2, [HYBBridge minorVersion], @"should return the right minor version");
 }
 
 - (void)testActiveBridge {

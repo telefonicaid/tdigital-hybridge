@@ -23,12 +23,12 @@
 /**
  Returns the native bridge major version.
  */
-+ (NSInteger)version;
++ (NSInteger)majorVersion;
 
 /**
  Returns the native bridge minor version.
  */
-+ (NSInteger)versionMinor;
++ (NSInteger)minorVersion;
 
 /**
  Sets the active bridge.

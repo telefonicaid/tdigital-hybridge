@@ -86,11 +86,11 @@ static NSDictionary *HYBSendAction(NSString *action,
     }
 }
 
-+ (NSInteger)version {
++ (NSInteger)majorVersion {
     return 1;
 }
 
-+ (NSInteger)versionMinor {
++ (NSInteger)minorVersion {
     return 2;
 }
 
@@ -144,7 +144,7 @@ static HYBBridge *activeBridge;
     NSArray *events = @[HYBEventPause, HYBEventResume, HYBEventMessage, HYBEventReady];
     NSString *eventsString = [NSString hyb_JSONStringWithObject:events];
     
-    NSString *javascript = [NSString stringWithFormat:kFormat, @([[self class] version]), @([[self class] versionMinor]), actionsString, eventsString];
+    NSString *javascript = [NSString stringWithFormat:kFormat, @([[self class] majorVersion]), @([[self class] minorVersion]), actionsString, eventsString];
     return [webView stringByEvaluatingJavaScriptFromString:javascript];
 }
 
