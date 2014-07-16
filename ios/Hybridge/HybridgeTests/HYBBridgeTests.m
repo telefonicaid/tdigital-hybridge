@@ -34,6 +34,10 @@
     XCTAssertEqual((NSInteger)1, [HYBBridge version], @"should return the right version");
 }
 
+- (void)testVersionMinor {
+    XCTAssertEqual((NSInteger)2, [HYBBridge versionMinor], @"should return the right minor version");
+}
+
 - (void)testActiveBridge {
     HYBBridge *bridge = [HYBBridge new];
     [HYBBridge setActiveBridge:bridge];
