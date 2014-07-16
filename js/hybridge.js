@@ -1,7 +1,7 @@
 /*!
  * tdigital-hybridge - v1.2.0
  * Bridge for mobile hybrid application between Javascript and native environment
- * (iOS & Android) in an AMD fashion.
+ * (iOS & Android)
  *
  * Copyright 2013 Telefonica Investigación y Desarrollo, S.A.U
  * Licensed AfferoGPLv3
@@ -21,19 +21,15 @@
  * please contact with contacto@tid.es
  */
 
-
-(function (factory) {
-  // Module systems magic dance.
-  if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
-    // AMD
-    define(['jquery'], function ($) {
-      return factory($);
-    });
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['jquery'], factory);
   } else {
-    //<script>> tag
-    window.Hybridge = factory(window.jQuery);
+    // Browser globals
+    root.Hybridge = factory(root.jQuery);
   }
-}(function ($) {
+}(this, function ($) {
   'use strict';
 
   var READY_EVENT = 'ready';
