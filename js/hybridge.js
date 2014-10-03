@@ -341,7 +341,6 @@
           actions: [INIT_ACTION, 'message'],
           events: [READY_EVENT, 'message']
         };
-        (window.document.getElementById('hybridgeTrigger') || {}).className = 'switch';
       }, 0);
   };
 
