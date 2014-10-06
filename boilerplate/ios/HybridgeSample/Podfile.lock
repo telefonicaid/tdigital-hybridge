@@ -1,5 +1,5 @@
 PODS:
-  - Hybridge (1.2.0)
+  - Hybridge (1.2.1)
 
 DEPENDENCIES:
   - Hybridge (from `../../..`)

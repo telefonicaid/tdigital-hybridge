@@ -37,7 +37,6 @@ public class HybridgeBroadcaster extends Observable {
                 + "window.HybridgeGlobal = {" + "  isReady : true" + ", version : "
                 + HybridgeConst.VERSION + ", versionMinor : " + HybridgeConst.VERSION_MINOR
                 + ", actions : " + actions.toString() + ", events : " + events.toString() + "};"
-                + "(window.document.getElementById('hybridgeTrigger') || {}).className = 'switch';"
                 + "},0)");
         mIsInitialized = true;
     }

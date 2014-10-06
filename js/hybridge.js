@@ -1,5 +1,5 @@
 /*!
- * tdigital-hybridge - v1.2.0
+ * tdigital-hybridge - v1.2.1
  * Bridge for mobile hybrid application between Javascript and native environment
  * (iOS & Android)
  *
@@ -341,31 +341,7 @@
           actions: [INIT_ACTION, 'message'],
           events: [READY_EVENT, 'message']
         };
-        (window.document.getElementById('hybridgeTrigger') || {}).className = 'switch';
       }, 0);
-  };
-
-  /**
-   * Enables transitionend hack in to trigger callbacks directly from native
-   */
-  var _setCSSTrigger = function (callback) {
-    var transitionEnd = $.support.transition ? $.support.transition.end : 'webkitTransitionEnd';
-    var trigger = document.createElement('div');
-    trigger.id = 'hybridgeTrigger';
-    var style = document.createElement('style');
-    style.id = 'triggerStyle';
-    style.type = 'text/css';
-    style.innerHTML = '#hybridgeTrigger{top:0;-webkit-transition:top 0.0001s;' +
-      'transition:top 0.0001s;' +
-      'position:absolute;visibility:hidden}' +
-      '#hybridgeTrigger.switch{top:1px;}';
-    document.getElementsByTagName('head')[0].appendChild(style);
-    document.getElementsByTagName('body')[0].appendChild(trigger);
-    $('#hybridgeTrigger').one(transitionEnd, function() {
-      callback();
-      $('#hybridgeTrigger').remove();
-      $('#triggerStyle').remove();
-    });
   };
 
   /**
@@ -486,21 +462,27 @@
   };
 
   /**
-   * Since HybridgeGlobal is set from native just add the client methods
-   */
-  // AMD/defer load (requirejs), native bridge already loaded
-  if (typeof window.HybridgeGlobal !== 'undefined') {
-    _attachToGlobal();
-  }
-  // Minified/inmediate load, native bridge loads after
-  else {
-    _setCSSTrigger(_attachToGlobal);
-  }
-
-  /**
    * Inits ready event
    */
   _events.ready = _createEvent(READY_EVENT);
+
+  /**
+   * window.HybridgeGlobal is set by the Native code in other thread outside
+   * the browser event loop.
+   * Lets going to poll for it and then we can be sure native has done
+   * its part in the handshake
+   *
+   * TODO: Refactor the handshake protocol, forcing native to start once the
+   * webview is DOMReady and a document the minimun initial DOM for using
+   * the old CSS trigger from version 1.2.0
+   */
+  (function _checkForGlobal() {
+    if (window.HybridgeGlobal) {
+      _attachToGlobal();
+    } else {
+      setTimeout(_checkForGlobal, 10);
+    }
+  })();
 
   /**
    * Initialize both native and javascript
