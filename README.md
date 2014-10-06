@@ -55,7 +55,7 @@ You'll also need [JQuery](http://jquery.com) (version 1.8.3 or newer) for the Ja
 
 ### <a name='installation_android'>Android</a>
 
-You can build your own Hybridge, but you can start with the latest version included at [hybridge.jar](boilerplate/android/HybridgeBoilerplate/libs/hybridge-1.2.0.jar) in the boilerplate code.
+You can build your own Hybridge, but you can start with the latest version included at [hybridge.jar](boilerplate/android/HybridgeBoilerplate/libs/hybridge-1.2.1.jar) in the boilerplate code.
 
 ### <a name='installation_ios'>iOS</a>
 

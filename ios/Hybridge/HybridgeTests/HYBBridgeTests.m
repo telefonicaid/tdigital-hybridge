@@ -55,8 +55,7 @@
                            @"		actions:[\"init\",\"test\",\"do_something\"],"
                            @"		events:[\"pause\",\"resume\",\"message\",\"ready\"]"
                            @"	};"
-                           @"	(window.document.getElementById('hybridgeTrigger') || {}).className = 'switch';"
-                           @"}, 500);";
+                           @"}, 0);";
     
     [[[webView expect] andReturn:@"true"] stringByEvaluatingJavaScriptFromString:javascript];
     
