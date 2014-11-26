@@ -10,26 +10,18 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
 
-import com.pdi.hybridge.HybridgeBroadcaster;
-import com.pdi.hybridge.HybridgeConst;
-import com.pdi.hybridge.HybridgeConst.Event;
-import com.pdi.hybridge.HybridgeWebChromeClient;
-import com.pdi.hybridge.HybridgeWebViewClient;
+import com.pdi.hybridge.HybridgeActionListener;
+import com.pdi.hybridge.HybridgeXWalkView;
 
-import org.json.JSONException;
 import org.json.JSONObject;
+import org.xwalk.core.XWalkPreferences;
 
-import java.util.Observable;
-import java.util.Observer;
+public class MainActivity extends Activity implements HybridgeActionListener {
 
-public class MainActivity extends Activity implements Observer {
+    private static final String TAG = MainActivity.class.getSimpleName();
 
-    private String mTag = "MainActivity";
-    private WebView mWebView;
-    private HybridgeBroadcaster mHybridge;
+    private HybridgeXWalkView mWebView;
 
     // String keys for JSON data user in Hybridge communication
     public static final String JSON_KEY_INIT = "initialized";
@@ -39,34 +31,14 @@ public class MainActivity extends Activity implements Observer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mWebView = (WebView) findViewById(R.id.webview);
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.setWebViewClient(webViewClient);
-        mWebView.setWebChromeClient(webChromeClient);
-        mHybridge = HybridgeBroadcaster.getInstance(mWebView);
+
+        XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
+
+        mWebView = (HybridgeXWalkView) findViewById(R.id.webview);
+        // mWebView.setJsActions(JsActionImpl.values());
         // Set the URL of your web app
-        mWebView.loadUrl("http://192.168.1.40/hybridge.html");
-    }
-
-    private final HybridgeWebViewClient webViewClient = new HybridgeWebViewClient(
-            JsActionImpl.values());
-
-    private final WebChromeClient webChromeClient = new HybridgeWebChromeClient(
-            JsActionImpl.values());
-
-    @Override
-    public void update(Observable observable, Object data) {
-        final JSONObject json = (JSONObject) data;
-        if (json.has(HybridgeConst.EVENT_NAME)) {
-            try {
-                mHybridge.fireJavascriptEvent(mWebView, (Event) json.get(HybridgeConst.EVENT_NAME),
-                        json);
-            } catch (final JSONException e) {
-                Log.e(mTag, "Problem with JSON object " + e.getMessage());
-            }
-        } else {
-            mHybridge.fireMessage(mWebView, json);
-        }
+        // mWebView.load("http://10.95.230.237:8000/hybridge.html", null);
+        mWebView.loadAppFromManifest("file:///android_asset/manifest.json", null);
     }
 
     /**
@@ -76,13 +48,26 @@ public class MainActivity extends Activity implements Observer {
      */
     @Override
     public void onResume() {
-        mHybridge.addObserver(this);
+        // mHybridge.addObserver(this);
         super.onResume();
     }
 
     @Override
     public void onPause() {
-        mHybridge.deleteObserver(this);
+        // mHybridge.deleteObserver(this);
         super.onPause();
+    }
+
+    /**
+     * HybridgeActionListener implementation.
+     */
+    @Override
+    public void onInitHybridge(JSONObject data) {
+        Log.d(TAG, "onInitHybridge: " + data.toString());
+    }
+
+    @Override
+    public void onLoadError(int arg0, String arg1, String arg2) {
+        // Do nothing.
     }
 }

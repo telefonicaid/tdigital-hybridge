@@ -35,7 +35,7 @@
   var READY_EVENT = 'ready';
   var INIT_ACTION = 'init';
 
-  var version = 1, versionMinor = 2, initialized = false,
+  var version = 1, versionMinor = 3, initialized = false,
     xhr, method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
     initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
 
@@ -185,7 +185,7 @@
       // Native bridge is enabled
       if (_isEnabled()) {
         if (data.action) {
-          if (_isActionImplemented(data.action)) {
+          if (data.action === INIT_ACTION || _isActionImplemented(data.action)) {
             return method(data);
           }
           else {

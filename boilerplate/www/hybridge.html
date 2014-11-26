@@ -6,20 +6,16 @@
       text-align: center;
     }
     h1 {
-      font-size: 4rem;
+      font-size: 8.5vw;
     }
     h3 {
-      font-size: 1.6  rem;
+      font-size: 5vw;
       text-align: center;
-    }
-    h3 span {
-      font-size: 2rem;
     }
     .actions select, button {
       padding-top: 2.5rem;
       padding: 25px;
-      font-size: 2rem;
-      line-height: 1rem;
+      font-size: 5vw;
       border: 0;
       border-radius: 0;
     }
@@ -31,16 +27,26 @@
       text-align: left;
       position: fixed;
       font-size: 1rem;
-      height: 300px;
+      height: 20vh;
       bottom: 0;
       overflow: scroll;
     }
+    .fluid-test {
+      text-align: center;
+      font-size: 125vw;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      z-index: -1;
+      color: #CCC;
+    }
   </style>
-  <script src='http://requirejs.org/docs/release/2.1.9/minified/require.js'></script>
+  <script src='http://requirejs.org/docs/release/2.1.15/minified/require.js'></script>
   <script type='text/javascript'>
     require.config({
       paths: {
-        'jquery' : 'https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
+        'jquery' : 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min',
         'hybridge': 'hybridge'
       },
       waitSeconds: 30
@@ -83,27 +89,31 @@
           };
 
           // Create a listbox with the implemented actions
-          var listbox = $('<select id="action"></select>');
-          for (var action in Hybridge.actions) {
-            if (Hybridge.actions.hasOwnProperty(action)) {
-              listbox.append($('<option value="' + Hybridge.actions[action] + '">' + Hybridge.actions[action] + '</option>'));
-            }
-          };
-          $("#actions").append(listbox);
-          $("#actions").append($('<button id="button" data-label="send">send</button>'));
-          $('#button').click(function (ev) {
-            Hybridge.send({
-              'action': $('#action').val(),
-              'data': {}
-            })
-            .done(function (response) {
-              response && messageWrapper.html('<span>Hybridge action response:</span> ' + JSON.stringify(response));
-            })
-            .fail(function (error) {
-              error && messageWrapper.html('<span>Hybridge action failure:</span> ' + JSON.stringify(error));
+					if (Hybridge.actions.length) {
+            var listbox = $('<select id="action"></select>');
+            for (var action in Hybridge.actions) {
+              if (Hybridge.actions.hasOwnProperty(action)) {
+                listbox.append($('<option value="' + Hybridge.actions[action] + '">' + Hybridge.actions[action] + '</option>'));
+              }
+            };
+            $("#actions").append(listbox);
+            $("#actions").append($('<button id="button" data-label="send">send</button>'));
+            $('#button').click(function (ev) {
+              Hybridge.send({
+                'action': $('#action').val(),
+                'data': {}
+              })
+              .done(function (response) {
+                response && messageWrapper.html('<span>Hybridge action response:</span> ' + JSON.stringify(response));
+              })
+              .fail(function (error) {
+                error && messageWrapper.html('<span>Hybridge action failure:</span> ' + JSON.stringify(error));
+              });
             });
-          });
-
+					}
+          else {
+            $("#actions").append('<h3>No actions available.</h3>');
+          }
         };
 
         Hybridge.addListener(Hybridge.events.ready, processInit);
@@ -117,7 +127,8 @@
   </script>
 </head>
 <body>
-
+  <div class="fluid-test">H</div>
+  
   <h1 id='status'></h1>
 
   <div id='actions' class="actions"></div>
