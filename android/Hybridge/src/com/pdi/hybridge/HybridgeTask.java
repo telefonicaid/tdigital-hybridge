@@ -4,9 +4,9 @@ package com.pdi.hybridge;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.webkit.JsPromptResult;
 
 import org.json.JSONObject;
+import org.xwalk.core.XWalkJavascriptResult;
 
 /**
  * Base Hybridge task.
@@ -15,7 +15,7 @@ public class HybridgeTask extends AsyncTask<Object, Void, JSONObject> {
 
     private static final String TAG = HybridgeTask.class.getSimpleName();
 
-    protected JsPromptResult mResult;
+    protected XWalkJavascriptResult mResult;
     protected HybridgeActionListener mHybridgeListener;
 
     /**
@@ -35,9 +35,8 @@ public class HybridgeTask extends AsyncTask<Object, Void, JSONObject> {
      */
     protected JSONObject prepareForBackgroundTask(Object... params) {
         final JSONObject json = (JSONObject) params[0];
-        mResult = (JsPromptResult) params[1];
+        mResult = (XWalkJavascriptResult) params[1];
         mHybridgeListener = (HybridgeActionListener) params[2];
-
         return json;
     }
 
@@ -50,7 +49,7 @@ public class HybridgeTask extends AsyncTask<Object, Void, JSONObject> {
     protected JSONObject doInBackground(Object... params) {
         final JSONObject json = prepareForBackgroundTask(params);
         try {
-            // Do anything.
+            // Overrite to do anything.
         } catch (final Exception e) {
             Log.e(TAG, "Problem with JSON object " + e.getMessage());
         }
@@ -63,7 +62,6 @@ public class HybridgeTask extends AsyncTask<Object, Void, JSONObject> {
      */
     @Override
     protected void onPostExecute(JSONObject json) {
-        mResult.confirm(json.toString());
+        mResult.confirmWithResult(json.toString());
     }
-
 }

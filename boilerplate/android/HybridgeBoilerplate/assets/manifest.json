@@ -1,0 +1,9 @@
+{
+  "name": "Hybridge Boilerplate",
+  "description": "a blank app",
+  "version": "1.3.0",
+	"start_url": "http://IP:PORT/hybridge.html",
+  "xwalk_hosts": [
+    "http://hybridge/"
+  ]
+}

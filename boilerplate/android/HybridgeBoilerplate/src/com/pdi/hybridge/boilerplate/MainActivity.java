@@ -37,25 +37,35 @@ public class MainActivity extends Activity implements HybridgeActionListener {
         mWebView = (HybridgeXWalkView) findViewById(R.id.webview);
         // mWebView.setJsActions(JsActionImpl.values());
         // Set the URL of your web app
-        // mWebView.load("http://10.95.230.237:8000/hybridge.html", null);
-        mWebView.loadAppFromManifest("file:///android_asset/manifest.json", null);
-    }
-
-    /**
-     * Callback invoke once the fragment is created.
-     * 
-     * @see android.app.Fragment#onResume()
-     */
-    @Override
-    public void onResume() {
-        // mHybridge.addObserver(this);
-        super.onResume();
+        mWebView.load("http://10.95.230.237:8000/hybridge.html", null);
+        // Alternatively the app can be loaded from manifest.
+        // mWebView.loadAppFromManifest("file:///android_asset/manifest.json", null);
     }
 
     @Override
-    public void onPause() {
-        // mHybridge.deleteObserver(this);
+    protected void onPause() {
         super.onPause();
+        if (mWebView != null) {
+            mWebView.pauseTimers();
+            mWebView.onHide();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mWebView != null) {
+            mWebView.resumeTimers();
+            mWebView.onShow();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mWebView != null) {
+            mWebView.onDestroy();
+        }
     }
 
     /**

@@ -19,7 +19,7 @@ import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.WeakHashMap;
+import java.util.HashMap;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class HybridgeXWalkView extends XWalkView {
@@ -27,11 +27,13 @@ public class HybridgeXWalkView extends XWalkView {
     private static final String TAG = HybridgeXWalkView.class.getSimpleName();
 
     @SuppressWarnings("rawtypes")
-    protected WeakHashMap<String, Class> mActions;
+    protected HashMap<String, Class> mActions;
 
     private HybridgeActionListener mHybridgeActionListener;
 
     private Context mContext;
+
+    private String mTitle;
 
     /**
      * Constructor.
@@ -54,23 +56,57 @@ public class HybridgeXWalkView extends XWalkView {
         init(context);
     }
 
+    /**
+     * Sets the javascript actions available from web.
+     * 
+     * @param actions
+     */
     @SuppressLint("DefaultLocale")
     @SuppressWarnings("rawtypes")
     public void setJsActions(JsAction[] actions) {
-        mActions = new WeakHashMap<String, Class>(actions.length);
+        mActions = new HashMap<String, Class>(actions.length);
         for (final JsAction action : actions) {
             mActions.put(action.toString().toLowerCase(), action.getTask());
         }
     }
 
-    private void init(Context context) {
+    /**
+     * @return the mHybridgeActionListener
+     */
+    public HybridgeActionListener getHybridgeActionListener() {
+        return mHybridgeActionListener;
+    }
+
+    /**
+     * @param mHybridgeActionListener the mHybridgeActionListener to set
+     */
+    public void setHybridgeActionListener(HybridgeActionListener hybridgeActionListener) {
         try {
-            mHybridgeActionListener = (HybridgeActionListener) context;
+            mHybridgeActionListener = hybridgeActionListener;
         } catch (final ClassCastException e) {
-            throw new ClassCastException(context.toString()
+            throw new ClassCastException(hybridgeActionListener.toString()
                     + " must implement HybridgeActionListener");
         }
-        getSettings().setJavaScriptEnabled(true);
+    }
+
+    public void setTitle(String title) {
+        mTitle = title;
+    }
+
+    @Override
+    public String getTitle() {
+        return mTitle;
+    }
+
+    @Override
+    public void onDestroy() {
+        mActions = null;
+        mContext = null;
+        mHybridgeActionListener = null;
+        super.onDestroy();
+    }
+
+    private void init(Context context) {
         setResourceClient(new ResourceClient(this));
         setUIClient(new UIClient(this));
     }
@@ -161,19 +197,18 @@ public class HybridgeXWalkView extends XWalkView {
             }
         }
 
+        /**
+         * Inits the Hybridge global object in javascript and sets the page title is has been
+         * previously settled.
+         */
         @SuppressLint("DefaultLocale")
         @Override
         public void onPageLoadStopped(XWalkView view, String url, LoadStatus status) {
-            // TODO Auto-generated method stub
             super.onPageLoadStopped(view, url, status);
             if (status == LoadStatus.FINISHED) {
-                final JSONArray actions = new JSONArray();
-                // actions.put(HybridgeConst.ACTION_INIT);
+                JSONArray actions = new JSONArray();
                 if (mActions != null) {
-                    final JsAction[] actionsList = null;// JsActionImpl.values();
-                    for (final JsAction action : actionsList) {
-                        actions.put(action.toString().toLowerCase());
-                    }
+                    actions = new JSONArray(mActions.keySet());
                 }
                 final JSONArray events = new JSONArray();
                 final Event[] eventsList = HybridgeConst.Event.values();
@@ -181,14 +216,16 @@ public class HybridgeXWalkView extends XWalkView {
                     events.put(event.getJsName());
                 }
                 final String jsString =
-                        "window.HybridgeGlobal || setTimeout(function () {"
+                        "window.HybridgeGlobal || (function () {"
                                 + "window.HybridgeGlobal = {" + "  isReady : true" + ", version : "
                                 + HybridgeConst.VERSION + ", versionMinor : "
                                 + HybridgeConst.VERSION_MINOR + ", actions : " + actions.toString()
-                                + ", events : " + events.toString() + "};" + "},0);";
-                // view.evaluateJavascript("alert('" + jsString + "')", null);
+                                + ", events : " + events.toString() + "};"
+                                + (mTitle != null ? ("document.title='" + mTitle + "';") : "")
+                                + "})();";
                 view.evaluateJavascript(jsString, null);
             }
         }
     }
+
 }
