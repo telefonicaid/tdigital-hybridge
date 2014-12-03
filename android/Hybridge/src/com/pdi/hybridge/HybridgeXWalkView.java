@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xwalk.core.XWalkJavascriptResult;
+import org.xwalk.core.XWalkPreferences;
 import org.xwalk.core.XWalkResourceClient;
 import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
@@ -111,8 +112,7 @@ public class HybridgeXWalkView extends XWalkView {
         setUIClient(new UIClient(this));
     }
 
-    private void
-            fireJavascriptEvent(final XWalkView view, final Event event, final JSONObject data) {
+    public void fireJavascriptEvent(final XWalkView view, final Event event, final JSONObject data) {
 
         final String json = data != null ? data.toString() : "{}";
         final StringBuffer js = new StringBuffer("HybridgeGlobal.fireEvent(\"");
@@ -170,7 +170,7 @@ public class HybridgeXWalkView extends XWalkView {
         })
         private void executeTask(String action, JSONObject json, XWalkJavascriptResult result) {
             final Class clazz = mActions.get(action);
-            final Activity activity = getActivity();
+            final Activity activity = (Activity) getContext();
             if (clazz != null && activity != null) {
                 AsyncTask task = null;
                 try {
@@ -228,4 +228,8 @@ public class HybridgeXWalkView extends XWalkView {
         }
     }
 
+    static {
+        // XWalkPreferencesInternal.ENABLE_JAVASCRIPT
+        XWalkPreferences.setValue("enable-javascript", true);
+    }
 }
