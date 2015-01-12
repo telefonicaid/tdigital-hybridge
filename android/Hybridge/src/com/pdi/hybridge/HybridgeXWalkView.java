@@ -58,6 +58,18 @@ public class HybridgeXWalkView extends XWalkView {
     }
 
     /**
+     * Constructor.
+     * 
+     * @param context
+     * @param attrs
+     * @param defStyle
+     */
+    public HybridgeXWalkView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs);
+        init(context);
+    }
+
+    /**
      * Sets the javascript actions available from web.
      * 
      * @param actions

@@ -35,9 +35,10 @@ public class MainActivity extends Activity implements HybridgeActionListener {
         XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
 
         mWebView = (HybridgeXWalkView) findViewById(R.id.webview);
+        mWebView.setHybridgeActionListener(this);
         // mWebView.setJsActions(JsActionImpl.values());
         // Set the URL of your web app
-        mWebView.load("http://10.95.230.237:8000/hybridge.html", null);
+        mWebView.load("http://10.95.231.129:8000/hybridge.html", null);
         // Alternatively the app can be loaded from manifest.
         // mWebView.loadAppFromManifest("file:///android_asset/manifest.json", null);
     }
