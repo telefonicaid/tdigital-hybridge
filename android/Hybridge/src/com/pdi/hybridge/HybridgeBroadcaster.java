@@ -32,11 +32,12 @@ public class HybridgeBroadcaster extends Observable {
         mJsBuffer = new StringBuffer("");
     }
 
-    public void initJs(WebView view, JSONArray actions, JSONArray events) {
+    public void initJs(WebView view, JSONArray actions, JSONArray events, JSONObject custom) {
         runJsInWebView(view, "window.HybridgeGlobal || setTimeout(function () {"
                 + "window.HybridgeGlobal = {" + "  isReady : true" + ", version : "
                 + HybridgeConst.VERSION + ", versionMinor : " + HybridgeConst.VERSION_MINOR
-                + ", actions : " + actions.toString() + ", events : " + events.toString() + "};"
+                + ", actions : " + actions.toString() + ", events : " + events.toString()
+                + ", custom : " + custom.toString() + "};"
                 + "},0)");
         mIsInitialized = true;
     }

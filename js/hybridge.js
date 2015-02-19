@@ -34,16 +34,17 @@
 
   var READY_EVENT = 'ready';
   var INIT_ACTION = 'init';
+  var CUSTOM_OBJ = 'custom';
 
   var version = 1, versionMinor = 2, initialized = false,
     xhr, method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
-    initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
+    initModuleDef = $.Deferred(), initGlobalDef = $.Deferred(), initCustomDef = $.Deferred();
 
   /**
    * Sets init configuration (native environment, logger)
    * @param {Object} ( environment: ios | android ).
    */
-  function _init (conf) {
+  function _init (conf, customCb) {
     environment = conf.environment || '';
     logger = conf.logger || null;
     debug = conf.debug || false;
@@ -69,6 +70,7 @@
       _getLogger().info('Fixing bridge for Android, prompt method used');
       method = _sendPrompt;
     }
+    $.when(initCustomDef).then(customCb);
 
     return initModuleDef.resolve(conf).promise();
   }
@@ -365,6 +367,11 @@
         }
       }
     }
+    if (window.HybridgeGlobal && (globalActions = window.HybridgeGlobal.custom)) {
+      Hybridge[CUSTOM_OBJ] = $.extend({}, window.HybridgeGlobal.custom);
+      initCustomDef.resolve(Hybridge[CUSTOM_OBJ]).promise();
+    }
+
     initialized = true;
     window.HybridgeGlobal.fireEvent = _fireEvent;
     window.HybridgeGlobal.initialized = initialized;
