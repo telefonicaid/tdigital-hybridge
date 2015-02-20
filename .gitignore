@@ -20,7 +20,7 @@ Pods
 */nbandroid/
 
 .DS_Store
-/.settings
+.settings
 
 *.orig
 .picasa.ini
