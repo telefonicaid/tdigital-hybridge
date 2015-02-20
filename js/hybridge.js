@@ -54,7 +54,7 @@
      */
     if (debug) {
      _getLogger().info('Fixing bridge for debug mode');
-     _mockHybridgeGlobal();
+     _mockHybridgeGlobal(conf);
     }
     /**
      * Sets up the bridge in iOS environment
@@ -334,14 +334,15 @@
   /**
    * Creates a mock for the HybridgeGlobal object, as created by the native app.
    */
-  var _mockHybridgeGlobal = function () {
+  var _mockHybridgeGlobal = function (conf) {
     window.HybridgeGlobal || setTimeout(function() {
         window.HybridgeGlobal = {
           isReady: true,
           version: version,
           versionMinor: versionMinor,
           actions: [INIT_ACTION, 'message'],
-          events: [READY_EVENT, 'message']
+          events: [READY_EVENT, 'message'],
+          custom: conf.custom || {}
         };
       }, 0);
   };
