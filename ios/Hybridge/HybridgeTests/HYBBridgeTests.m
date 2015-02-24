@@ -52,6 +52,7 @@
                            @"	window.HybridgeGlobal = {"
                            @"		isReady:true,"
                            @"		version:1,"
+                           @"		custom:{x:\"y\"},"
                            @"		actions:[\"init\",\"test\",\"do_something\"],"
                            @"		events:[\"pause\",\"resume\",\"message\",\"ready\"]"
                            @"	};"
@@ -142,6 +143,12 @@
 
 - (NSArray *)bridgeActions:(HYBBridge *)bridge {
     return @[@"test", @"do_something"];
+}
+
+#pragma mark - HYBBridgeDelegate
+
+- (NSDictionary *)bridgeCustom:(HYBBridge *)bridge {
+    return @{@"test": @"data"};
 }
 
 - (NSDictionary *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data {

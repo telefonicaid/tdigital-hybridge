@@ -33,7 +33,7 @@
     return @{@"a_custom_data": @[@"some_data", @"some_other_data"],
              @"some_other_custom": @{@"other_data": @"some_data"},
              @"more_custom": @"more_data",
-             @"and_more_custom": 123456};
+             @"and_more_custom": @1};
 }
 
 /* 
