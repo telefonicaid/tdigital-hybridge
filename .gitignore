@@ -27,10 +27,13 @@ Pods
 
 # Android
 */*/.classpath
+*/*/*/.classpath
 */*/local.properties
 */*/.idea
 */*/.project
+*/*/*/.project
 */*/bin/
+*/*/*/bin/
 */*/gen/
 */*/build/
 

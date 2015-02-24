@@ -45,12 +45,16 @@ public class MainActivity extends Activity implements Observer {
         mWebView.setWebChromeClient(webChromeClient);
         mHybridge = HybridgeBroadcaster.getInstance(mWebView);
         // Set the URL of your web app
-        mWebView.loadUrl("http://192.168.1.40/hybridge.html");
+        mWebView.loadUrl("http://play.tid.es/M5/j/GO/10570/www/hybridge.html");
     }
 
     private JSONObject getCustomObject() {
         JSONObject custom = new JSONObject();
-        custom.put("a_custom_data", 123456);
+        try {
+            custom.put("a_custom_data", 123456);
+        } catch (JSONException e) {
+            Log.e(mTag, "Problem with JSON custom object " + e.getMessage());
+        }
         return custom;
     }
 
