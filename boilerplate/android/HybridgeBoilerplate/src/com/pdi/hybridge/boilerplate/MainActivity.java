@@ -48,8 +48,14 @@ public class MainActivity extends Activity implements Observer {
         mWebView.loadUrl("http://192.168.1.40/hybridge.html");
     }
 
+    private JSONObject getCustomObject() {
+        JSONObject custom = new JSONObject();
+        custom.put("a_custom_data", 123456);
+        return custom;
+    }
+
     private final HybridgeWebViewClient webViewClient = new HybridgeWebViewClient(
-            JsActionImpl.values());
+            JsActionImpl.values(), getCustomObject());
 
     private final WebChromeClient webChromeClient = new HybridgeWebChromeClient(
             JsActionImpl.values());
