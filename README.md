@@ -386,4 +386,7 @@ Coming soon...
 
 ## <a name='license'>License</a>
 Copyright (c) 2013 Telefonica Digital
-Licensed under the AfferoGPLv3 license.
+Licensed under the MIT license.
+The MIT License is simple and easy to understand and it places almost no restrictions on what you can do with a tdigital-hybridge project.
+
+You are free to use tdigital-hybridge project in any other project (even commercial projects) as long as the copyright header is left intact.
