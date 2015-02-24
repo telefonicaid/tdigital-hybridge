@@ -91,7 +91,7 @@ static NSDictionary *HYBSendAction(NSString *action,
 }
 
 + (NSInteger)minorVersion {
-    return 2;
+    return 3;
 }
 
 static HYBBridge *activeBridge;
@@ -128,14 +128,14 @@ static HYBBridge *activeBridge;
     self.webView = webView;
     
     static NSString * const kFormat = @"window.HybridgeGlobal || setTimeout(function() {"
-                                      @"	window.HybridgeGlobal = {"
-                                      @"		isReady:true,"
-                                      @"		version:%@,"
-                                      @"		versionMinor:%@,"
-                                      @"		custom:%@,"
-                                      @"		actions:%@,"
-                                      @"		events:%@"
-                                      @"	};"
+                                      @"    window.HybridgeGlobal = {"
+                                      @"        isReady:true,"
+                                      @"        version:%@,"
+                                      @"        versionMinor:%@,"
+                                      @"        custom:%@,"
+                                      @"        actions:%@,"
+                                      @"        events:%@"
+                                      @"    };"
                                       @"}, 0);";
     
     NSArray *actions = [@[@"init"] arrayByAddingObjectsFromArray:[self.delegate bridgeActions:self]];

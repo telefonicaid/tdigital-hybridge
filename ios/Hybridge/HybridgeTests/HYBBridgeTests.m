@@ -35,7 +35,7 @@
 }
 
 - (void)testVersionMinor {
-    XCTAssertEqual((NSInteger)2, [HYBBridge minorVersion], @"should return the right minor version");
+    XCTAssertEqual((NSInteger)3, [HYBBridge minorVersion], @"should return the right minor version");
 }
 
 - (void)testActiveBridge {
@@ -49,20 +49,21 @@
     id webView = [self autoVerifiedMockForClass:[UIWebView class]];
     
     NSString *javascript = @"window.HybridgeGlobal || setTimeout(function() {"
-                           @"	window.HybridgeGlobal = {"
-                           @"		isReady:true,"
-                           @"		version:1,"
-                           @"		custom:{x:\"y\"},"
-                           @"		actions:[\"init\",\"test\",\"do_something\"],"
-                           @"		events:[\"pause\",\"resume\",\"message\",\"ready\"]"
-                           @"	};"
+                           @"    window.HybridgeGlobal = {"
+                           @"        isReady:true,"
+                           @"        version:1,"
+                           @"        versionMinor:3,"
+                           @"        custom:{\"test\":{\"foo\":\"bar\"}},"
+                           @"        actions:[\"init\",\"test\",\"do_something\"],"
+                           @"        events:[\"pause\",\"resume\",\"message\",\"ready\"]"
+                           @"    };"
                            @"}, 0);";
     
     [[[webView expect] andReturn:@"true"] stringByEvaluatingJavaScriptFromString:javascript];
     
     HYBBridge *bridge = [HYBBridge new];
     bridge.delegate = self;
-    
+
     NSString *result = [bridge prepareWebView:webView];
     XCTAssertEqualObjects(@"true", result, @"should return the value returned by the web view");
 }
@@ -148,7 +149,7 @@
 #pragma mark - HYBBridgeDelegate
 
 - (NSDictionary *)bridgeCustom:(HYBBridge *)bridge {
-    return @{@"test": @"data"};
+    return @{@"test": @{@"foo": @"bar"}};
 }
 
 - (NSDictionary *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data {
