@@ -96,6 +96,11 @@
  */
 - (NSArray *)bridgeActions:(HYBBridge *)bridge;
 
+/**
+ Returns the dictionary of custom data.
+ */
+- (NSDictionary *)bridgeCustom:(HYBBridge *)bridge;
+
 @optional
 
 /**

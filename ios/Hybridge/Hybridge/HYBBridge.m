@@ -132,6 +132,7 @@ static HYBBridge *activeBridge;
                                       @"		isReady:true,"
                                       @"		version:%@,"
                                       @"		versionMinor:%@,"
+                                      @"		custom:%@,"
                                       @"		actions:%@,"
                                       @"		events:%@"
                                       @"	};"
@@ -142,8 +143,11 @@ static HYBBridge *activeBridge;
     
     NSArray *events = @[HYBEventPause, HYBEventResume, HYBEventMessage, HYBEventReady];
     NSString *eventsString = [NSString hyb_JSONStringWithObject:events];
-    
-    NSString *javascript = [NSString stringWithFormat:kFormat, @([[self class] majorVersion]), @([[self class] minorVersion]), actionsString, eventsString];
+
+    NSDictionary *custom = [self.delegate bridgeCustom:self];
+    NSString *customString = [NSString hyb_JSONStringWithObject:custom];
+
+    NSString *javascript = [NSString stringWithFormat:kFormat, @([[self class] majorVersion]), @([[self class] minorVersion]), customString, actionsString, eventsString];
     return [webView stringByEvaluatingJavaScriptFromString:javascript];
 }
 
