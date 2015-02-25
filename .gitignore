@@ -20,25 +20,21 @@ Pods
 */nbandroid/
 
 .DS_Store
-.settings
+.settings/
 
 *.orig
 .picasa.ini
 
 # Android
-*/*/.classpath
-*/*/*/.classpath
-*/*/local.properties
-*/*/.idea
-*/*/.project
-*/*/*/.project
-*/*/bin/
-*/*/*/bin/
-*/*/gen/
-*/*/build/
+.classpath
+local.properties
+.project
+bin/
+gen/
+build/
 
 # Web
-.idea
+.idea/
 
 # Development
 node_modules
