@@ -20,10 +20,10 @@ public class HybridgeWebViewClient extends WebViewClient {
 
     protected JSONArray mActions;
     protected JSONArray mEvents;
-    protected JSONObject mCustom;
+    protected JSONObject mCustomData;
 
     @SuppressLint("DefaultLocale")
-    public HybridgeWebViewClient(JsAction[] actions, JSONObject custom) {
+    public HybridgeWebViewClient(JsAction[] actions, JSONObject customData) {
         mActions = new JSONArray();
         for (final JsAction action : actions) {
             this.mActions.put(action.toString().toLowerCase());
@@ -36,9 +36,9 @@ public class HybridgeWebViewClient extends WebViewClient {
         }
 
         try {
-            mCustom = new JSONObject(custom.toString());
+            mCustomData = new JSONObject(customData.toString());
         } catch (JSONException e) {
-            mCustom = new JSONObject();
+            mCustomData = new JSONObject();
         }
     }
 
@@ -47,7 +47,7 @@ public class HybridgeWebViewClient extends WebViewClient {
         super.onPageFinished(view, url);
         final HybridgeBroadcaster hybridge = HybridgeBroadcaster.getInstance(view);
         if (hybridge != null) {
-            hybridge.initJs(view, mActions, mEvents, mCustom);
+            hybridge.initJs(view, mActions, mEvents, mCustomData);
         }
     }
 }

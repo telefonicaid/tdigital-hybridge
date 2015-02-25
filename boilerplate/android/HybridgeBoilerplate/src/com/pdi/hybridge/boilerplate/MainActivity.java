@@ -48,18 +48,18 @@ public class MainActivity extends Activity implements Observer {
         mWebView.loadUrl("http://192.168.1.40/hybridge.html");
     }
 
-    private JSONObject getCustomObject() {
-        JSONObject custom = new JSONObject();
+    private JSONObject getCustomDataObject() {
+        JSONObject customData = new JSONObject();
         try {
-            custom.put("a_custom_data", 123456);
+            customData.put("a_custom_data", 123456);
         } catch (JSONException e) {
-            Log.e(mTag, "Problem with JSON custom object " + e.getMessage());
+            Log.e(mTag, "Problem with JSON custom data object " + e.getMessage());
         }
-        return custom;
+        return customData;
     }
 
     private final HybridgeWebViewClient webViewClient = new HybridgeWebViewClient(
-            JsActionImpl.values(), getCustomObject());
+            JsActionImpl.values(), getCustomDataObject());
 
     private final WebChromeClient webChromeClient = new HybridgeWebChromeClient(
             JsActionImpl.values());

@@ -53,7 +53,7 @@
                            @"        isReady:true,"
                            @"        version:1,"
                            @"        versionMinor:3,"
-                           @"        custom:{\"test\":{\"foo\":\"bar\"}},"
+                           @"        customData:{\"test\":{\"foo\":\"bar\"}},"
                            @"        actions:[\"init\",\"test\",\"do_something\"],"
                            @"        events:[\"pause\",\"resume\",\"message\",\"ready\"]"
                            @"    };"
@@ -148,7 +148,7 @@
 
 #pragma mark - HYBBridgeDelegate
 
-- (NSDictionary *)bridgeCustom:(HYBBridge *)bridge {
+- (NSDictionary *)bridgeCustomData:(HYBBridge *)bridge {
     return @{@"test": @{@"foo": @"bar"}};
 }
 

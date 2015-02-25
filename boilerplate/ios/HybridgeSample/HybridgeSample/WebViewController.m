@@ -30,7 +30,7 @@
 
 #pragma mark - HYBBridgeDelegate
 
-- (NSDictionary *)bridgeCustom:(HYBBridge *)bridge {
+- (NSDictionary *)bridgeCustomData:(HYBBridge *)bridge {
     return @{@"a_custom_data": @[@"some_data", @"some_other_data"],
              @"some_other_custom": @{@"other_data": @"some_data"},
              @"more_custom": @"more_data",

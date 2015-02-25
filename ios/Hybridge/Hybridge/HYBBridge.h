@@ -99,7 +99,7 @@
 /**
  Returns the dictionary of custom data.
  */
-- (NSDictionary *)bridgeCustom:(HYBBridge *)bridge;
+- (NSDictionary *)bridgeCustomData:(HYBBridge *)bridge;
 
 @optional
 

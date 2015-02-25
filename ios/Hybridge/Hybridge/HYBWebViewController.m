@@ -117,4 +117,10 @@
     return nil;
 }
 
+#pragma mark - HYBBridgeDelegate
+
+- (NSDictionary *)bridgeCustomData:(HYBBridge *)bridge {
+    return nil;
+}
+
 @end
