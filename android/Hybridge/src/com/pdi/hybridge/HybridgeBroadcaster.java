@@ -1,7 +1,7 @@
 /**
  * Hybridge
  * (c) Telefonica Digital, 2013 - All rights reserved
- * License: GNU Affero V3 (see LICENSE file)
+ * License: MIT (see LICENSE file)
  */
 
 package com.pdi.hybridge;
@@ -32,11 +32,12 @@ public class HybridgeBroadcaster extends Observable {
         mJsBuffer = new StringBuffer("");
     }
 
-    public void initJs(WebView view, JSONArray actions, JSONArray events) {
+    public void initJs(WebView view, JSONArray actions, JSONArray events, JSONObject customData) {
         runJsInWebView(view, "window.HybridgeGlobal || setTimeout(function () {"
                 + "window.HybridgeGlobal = {" + "  isReady : true" + ", version : "
                 + HybridgeConst.VERSION + ", versionMinor : " + HybridgeConst.VERSION_MINOR
-                + ", actions : " + actions.toString() + ", events : " + events.toString() + "};"
+                + ", actions : " + actions.toString() + ", events : " + events.toString()
+                + ", customData : " + customData.toString() + "};"
                 + "},0)");
         mIsInitialized = true;
     }

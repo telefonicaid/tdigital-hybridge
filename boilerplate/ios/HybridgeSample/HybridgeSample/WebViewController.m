@@ -4,6 +4,7 @@
 //
 //  Created by guille on 07/04/14.
 //  Copyright (c) 2014 Telefonica I+D. All rights reserved.
+//  Licensed under MIT, see LICENSE for more details.
 //
 
 #import "WebViewController.h"
@@ -25,6 +26,15 @@
 
 - (NSArray *)bridgeActions:(HYBBridge *)bridge {
     return @[@"some_action", @"some_other_action"];
+}
+
+#pragma mark - HYBBridgeDelegate
+
+- (NSDictionary *)bridgeCustomData:(HYBBridge *)bridge {
+    return @{@"a_custom_data": @[@"some_data", @"some_other_data"],
+             @"some_other_custom": @{@"other_data": @"some_data"},
+             @"more_custom": @"more_data",
+             @"and_more_custom": @1};
 }
 
 /* 

@@ -3,7 +3,7 @@
 //  Hybridge
 //
 //  Copyright (c) 2014 Telefonica I+D. All rights reserved.
-//  Licensed under the Affero GNU GPL v3, see LICENSE for more details.
+//  Licensed under MIT, see LICENSE for more details.
 //
 
 #import "HYBWebViewController.h"
@@ -114,6 +114,12 @@
 #pragma mark - HYBBridgeDelegate
 
 - (NSArray *)bridgeActions:(HYBBridge *)bridge {
+    return nil;
+}
+
+#pragma mark - HYBBridgeDelegate
+
+- (NSDictionary *)bridgeCustomData:(HYBBridge *)bridge {
     return nil;
 }
 

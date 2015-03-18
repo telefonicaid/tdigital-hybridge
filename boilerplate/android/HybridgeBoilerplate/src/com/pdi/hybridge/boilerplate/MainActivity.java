@@ -1,7 +1,7 @@
 /**
  * Hybridge
  * (c) Telefonica Digital, 2013 - All rights reserved
- * License: GNU Affero V3 (see LICENSE file)
+ * License: MIT (see LICENSE file)
  */
 
 package com.pdi.hybridge.boilerplate;
@@ -48,8 +48,18 @@ public class MainActivity extends Activity implements Observer {
         mWebView.loadUrl("http://192.168.1.40/hybridge.html");
     }
 
+    private JSONObject getCustomDataObject() {
+        JSONObject customData = new JSONObject();
+        try {
+            customData.put("a_custom_data", 123456);
+        } catch (JSONException e) {
+            Log.e(mTag, "Problem with JSON custom data object " + e.getMessage());
+        }
+        return customData;
+    }
+
     private final HybridgeWebViewClient webViewClient = new HybridgeWebViewClient(
-            JsActionImpl.values());
+            JsActionImpl.values(), getCustomDataObject());
 
     private final WebChromeClient webChromeClient = new HybridgeWebChromeClient(
             JsActionImpl.values());

@@ -2,7 +2,7 @@
 //  HYBAsyncTestHelper.h
 //
 //  Copyright (c) 2013 Guillermo Gonzalez. All rights reserved.
-//  Licensed under the Affero GNU GPL v3, see LICENSE for more details.
+//  Licensed under MIT, see LICENSE for more details.
 //
 
 #import <Foundation/Foundation.h>

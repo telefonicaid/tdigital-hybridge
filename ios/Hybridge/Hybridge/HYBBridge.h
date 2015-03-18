@@ -3,7 +3,7 @@
 //  Hybridge
 //
 //  Copyright (c) 2014 Telefonica I+D. All rights reserved.
-//  Licensed under the Affero GNU GPL v3, see LICENSE for more details.
+//  Licensed under MIT, see LICENSE for more details.
 //
 
 #import <UIKit/UIKit.h>
@@ -95,6 +95,11 @@
  Returns the array of actions that the receiver can process.
  */
 - (NSArray *)bridgeActions:(HYBBridge *)bridge;
+
+/**
+ Returns the dictionary of custom data.
+ */
+- (NSDictionary *)bridgeCustomData:(HYBBridge *)bridge;
 
 @optional
 

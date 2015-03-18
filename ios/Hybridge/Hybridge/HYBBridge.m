@@ -3,7 +3,7 @@
 //  Hybridge
 //
 //  Copyright (c) 2014 Telefonica I+D. All rights reserved.
-//  Licensed under the Affero GNU GPL v3, see LICENSE for more details.
+//  Licensed under MIT, see LICENSE for more details.
 //
 
 #import "HYBBridge.h"
@@ -91,7 +91,7 @@ static NSDictionary *HYBSendAction(NSString *action,
 }
 
 + (NSInteger)minorVersion {
-    return 2;
+    return 3;
 }
 
 static HYBBridge *activeBridge;
@@ -128,13 +128,14 @@ static HYBBridge *activeBridge;
     self.webView = webView;
     
     static NSString * const kFormat = @"window.HybridgeGlobal || setTimeout(function() {"
-                                      @"	window.HybridgeGlobal = {"
-                                      @"		isReady:true,"
-                                      @"		version:%@,"
-                                      @"		versionMinor:%@,"
-                                      @"		actions:%@,"
-                                      @"		events:%@"
-                                      @"	};"
+                                      @"    window.HybridgeGlobal = {"
+                                      @"        isReady:true,"
+                                      @"        version:%@,"
+                                      @"        versionMinor:%@,"
+                                      @"        customData:%@,"
+                                      @"        actions:%@,"
+                                      @"        events:%@"
+                                      @"    };"
                                       @"}, 0);";
     
     NSArray *actions = [@[@"init"] arrayByAddingObjectsFromArray:[self.delegate bridgeActions:self]];
@@ -142,8 +143,11 @@ static HYBBridge *activeBridge;
     
     NSArray *events = @[HYBEventPause, HYBEventResume, HYBEventMessage, HYBEventReady];
     NSString *eventsString = [NSString hyb_JSONStringWithObject:events];
-    
-    NSString *javascript = [NSString stringWithFormat:kFormat, @([[self class] majorVersion]), @([[self class] minorVersion]), actionsString, eventsString];
+
+    NSDictionary *customData = [self.delegate bridgeCustomData:self];
+    NSString *customDataString = [NSString hyb_JSONStringWithObject:customData];
+
+    NSString *javascript = [NSString stringWithFormat:kFormat, @([[self class] majorVersion]), @([[self class] minorVersion]), customDataString, actionsString, eventsString];
     return [webView stringByEvaluatingJavaScriptFromString:javascript];
 }
 

@@ -55,7 +55,7 @@ You'll also need [JQuery](http://jquery.com) (version 1.8.3 or newer) for the Ja
 
 ### <a name='installation_android'>Android</a>
 
-You can build your own Hybridge, but you can start with the latest version included at [hybridge.jar](boilerplate/android/HybridgeBoilerplate/libs/hybridge-1.2.1.jar) in the boilerplate code.
+You can build your own Hybridge, but you can start with the latest version included at [hybridge.jar](boilerplate/android/HybridgeBoilerplate/libs/hybridge-1.3.0.jar) in the boilerplate code.
 
 ### <a name='installation_ios'>iOS</a>
 
@@ -386,4 +386,7 @@ Coming soon...
 
 ## <a name='license'>License</a>
 Copyright (c) 2013 Telefonica Digital
-Licensed under the AfferoGPLv3 license.
+Licensed under the MIT license.
+The MIT License is simple and easy to understand and it places almost no restrictions on what you can do with a tdigital-hybridge project.
+
+You are free to use tdigital-hybridge project in any other project (even commercial projects) as long as the copyright header is left intact.

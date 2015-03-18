@@ -1,7 +1,7 @@
 /**
  * Hybridge
  * (c) Telefonica Digital, 2013 - All rights reserved
- * License: GNU Affero V3 (see LICENSE file)
+ * License: MIT (see LICENSE file)
  */
 
 package com.pdi.hybridge;
@@ -13,14 +13,17 @@ import android.webkit.WebViewClient;
 import com.pdi.hybridge.HybridgeConst.Event;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class HybridgeWebViewClient extends WebViewClient {
 
     protected JSONArray mActions;
     protected JSONArray mEvents;
+    protected JSONObject mCustomData;
 
     @SuppressLint("DefaultLocale")
-    public HybridgeWebViewClient(JsAction[] actions) {
+    public HybridgeWebViewClient(JsAction[] actions, JSONObject customData) {
         mActions = new JSONArray();
         for (final JsAction action : actions) {
             this.mActions.put(action.toString().toLowerCase());
@@ -31,6 +34,12 @@ public class HybridgeWebViewClient extends WebViewClient {
         for (final Event event : events) {
             this.mEvents.put(event.getJsName());
         }
+
+        try {
+            mCustomData = new JSONObject(customData.toString());
+        } catch (JSONException e) {
+            mCustomData = new JSONObject();
+        }
     }
 
     @Override
@@ -38,7 +47,7 @@ public class HybridgeWebViewClient extends WebViewClient {
         super.onPageFinished(view, url);
         final HybridgeBroadcaster hybridge = HybridgeBroadcaster.getInstance(view);
         if (hybridge != null) {
-            hybridge.initJs(view, mActions, mEvents);
+            hybridge.initJs(view, mActions, mEvents, mCustomData);
         }
     }
 }

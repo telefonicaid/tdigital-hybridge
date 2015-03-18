@@ -1,24 +1,28 @@
 /*!
- * tdigital-hybridge - v1.2.1
+ * tdigital-hybridge - v1.3.0
  * Bridge for mobile hybrid application between Javascript and native environment
  * (iOS & Android)
  *
  * Copyright 2013 Telefonica Investigación y Desarrollo, S.A.U
- * Licensed AfferoGPLv3
+ * Licensed under MIT License.
  *
- * tdigital-hybridge is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License as published by the
- * Free Software Foundation, either version 3 of the License, or (at your option)
- * any later version.
- * tdigital-hybridge is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
- * for more details.
- * You should have received a copy of the GNU Affero General Public License along
- * with tdigital-hybridge. If not, see http://www.gnu.org/licenses/.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the “Software”), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * For those usages not covered by the GNU Affero General Public License
- * please contact with contacto@tid.es
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 
 (function (root, factory) {
@@ -34,16 +38,18 @@
 
   var READY_EVENT = 'ready';
   var INIT_ACTION = 'init';
+  var CUSTOM_DATA_OBJ = 'customData';
 
   var version = 1, versionMinor = 2, initialized = false,
     xhr, method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
-    initModuleDef = $.Deferred(), initGlobalDef = $.Deferred();
+    initModuleDef = $.Deferred(), initGlobalDef = $.Deferred(), initCustomDataDef = $.Deferred();
 
   /**
    * Sets init configuration (native environment, logger)
-   * @param {Object} ( environment: ios | android ).
+   * @param {Object} ( environment: ios | android, customData ).
+   * @param {Function} customDataCb
    */
-  function _init (conf) {
+  function _init (conf, customDataCb) {
     environment = conf.environment || '';
     logger = conf.logger || null;
     debug = conf.debug || false;
@@ -53,7 +59,7 @@
      */
     if (debug) {
      _getLogger().info('Fixing bridge for debug mode');
-     _mockHybridgeGlobal();
+     _mockHybridgeGlobal(conf);
     }
     /**
      * Sets up the bridge in iOS environment
@@ -69,6 +75,7 @@
       _getLogger().info('Fixing bridge for Android, prompt method used');
       method = _sendPrompt;
     }
+    $.when(initCustomDataDef).then(customDataCb);
 
     return initModuleDef.resolve(conf).promise();
   }
@@ -332,14 +339,15 @@
   /**
    * Creates a mock for the HybridgeGlobal object, as created by the native app.
    */
-  var _mockHybridgeGlobal = function () {
+  var _mockHybridgeGlobal = function (conf) {
     window.HybridgeGlobal || setTimeout(function() {
         window.HybridgeGlobal = {
           isReady: true,
           version: version,
           versionMinor: versionMinor,
           actions: [INIT_ACTION, 'message'],
-          events: [READY_EVENT, 'message']
+          events: [READY_EVENT, 'message'],
+          customData: conf.customData || {}
         };
       }, 0);
   };
@@ -365,6 +373,11 @@
         }
       }
     }
+    if (window.HybridgeGlobal && (globalActions = window.HybridgeGlobal.customData)) {
+      Hybridge[CUSTOM_DATA_OBJ] = $.extend({}, window.HybridgeGlobal.customData);
+      initCustomDataDef.resolve(Hybridge[CUSTOM_DATA_OBJ]).promise();
+    }
+
     initialized = true;
     window.HybridgeGlobal.fireEvent = _fireEvent;
     window.HybridgeGlobal.initialized = initialized;

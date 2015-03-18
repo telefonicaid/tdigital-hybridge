@@ -3,7 +3,7 @@
 //  Hybridge
 //
 //  Copyright (c) 2014 Telefonica I+D. All rights reserved.
-//  Licensed under the Affero GNU GPL v3, see LICENSE for more details.
+//  Licensed under MIT, see LICENSE for more details.
 //
 
 #import "HYBTestCase.h"
@@ -35,7 +35,7 @@
 }
 
 - (void)testVersionMinor {
-    XCTAssertEqual((NSInteger)2, [HYBBridge minorVersion], @"should return the right minor version");
+    XCTAssertEqual((NSInteger)3, [HYBBridge minorVersion], @"should return the right minor version");
 }
 
 - (void)testActiveBridge {
@@ -49,19 +49,21 @@
     id webView = [self autoVerifiedMockForClass:[UIWebView class]];
     
     NSString *javascript = @"window.HybridgeGlobal || setTimeout(function() {"
-                           @"	window.HybridgeGlobal = {"
-                           @"		isReady:true,"
-                           @"		version:1,"
-                           @"		actions:[\"init\",\"test\",\"do_something\"],"
-                           @"		events:[\"pause\",\"resume\",\"message\",\"ready\"]"
-                           @"	};"
+                           @"    window.HybridgeGlobal = {"
+                           @"        isReady:true,"
+                           @"        version:1,"
+                           @"        versionMinor:3,"
+                           @"        customData:{\"test\":{\"foo\":\"bar\"}},"
+                           @"        actions:[\"init\",\"test\",\"do_something\"],"
+                           @"        events:[\"pause\",\"resume\",\"message\",\"ready\"]"
+                           @"    };"
                            @"}, 0);";
     
     [[[webView expect] andReturn:@"true"] stringByEvaluatingJavaScriptFromString:javascript];
     
     HYBBridge *bridge = [HYBBridge new];
     bridge.delegate = self;
-    
+
     NSString *result = [bridge prepareWebView:webView];
     XCTAssertEqualObjects(@"true", result, @"should return the value returned by the web view");
 }
@@ -142,6 +144,12 @@
 
 - (NSArray *)bridgeActions:(HYBBridge *)bridge {
     return @[@"test", @"do_something"];
+}
+
+#pragma mark - HYBBridgeDelegate
+
+- (NSDictionary *)bridgeCustomData:(HYBBridge *)bridge {
+    return @{@"test": @{@"foo": @"bar"}};
 }
 
 - (NSDictionary *)bridgeDidReceiveAction:(NSString *)action data:(NSDictionary *)data {
