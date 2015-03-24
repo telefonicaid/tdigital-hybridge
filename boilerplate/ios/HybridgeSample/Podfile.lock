@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../../..
 
 SPEC CHECKSUMS:
-  Hybridge: 9c0600c2faf4ba43b2c66b9fbbc714ce7cbfdc8d
+  Hybridge: c1247bb5d1fc03e7eac516903a5a0a023d8659fe
 
-COCOAPODS: 0.33.1
+COCOAPODS: 0.34.1

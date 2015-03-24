@@ -21,6 +21,8 @@
 		99801D4B18F291100027FC7A /* HybridgeSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99801D4A18F291100027FC7A /* HybridgeSampleTests.m */; };
 		99801D5618F295670027FC7A /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99801D5518F295670027FC7A /* WebViewController.m */; };
 		B785C3222F884EA28C6EA1BA /* libPods-HybridgeSample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3120090FCC9B40F4BA0C73DE /* libPods-HybridgeSample.a */; };
+		E46A2C4E1AC2ED3000785438 /* hybridge.html in Resources */ = {isa = PBXBuildFile; fileRef = E46A2C4C1AC2ED3000785438 /* hybridge.html */; };
+		E46A2C4F1AC2ED3000785438 /* hybridge.js in Resources */ = {isa = PBXBuildFile; fileRef = E46A2C4D1AC2ED3000785438 /* hybridge.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04548BAEF539645015D39742 /* Pods-HybridgeSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HybridgeSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-HybridgeSample/Pods-HybridgeSample.release.xcconfig"; sourceTree = "<group>"; };
 		3120090FCC9B40F4BA0C73DE /* libPods-HybridgeSample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HybridgeSample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		99801D1918F2910F0027FC7A /* HybridgeSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HybridgeSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99801D1C18F2910F0027FC7A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -53,7 +56,9 @@
 		99801D4A18F291100027FC7A /* HybridgeSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HybridgeSampleTests.m; sourceTree = "<group>"; };
 		99801D5418F295670027FC7A /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		99801D5518F295670027FC7A /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
-		C434E462390044FABE0DB5F7 /* Pods-HybridgeSample.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HybridgeSample.xcconfig"; path = "Pods/Pods-HybridgeSample.xcconfig"; sourceTree = "<group>"; };
+		A4C377E04AC2C4CD42585D5C /* Pods-HybridgeSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HybridgeSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HybridgeSample/Pods-HybridgeSample.debug.xcconfig"; sourceTree = "<group>"; };
+		E46A2C4C1AC2ED3000785438 /* hybridge.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = hybridge.html; sourceTree = "<group>"; };
+		E46A2C4D1AC2ED3000785438 /* hybridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = hybridge.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,14 +86,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A5ADFF74D57B66F0645DD26 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A4C377E04AC2C4CD42585D5C /* Pods-HybridgeSample.debug.xcconfig */,
+				04548BAEF539645015D39742 /* Pods-HybridgeSample.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		99801D1018F2910F0027FC7A = {
 			isa = PBXGroup;
 			children = (
+				E46A2C4B1AC2ECFB00785438 /* Resources */,
 				99801D2218F2910F0027FC7A /* HybridgeSample */,
 				99801D4418F291100027FC7A /* HybridgeSampleTests */,
 				99801D1B18F2910F0027FC7A /* Frameworks */,
 				99801D1A18F2910F0027FC7A /* Products */,
-				C434E462390044FABE0DB5F7 /* Pods-HybridgeSample.xcconfig */,
+				0A5ADFF74D57B66F0645DD26 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -153,6 +168,15 @@
 				99801D4718F291100027FC7A /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E46A2C4B1AC2ECFB00785438 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E46A2C4C1AC2ED3000785438 /* hybridge.html */,
+				E46A2C4D1AC2ED3000785438 /* hybridge.js */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,6 +257,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E46A2C4F1AC2ED3000785438 /* hybridge.js in Resources */,
+				E46A2C4E1AC2ED3000785438 /* hybridge.html in Resources */,
 				99801D3818F291100027FC7A /* Images.xcassets in Resources */,
 				99801D2718F2910F0027FC7A /* InfoPlist.strings in Resources */,
 			);
@@ -261,7 +287,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-HybridgeSample-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HybridgeSample/Pods-HybridgeSample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ECD114C2A7DE442998F017F8 /* Check Pods Manifest.lock */ = {
@@ -402,7 +428,7 @@
 		};
 		99801D4F18F291100027FC7A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C434E462390044FABE0DB5F7 /* Pods-HybridgeSample.xcconfig */;
+			baseConfigurationReference = A4C377E04AC2C4CD42585D5C /* Pods-HybridgeSample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -416,7 +442,7 @@
 		};
 		99801D5018F291100027FC7A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C434E462390044FABE0DB5F7 /* Pods-HybridgeSample.xcconfig */;
+			baseConfigurationReference = 04548BAEF539645015D39742 /* Pods-HybridgeSample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
