@@ -40,7 +40,7 @@
   var INIT_ACTION = 'init';
   var CUSTOM_DATA_OBJ = 'customData';
 
-  var version = 1, versionMinor = 2, initialized = false,
+  var version = 1, versionMinor = 4, initialized = false,
     xhr, method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
     initModuleDef = $.Deferred(), initGlobalDef = $.Deferred(), initCustomDataDef = $.Deferred();
 
@@ -89,7 +89,8 @@
       'action' : INIT_ACTION,
       'initialized' : deferredGlobal.initialized,
       'version' : version,
-      'versionMinor' : versionMinor
+      'versionMinor' : versionMinor,
+      'timestamp' : Date.now()
     });
   }
 
@@ -192,7 +193,7 @@
       // Native bridge is enabled
       if (_isEnabled()) {
         if (data.action) {
-          if (_isActionImplemented(data.action)) {
+          if (data.action === INIT_ACTION || _isActionImplemented(data.action)) {
             return method(data);
           }
           else {
@@ -490,7 +491,7 @@
    * the old CSS trigger from version 1.2.0
    */
   (function _checkForGlobal() {
-    if (window.HybridgeGlobal) {
+    if (!!window.HybridgeGlobal) {
       _attachToGlobal();
     } else {
       setTimeout(_checkForGlobal, 10);

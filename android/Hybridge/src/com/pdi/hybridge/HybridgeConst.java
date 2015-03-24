@@ -9,9 +9,10 @@ package com.pdi.hybridge;
 public class HybridgeConst {
 
     public static final int VERSION = 1;
-    public static final int VERSION_MINOR = 2;
+    public static final int VERSION_MINOR = 4;
 
     public static final String EVENT_NAME = "event";
+    public static final String ACTION_INIT = "init";
 
     public enum Event {
         PAUSE("pause"), RESUME("resume"), MESSAGE("message"), READY("ready");
