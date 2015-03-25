@@ -19,7 +19,11 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSURL *url = [NSURL URLWithString:@"http://telefonicaid.github.io/tdigital-hybridge/hybridge.html"];
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"hybridge" ofType:@"html"]isDirectory:NO];
+    
+    // Alternatively you can set the remote URL of your web app:
+    //NSURL *url = [NSURL URLWithString:@"http://remoteUrl"];
+
     WebViewController *webViewController = [[WebViewController alloc] initWithURL:url];
     
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];

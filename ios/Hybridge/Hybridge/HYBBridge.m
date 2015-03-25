@@ -91,7 +91,7 @@ static NSDictionary *HYBSendAction(NSString *action,
 }
 
 + (NSInteger)minorVersion {
-    return 3;
+    return 4;
 }
 
 static HYBBridge *activeBridge;

@@ -25,7 +25,7 @@
 #pragma mark - HYBBridgeDelegate
 
 - (NSArray *)bridgeActions:(HYBBridge *)bridge {
-    return @[@"some_action", @"some_other_action"];
+    return @[@"time", @"battery"];
 }
 
 #pragma mark - HYBBridgeDelegate
@@ -43,24 +43,36 @@
  to handle that action.
  */
 
-- (NSDictionary *)handleSomeActionWithData:(NSDictionary *)data {
+- (NSDictionary *)handleTimeWithData:(NSDictionary *)data {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    NSDate * now = [NSDate date];
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"HH:mm:ss"];
+    NSString *timeString = [outputFormatter stringFromDate:now];
     
     // Send a message event back to the web view
     [self.webView hyb_fireEvent:HYBEventMessage data:@{@"method": NSStringFromSelector(_cmd)}];
     
     return @{
-               @"foo": @"bar"
+               @"time": timeString
     };
 }
 
-- (NSDictionary *)handleSomeOtherActionWithData:(NSDictionary *)data {
+- (NSDictionary *)handleBatteryWithData:(NSDictionary *)data {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    UIDevice *myDevice = [UIDevice currentDevice];
+    [myDevice setBatteryMonitoringEnabled:YES];
+    float batteryLeft = [myDevice batteryLevel];
+    NSString *batteryLevel = (batteryLeft<0.0f)? @"iOS Simulator - not available" : [NSString stringWithFormat:@"%f%%", batteryLeft];
     
     // Send a message event back to the web view
     [self.webView hyb_fireEvent:HYBEventMessage data:@{@"method": NSStringFromSelector(_cmd)}];
     
-    return nil;
+    return @{
+             @"battery": batteryLevel
+    };
 }
 
 /* If you wish to handle actions in a more generic way, you can implement:

@@ -21,7 +21,6 @@ import org.json.JSONObject;
 public class GetBatteryTask extends HybridgeTask {
 
     private static final String TAG = GetBatteryTask.class.getSimpleName();
-    @SuppressWarnings("unused")
     private Context mContext;
 
     public GetBatteryTask(Activity activity) {

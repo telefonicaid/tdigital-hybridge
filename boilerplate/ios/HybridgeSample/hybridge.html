@@ -1,0 +1,147 @@
+<html>
+<head>
+  <title>Hybridge Boilerplate</title>
+  <style>
+    html, body {
+      text-align: center;
+    }
+    h1 {
+      font-size: 8.5vw;
+    }
+    h3 {
+      font-size: 5vw;
+      text-align: center;
+      overflow: scroll;
+    }
+    .actions select, button {
+      padding-top: 2.5rem;
+      padding: 25px;
+      font-size: 5vw;
+      border: 0;
+      border-radius: 0;
+    }
+    .actions button {
+      border: 1px;
+    }
+    footer {
+      width: 100%;
+      text-align: left;
+      position: fixed;
+      font-size: 1rem;
+      height: 20vh;
+      bottom: 0;
+      overflow: scroll;
+    }
+    .fluid-test {
+      text-align: center;
+      font-size: 125vw;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      z-index: -1;
+      color: #CCC;
+    }
+    #message {
+      white-space: pre-wrap;
+      text-align: justify;
+      margin: auto 2rem;
+    }
+  </style>
+  <script src='http://requirejs.org/docs/release/2.1.16/minified/require.js'></script>
+  <script type='text/javascript'>
+    require.config({
+      paths: {
+        'jquery' : 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min',
+        'hybridge': 'hybridge'
+      },
+      waitSeconds: 30
+    });
+  </script>
+  <script type='text/javascript'>
+    require(['jquery','hybridge'],
+      function ($, Hybridge) {
+        var statusWrapper = $('#status');
+        var messageWrapper = $('#message');
+        var webConsole = $('#logs');
+        var logger = {
+            info: function (text) {
+                webConsole.append('<p>INFO: ' + text + '</p>');
+            },
+            error: function (text) {
+                console.log(new Error().stack);
+                webConsole.append('<p>ERROR: ' + text + '</p>');
+            },
+            log: function (text) {
+                webConsole.append('<p>WARN: ' + text + '</p>');
+            }
+        };
+
+        window.onerror = logger.error;
+
+        var processEvent = function (event) {
+          messageWrapper.text('Hybridge event: ' + JSON.stringify(event.data, null, 4));
+        }
+
+        // 'ready' callback, entry point for HyBridge action-event communication
+        var processInit = function (event) {
+          statusWrapper.text('Hybridge (version ' + HybridgeGlobal.version + '.' + HybridgeGlobal.versionMinor + ') is ON');
+          Hybridge.removeListener(Hybridge.events.ready, processInit);
+          // Create a listbox with the implemented events
+          for (var event in Hybridge.events) {
+            if (Hybridge.events.hasOwnProperty(event)) {
+              Hybridge.addListener(Hybridge.events[event], processEvent);
+            }
+          };
+          // Create a listbox with the implemented actions
+          if (Hybridge.actions.length) {
+            var listbox = $('<select id="action"></select>');
+            for (var action in Hybridge.actions) {
+              if (Hybridge.actions.hasOwnProperty(action) && Hybridge.actions[action] != 'init') {
+                listbox.append($('<option value="' + Hybridge.actions[action] + '">' + Hybridge.actions[action] + '</option>'));
+              }
+            };
+            $("#actions").append(listbox);
+            $("#actions").append($('<button id="button" data-label="send">send</button>'));
+            $('#button').click(function (ev) {
+              Hybridge.send({
+                'action': $('#action').val(),
+                'data': {}
+              })
+              .done(function (response) {
+                response && messageWrapper.html('<span>Hybridge action response:</span> ' + JSON.stringify(response, null, 4));
+              })
+              .fail(function (error) {
+                error && messageWrapper.html('<span>Hybridge action failure:</span> ' + JSON.stringify(error));
+              });
+            });
+          }
+          else {
+            $("#actions").append('<h3>No actions available.</h3>');
+          }
+        };
+
+        Hybridge.addListener(Hybridge.events.ready, processInit);
+        Hybridge.init({
+            'environment' : 'ios',
+            'logger': logger
+        });
+      }
+    );
+  </script>
+</head>
+<body>
+  <div class="fluid-test">H</div>
+
+  <h1 id='status'></h1>
+
+  <div id='actions' class="actions"></div>
+
+  <h3 id='message'></h3>
+
+  <footer>
+    <h4>Debug log</h4>
+    <div id='logs' class="footer"></div>
+  </footer>
+</body>
+</html>

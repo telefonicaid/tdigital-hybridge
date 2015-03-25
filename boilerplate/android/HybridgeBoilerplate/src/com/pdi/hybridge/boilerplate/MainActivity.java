@@ -41,10 +41,14 @@ public class MainActivity extends Activity implements HybridgeActionListener {
         mWebView.setHybridgeActionListener(this);
         mWebView.setCustomData(getCustomDataObject());
         mWebView.setJsActions(JsActionImpl.values());
-        // Set the URL of your web app
-        mWebView.load("http://10.95.231.200:8000/hybridge.html", null);
-        // Alternatively the app can be loaded from manifest.
-        // mWebView.loadAppFromManifest("file:///android_asset/manifest.json", null);
+
+        // Load the HTML file from local resources
+        mWebView.load("file:///android_asset/hybridge.html", null);
+
+        // Alternatively you can set the URL of your web app:
+        // --> mWebView.load("http://HOST:PORT/hybridge.html", null);
+        // As well as load from a manifest file providing fine grained information:
+        // --> mWebView.loadAppFromManifest("file:///android_asset/manifest.json", null);
     }
 
     private JSONObject getCustomDataObject() {
