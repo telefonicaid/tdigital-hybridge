@@ -1,9 +1,9 @@
 /*!
- * tdigital-hybridge - v1.3.0
+ * tdigital-hybridge - v1.4.0
  * Bridge for mobile hybrid application between Javascript and native environment
  * (iOS & Android)
  *
- * Copyright 2013 Telefonica Investigación y Desarrollo, S.A.U
+ * Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
  * Licensed under MIT License.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -144,7 +144,7 @@
    */
   function _isActionImplemented (action) {
     return !!(window.HybridgeGlobal && window.HybridgeGlobal.actions &&
-      $.inArray(action, window.HybridgeGlobal.actions) !== -1 );
+      (action == INIT_ACTION || $.inArray(action, window.HybridgeGlobal.actions) !== -1));
   }
 
   /**
@@ -193,7 +193,7 @@
       // Native bridge is enabled
       if (_isEnabled()) {
         if (data.action) {
-          if (data.action === INIT_ACTION || _isActionImplemented(data.action)) {
+          if (_isActionImplemented(data.action)) {
             return method(data);
           }
           else {

@@ -2,7 +2,7 @@
 //  HYBBridge.m
 //  Hybridge
 //
-//  Copyright (c) 2014 Telefonica I+D. All rights reserved.
+//  Copyright (c) 2015 Telefonica Digital. All rights reserved.
 //  Licensed under MIT, see LICENSE for more details.
 //
 
@@ -138,7 +138,7 @@ static HYBBridge *activeBridge;
                                       @"    };"
                                       @"}, 0);";
     
-    NSArray *actions = [@[@"init"] arrayByAddingObjectsFromArray:[self.delegate bridgeActions:self]];
+    NSArray *actions = [@[] arrayByAddingObjectsFromArray:[self.delegate bridgeActions:self]];
     NSString *actionsString = [NSString hyb_JSONStringWithObject:actions];
     
     NSArray *events = @[HYBEventPause, HYBEventResume, HYBEventMessage, HYBEventReady];

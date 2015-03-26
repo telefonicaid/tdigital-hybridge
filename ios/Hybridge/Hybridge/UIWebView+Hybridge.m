@@ -2,7 +2,7 @@
 //  UIWebView+Hybridge.m
 //  Hybridge
 //
-//  Copyright (c) 2014 Telefonica I+D. All rights reserved.
+//  Copyright (c) 2015 Telefonica Digital. All rights reserved.
 //  Licensed under MIT, see LICENSE for more details.
 //
 

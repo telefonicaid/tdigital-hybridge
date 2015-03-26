@@ -1,6 +1,6 @@
 /**
  * Hybridge
- * (c) Telefonica Digital, 2013 - All rights reserved
+ * (c) Telefonica Digital, 2015 - All rights reserved
  * License: MIT (see LICENSE file)
  */
 
