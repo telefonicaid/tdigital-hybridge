@@ -14,7 +14,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xwalk.core.XWalkJavascriptResult;
-import org.xwalk.core.XWalkPreferences;
 import org.xwalk.core.XWalkResourceClient;
 import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
@@ -194,7 +193,7 @@ public class HybridgeXWalkView extends XWalkView {
                 AsyncTask task = null;
                 try {
                     task =
-                            (AsyncTask<JSONObject, Void, JSONObject>) clazz.getDeclaredConstructor(
+                            (AsyncTask<JSONObject, Void, JSONObject>) clazz.getConstructor(
                                     new Class[] {
                                         android.app.Activity.class
                                     }).newInstance(activity);
@@ -250,6 +249,6 @@ public class HybridgeXWalkView extends XWalkView {
 
     static {
         // XWalkPreferencesInternal.ENABLE_JAVASCRIPT
-        XWalkPreferences.setValue("enable-javascript", true);
+        // XWalkPreferences.setValue("enable-javascript", true);
     }
 }

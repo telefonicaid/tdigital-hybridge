@@ -7,7 +7,6 @@
 package com.pdi.hybridge.boilerplate.action;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
@@ -21,29 +20,24 @@ import org.json.JSONObject;
 public class GetBatteryTask extends HybridgeTask {
 
     private static final String TAG = GetBatteryTask.class.getSimpleName();
-    private Context mContext;
 
     public GetBatteryTask(Activity activity) {
+        // You must provide a constructor to pass the current Activity.
         super(activity);
-        mContext = activity.getApplicationContext();
     }
 
     @Override
     protected JSONObject doInBackground(Object... params) {
-        final JSONObject json = prepareForBackgroundTask(params);
+        // You must always call super prior to do anything.
+        super.doInBackground(params);
 
         try {
-            json.put("battery", getBatteryLevel() + "%");
+            mJson.put("battery", getBatteryLevel() + "%");
         } catch (final JSONException e) {
             Log.e(TAG, "Problem with JSON object " + e.getMessage());
         }
 
-        return json;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
+        return mJson;
     }
 
     private float getBatteryLevel() {

@@ -7,7 +7,6 @@
 package com.pdi.hybridge.boilerplate.action;
 
 import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
 
 import com.pdi.hybridge.HybridgeTask;
@@ -22,32 +21,26 @@ import java.util.Locale;
 public class GetTimeTask extends HybridgeTask {
 
     private static final String TAG = GetTimeTask.class.getSimpleName();
-    @SuppressWarnings("unused")
-    private Context mContext;
 
     public GetTimeTask(Activity activity) {
+        // You must provide a constructor to pass the current Activity.
         super(activity);
-        mContext = activity.getApplicationContext();
     }
 
     @Override
     protected JSONObject doInBackground(Object... params) {
-        final JSONObject json = prepareForBackgroundTask(params);
+        // You must always call super prior to do anything.
+        super.doInBackground(params);
 
         try {
             final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.ROOT);
             final String time = sdf.format(new Date());
-            json.put("time", time);
+            mJson.put("time", time);
         } catch (final JSONException e) {
             Log.e(TAG, "Problem with JSON object " + e.getMessage());
         }
 
-        return json;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
+        return mJson;
     }
 
 }

@@ -2,6 +2,7 @@
 package com.pdi.hybridge;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -15,29 +16,27 @@ public class HybridgeTask extends AsyncTask<Object, Void, JSONObject> {
 
     private static final String TAG = HybridgeTask.class.getSimpleName();
 
+    protected Context mContext;
+    protected JSONObject mJson;
     protected XWalkJavascriptResult mResult;
     protected HybridgeActionListener mHybridgeListener;
 
     /**
      * Base constructor for Hybridge tasks.
-     * 
-     * @param activity
      */
     public HybridgeTask(Activity activity) {
-
+        mContext = activity.getApplicationContext();
     }
 
     /**
      * Helper method to set up the appropriate properties of a HybridgeTask.
      * 
      * @param params
-     * @return
      */
-    protected JSONObject prepareForBackgroundTask(Object... params) {
-        final JSONObject json = (JSONObject) params[0];
+    protected void prepareForBackgroundTask(Object... params) {
+        mJson = (JSONObject) params[0];
         mResult = (XWalkJavascriptResult) params[1];
         mHybridgeListener = (HybridgeActionListener) params[2];
-        return json;
     }
 
     /**
@@ -47,18 +46,18 @@ public class HybridgeTask extends AsyncTask<Object, Void, JSONObject> {
      */
     @Override
     protected JSONObject doInBackground(Object... params) {
-        final JSONObject json = prepareForBackgroundTask(params);
+        prepareForBackgroundTask(params);
         try {
-            // Overrite to do anything.
+            // Override to do anything.
         } catch (final Exception e) {
             Log.e(TAG, "Problem with JSON object " + e.getMessage());
         }
 
-        return json;
+        return mJson;
     }
 
     /**
-     * Default post-exetute action.
+     * Default post-execute action.
      */
     @Override
     protected void onPostExecute(JSONObject json) {
