@@ -1,3 +1,8 @@
+/**
+ * Hybridge
+ * (c) Telefonica Digital, 2015 - All rights reserved
+ * License: MIT (see LICENSE file)
+ */
 
 package com.pdi.hybridge.chromium;
 

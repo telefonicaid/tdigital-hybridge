@@ -40,7 +40,7 @@
   var INIT_ACTION = 'init';
   var CUSTOM_DATA_OBJ = 'customData';
 
-  var version = 1, versionMinor = 4, initialized = false,
+  var version = 1, versionMinor = 4, initialized = false, callCount = 0,
     xhr, method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
     initModuleDef = $.Deferred(), initGlobalDef = $.Deferred(), initCustomDataDef = $.Deferred();
 
@@ -89,8 +89,7 @@
       'action' : INIT_ACTION,
       'initialized' : deferredGlobal.initialized,
       'version' : version,
-      'versionMinor' : versionMinor,
-      'timestamp' : Date.now()
+      'versionMinor' : versionMinor
     });
   }
 
@@ -166,6 +165,10 @@
    */
   function _send (data, fallbackFn) {
     var error, warning, details, mock;
+    // Add timestamp
+    data.timestamp = Date.now();
+    // Add call id
+    data.id = callCount++;
     // Is mode debug on
     if (debug) {
       // Fire the ready event as a response for the init action
@@ -237,6 +240,7 @@
     setTimeout(function() {
       try {
         result = JSON.parse(window.prompt(action, strJSON) || '{}');
+        _getLogger().info('Hybridge: response OK');
         def.resolve(result);
       }
       catch (e) {
@@ -268,11 +272,11 @@
     });
     xhr.done(function() {
         if (xhr.status === 200) {
-          _getLogger().info('Hybridge: ' + xhr.statusText);
+          _getLogger().info('Hybridge: xhr status - ' + xhr.statusText);
           def.resolve(JSON.parse(xhr.responseText || '{}'));
         }
         else {
-          _getLogger().error('Hybridge: ' + xhr.statusText);
+          _getLogger().error('Hybridge: xhr status - ' + xhr.statusText);
           def.reject({'error' : 'HTTP error: ' + xhr.status});
         }
       });

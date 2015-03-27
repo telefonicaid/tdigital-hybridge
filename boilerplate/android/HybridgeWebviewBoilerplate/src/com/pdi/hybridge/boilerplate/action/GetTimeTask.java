@@ -35,12 +35,12 @@ public class GetTimeTask extends HybridgeTaskWebview {
         try {
             final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.ROOT);
             final String time = sdf.format(new Date());
-            mJson.put("time", time);
+            mJsonData.put("time", time);
         } catch (final JSONException e) {
             Log.e(TAG, "Problem with JSON object " + e.getMessage());
         }
 
-        return mJson;
+        return mJsonMessage;
     }
 
 }

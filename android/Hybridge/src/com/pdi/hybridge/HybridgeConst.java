@@ -13,6 +13,7 @@ public class HybridgeConst {
 
     public static final String EVENT_NAME = "event";
     public static final String ACTION_INIT = "init";
+    public static final String JSON_DATA = "data";
 
     public enum Event {
         PAUSE("pause"), RESUME("resume"), MESSAGE("message"), READY("ready");
@@ -27,4 +28,5 @@ public class HybridgeConst {
             return this.jsName;
         }
     }
+
 }

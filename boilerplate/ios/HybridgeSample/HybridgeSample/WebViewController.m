@@ -45,17 +45,20 @@
 - (NSDictionary *)handleTimeWithData:(NSDictionary *)data {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
-    NSDate * now = [NSDate date];
+    NSDate *now = [NSDate date];
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setDateFormat:@"HH:mm:ss"];
     NSString *timeString = [outputFormatter stringFromDate:now];
+
+    NSMutableDictionary *response = [NSMutableDictionary dictionaryWithDictionary:data];
+    NSMutableDictionary *payLoad = [NSMutableDictionary dictionaryWithDictionary:response[@"data"]];
+    payLoad[@"time"] = timeString;
+    response[@"data"] = payLoad;
     
     // Send a message event back to the web view
     [self.webView hyb_fireEvent:HYBEventMessage data:@{@"method": NSStringFromSelector(_cmd)}];
     
-    return @{
-               @"time": timeString
-    };
+    return response;
 }
 
 - (NSDictionary *)handleBatteryWithData:(NSDictionary *)data {
@@ -66,12 +69,15 @@
     float batteryLeft = [myDevice batteryLevel];
     NSString *batteryLevel = (batteryLeft<0.0f)? @"iOS Simulator - not available" : [NSString stringWithFormat:@"%f%%", batteryLeft];
     
+    NSMutableDictionary *response = [NSMutableDictionary dictionaryWithDictionary:data];
+    NSMutableDictionary *payLoad = [NSMutableDictionary dictionaryWithDictionary:response[@"data"]];
+    payLoad[@"battery"] = batteryLevel;
+    response[@"data"] = payLoad;
+    
     // Send a message event back to the web view
     [self.webView hyb_fireEvent:HYBEventMessage data:@{@"method": NSStringFromSelector(_cmd)}];
     
-    return @{
-             @"battery": batteryLevel
-    };
+    return response;
 }
 
 /* If you wish to handle actions in a more generic way, you can implement:

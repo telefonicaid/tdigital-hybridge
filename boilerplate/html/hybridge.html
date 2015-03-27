@@ -4,6 +4,7 @@
   <style>
     html, body {
       text-align: center;
+      font-family: sans-serif;
     }
     h1 {
       font-size: 8.5vw;
@@ -28,17 +29,14 @@
       text-align: left;
       position: fixed;
       font-size: 1rem;
-      height: 20vh;
+      height: 40vh;
       bottom: 0;
       overflow: scroll;
     }
     .fluid-test {
       text-align: center;
-      font-size: 125vw;
+      font-size: 140vw;
       position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
       z-index: -1;
       color: #CCC;
       display: none;
@@ -77,16 +75,22 @@
         var statusWrapper = $('#status');
         var messageWrapper = $('#message');
         var webConsole = $('#logs');
+        var scrollToEnd = function($obj) {
+          $obj.animate({scrollTop: $obj.prop("scrollHeight") - $obj.height()}, 500);
+        };
         var logger = {
             info: function (text) {
                 webConsole.append('<p class="info">INFO: ' + text + '</p>');
+                scrollToEnd(webConsole.parent());
             },
             error: function (text) {
                 webConsole.append('<p class="error">ERROR: ' + text + '</p>');
                 webConsole.append('<p class="error">STACK: ' + new Error().stack + '</p>');
+                scrollToEnd(webConsole.parent());
             },
             log: function (text) {
                 webConsole.append('<p class="warn">WARN: ' + text + '</p>');
+                scrollToEnd(webConsole.parent());
             }
         };
 
@@ -184,8 +188,8 @@
 
   <h3 id='message'></h3>
 
+  <h3>Debug log</h3>
   <footer>
-    <h4>Debug log</h4>
     <div id='logs' class="footer"></div>
   </footer>
 </body>

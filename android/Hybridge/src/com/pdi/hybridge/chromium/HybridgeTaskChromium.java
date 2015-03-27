@@ -1,42 +1,31 @@
+/**
+ * Hybridge
+ * (c) Telefonica Digital, 2015 - All rights reserved
+ * License: MIT (see LICENSE file)
+ */
 
 package com.pdi.hybridge.chromium;
 
 import android.app.Activity;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
+
+import com.pdi.hybridge.HybridgeTask;
 
 import org.json.JSONObject;
 import org.xwalk.core.XWalkJavascriptResult;
 
 /**
- * Base Hybridge task.
+ * Base Hybridge Chromium task.
  */
-public class HybridgeTaskChromium extends AsyncTask<Object, Void, JSONObject> {
+public class HybridgeTaskChromium extends HybridgeTask {
 
-    private static final String TAG = HybridgeTaskChromium.class.getSimpleName();
-
-    protected Context mContext;
-    protected JSONObject mJson;
     protected XWalkJavascriptResult mResult;
     protected HybridgeActionListener mHybridgeListener;
 
     /**
-     * Base constructor for Hybridge tasks.
+     * Base constructor for Hybridge Chromium tasks.
      */
     public HybridgeTaskChromium(Activity activity) {
-        mContext = activity.getApplicationContext();
-    }
-
-    /**
-     * Helper method to set up the appropriate properties of a HybridgeTask.
-     * 
-     * @param params
-     */
-    protected void prepareForBackgroundTask(Object... params) {
-        mJson = (JSONObject) params[0];
-        mResult = (XWalkJavascriptResult) params[1];
-        mHybridgeListener = (HybridgeActionListener) params[2];
+        super(activity);
     }
 
     /**
@@ -46,14 +35,10 @@ public class HybridgeTaskChromium extends AsyncTask<Object, Void, JSONObject> {
      */
     @Override
     protected JSONObject doInBackground(Object... params) {
-        prepareForBackgroundTask(params);
-        try {
-            // Override to do anything.
-        } catch (final Exception e) {
-            Log.e(TAG, "Problem with JSON object " + e.getMessage());
-        }
-
-        return mJson;
+        super.doInBackground(params);
+        mResult = (XWalkJavascriptResult) params[1];
+        mHybridgeListener = (HybridgeActionListener) params[2];
+        return mJsonMessage;
     }
 
     /**

@@ -32,12 +32,12 @@ public class GetBatteryTask extends HybridgeTaskWebview {
         super.doInBackground(params);
 
         try {
-            mJson.put("battery", getBatteryLevel() + "%");
+            mJsonData.put("battery", getBatteryLevel() + "%");
         } catch (final JSONException e) {
             Log.e(TAG, "Problem with JSON object " + e.getMessage());
         }
 
-        return mJson;
+        return mJsonMessage;
     }
 
     private float getBatteryLevel() {

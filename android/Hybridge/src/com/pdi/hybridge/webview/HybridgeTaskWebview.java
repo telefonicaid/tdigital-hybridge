@@ -1,42 +1,31 @@
+/**
+ * Hybridge
+ * (c) Telefonica Digital, 2015 - All rights reserved
+ * License: MIT (see LICENSE file)
+ */
 
 package com.pdi.hybridge.webview;
 
 import android.app.Activity;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.webkit.JsPromptResult;
+
+import com.pdi.hybridge.HybridgeTask;
 
 import org.json.JSONObject;
 
 /**
- * Base Hybridge task.
+ * Base Hybridge Webview task.
  */
-public class HybridgeTaskWebview extends AsyncTask<Object, Void, JSONObject> {
+public class HybridgeTaskWebview extends HybridgeTask {
 
-    private static final String TAG = HybridgeTaskWebview.class.getSimpleName();
-
-    protected Context mContext;
-    protected JSONObject mJson;
     protected JsPromptResult mResult;
     protected HybridgeBroadcaster mHybridge;
 
     /**
-     * Base constructor for Hybridge tasks.
+     * Base constructor for Hybridge Webview tasks.
      */
     public HybridgeTaskWebview(Activity activity) {
-        mContext = activity.getApplicationContext();
-    }
-
-    /**
-     * Helper method to set up the appropriate properties of a HybridgeTask.
-     * 
-     * @param params
-     */
-    protected void prepareForBackgroundTask(Object... params) {
-        mJson = (JSONObject) params[0];
-        mResult = (JsPromptResult) params[1];
-        mHybridge = (HybridgeBroadcaster) params[2];
+        super(activity);
     }
 
     /**
@@ -46,14 +35,10 @@ public class HybridgeTaskWebview extends AsyncTask<Object, Void, JSONObject> {
      */
     @Override
     protected JSONObject doInBackground(Object... params) {
-        prepareForBackgroundTask(params);
-        try {
-            // Override to do anything.
-        } catch (final Exception e) {
-            Log.e(TAG, "Problem with JSON object " + e.getMessage());
-        }
-
-        return mJson;
+        super.doInBackground(params);
+        mResult = (JsPromptResult) params[1];
+        mHybridge = (HybridgeBroadcaster) params[2];
+        return mJsonMessage;
     }
 
     /**
