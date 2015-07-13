@@ -1,5 +1,5 @@
 /*!
- * tdigital-hybridge - v1.3.0
+ * tdigital-hybridge - v1.3.1
  * Bridge for mobile hybrid application between Javascript and native environment
  * (iOS & Android)
  *
