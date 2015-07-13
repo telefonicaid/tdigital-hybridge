@@ -41,7 +41,7 @@
   var CUSTOM_DATA_OBJ = 'customData';
 
   var version = 1, versionMinor = 2, initialized = false,
-    xhr, method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
+    method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
     initModuleDef = $.Deferred(), initGlobalDef = $.Deferred(), initCustomDataDef = $.Deferred();
 
   /**
@@ -254,13 +254,10 @@
    */
   function _sendXHR (data) {
     var strJSON = JSON.stringify(data);
-    if (xhr && xhr.readyState !== 4) {
-        xhr = null;
-    }
     var def = $.Deferred();
     var action = data.action;
     var id = data.id;
-    xhr = $.ajax({
+    var xhr = $.ajax({
       url: 'http://hybridge/' + action + '/' + id + '/' + new Date().getTime(),
       type: 'HEAD',
       headers: { 'data': strJSON || '{}' }
@@ -278,6 +275,10 @@
     xhr.fail(function(xhr, text, textError) {
         _getLogger().error('Error on bridge to native. Non native environment?',
                            xhr, text, textError);
+      });
+    xhr.always(function() {
+        xhr = null;
+        _getLogger().info('Hybridge: clean');
       });
     return def.promise();
   }
