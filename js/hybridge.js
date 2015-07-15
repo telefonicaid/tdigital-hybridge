@@ -372,7 +372,7 @@
         }
       }
     }
-    if (window.HybridgeGlobal && (globalActions = window.HybridgeGlobal.customData)) {
+    if (window.HybridgeGlobal && (window.HybridgeGlobal.customData)) {
       Hybridge[CUSTOM_DATA_OBJ] = $.extend({}, window.HybridgeGlobal.customData);
       initCustomDataDef.resolve(Hybridge[CUSTOM_DATA_OBJ]).promise();
     }
