@@ -258,23 +258,25 @@
     var def = $.Deferred();
     var action = data.action;
     var id = data.id;
+    var ts = new Date().getTime();
+    var info = ' (' + action + ': ' + ts + ')';
     $.ajax({
-      url: 'http://hybridge/' + action + '/' + id + '/' + new Date().getTime(),
+      url: 'http://hybridge/' + action + '/' + id + '/' + ts,
       type: 'HEAD',
       headers: { 'data': strJSON || '{}' },
       beforeSend: function (xhr) {
         xhr.done(function () {
           if (xhr.status === 200) {
-            _getLogger().info('Hybridge: ' + action + ": " + xhr.statusText);
+            _getLogger().info('Hybridge: ' + xhr.statusText + info);
             def.resolve(JSON.parse(xhr.responseText || '{}'));
           }
           else {
-            _getLogger().error('Hybridge: ' + xhr.statusText);
+            _getLogger().error('Hybridge: ' + xhr.statusText + info);
             def.reject({'error': 'HTTP error: ' + xhr.status});
           }
         }).fail(function (xhr, text, textError) {
           _getLogger().error('Error on bridge to native. Non native environment?',
-              xhr, text, textError);
+              xhr, text, textError, info);
         });
       }
     });
