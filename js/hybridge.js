@@ -40,7 +40,7 @@
   var INIT_ACTION = 'init';
   var CUSTOM_DATA_OBJ = 'customData';
 
-  var version = 1, versionMinor = 2, initialized = false,
+  var version = 1, versionMinor = 3, initialized = false,
     method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
     initModuleDef = $.Deferred(), initGlobalDef = $.Deferred(), initCustomDataDef = $.Deferred();
 
