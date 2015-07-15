@@ -249,6 +249,7 @@
   /**
    * Provides XHR bridge method for iOS environment
    * Warning: Fixed to work with JQuery 1.10.2
+   * Info: tested from 1.8.3, 1.10.2, ... 2.1.1 for beforeSend
    * @param  {Object} data
    * @return {Promise}
    */
@@ -257,29 +258,26 @@
     var def = $.Deferred();
     var action = data.action;
     var id = data.id;
-    var xhr = $.ajax({
+    $.ajax({
       url: 'http://hybridge/' + action + '/' + id + '/' + new Date().getTime(),
       type: 'HEAD',
-      headers: { 'data': strJSON || '{}' }
+      headers: { 'data': strJSON || '{}' },
+      beforeSend: function (xhr) {
+        xhr.done(function () {
+          if (xhr.status === 200) {
+            _getLogger().info('Hybridge: ' + xhr.statusText);
+            def.resolve(JSON.parse(xhr.responseText || '{}'));
+          }
+          else {
+            _getLogger().error('Hybridge: ' + xhr.statusText);
+            def.reject({'error': 'HTTP error: ' + xhr.status});
+          }
+        }).fail(function (xhr, text, textError) {
+          _getLogger().error('Error on bridge to native. Non native environment?',
+              xhr, text, textError);
+        });
+      }
     });
-    xhr.done(function() {
-        if (xhr.status === 200) {
-          _getLogger().info('Hybridge: ' + xhr.statusText);
-          def.resolve(JSON.parse(xhr.responseText || '{}'));
-        }
-        else {
-          _getLogger().error('Hybridge: ' + xhr.statusText);
-          def.reject({'error' : 'HTTP error: ' + xhr.status});
-        }
-      });
-    xhr.fail(function(xhr, text, textError) {
-        _getLogger().error('Error on bridge to native. Non native environment?',
-                           xhr, text, textError);
-      });
-    xhr.always(function() {
-        xhr = null;
-        _getLogger().info('Hybridge: clean');
-      });
     return def.promise();
   }
 
