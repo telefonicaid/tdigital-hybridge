@@ -265,7 +265,7 @@
       beforeSend: function (xhr) {
         xhr.done(function () {
           if (xhr.status === 200) {
-            _getLogger().info('Hybridge: ' + xhr.statusText);
+            _getLogger().info('Hybridge: ' + action + ": " + xhr.statusText);
             def.resolve(JSON.parse(xhr.responseText || '{}'));
           }
           else {
