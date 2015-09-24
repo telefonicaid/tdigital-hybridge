@@ -37,8 +37,7 @@ public class HybridgeBroadcaster extends Observable {
                 + "window.HybridgeGlobal = {" + "  isReady : true" + ", version : "
                 + HybridgeConst.VERSION + ", versionMinor : " + HybridgeConst.VERSION_MINOR
                 + ", actions : " + actions.toString() + ", events : " + events.toString()
-                + ", customData : " + customData.toString() + "};"
-                + "},0)");
+                + ", customData : " + customData.toString() + "};" + "},0)");
         mIsInitialized = true;
     }
 
@@ -71,6 +70,7 @@ public class HybridgeBroadcaster extends Observable {
             view.post(new Runnable() {
                 @Override
                 public void run() {
+                    try {
                     final WebView.HitTestResult hitTestResult = view.getHitTestResult();
                     String prejs = "";
                     final String json = data != null ? data.toString() : "{}";
@@ -90,13 +90,20 @@ public class HybridgeBroadcaster extends Observable {
                         Log.d(TAG, "Defer javascript message, user is entering text");
                         mJsBuffer.append(js.toString());
                     }
-                }
+                    } catch (NullPointerException e) {
+                        Log.d(TAG, e.getMessage());
+                    }
+                 }
             });
         }
     }
 
     public void runJsInWebView(WebView view, final String js) {
-        view.loadUrl("javascript:(function(){" + js + "})()");
+        try {
+            view.loadUrl("javascript:(function(){" + js + "})()");
+        } catch (NullPointerException e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 
     public void updateState(JSONObject data) {
