@@ -9,7 +9,7 @@ package com.pdi.hybridge;
 public class HybridgeConst {
 
     public static final int VERSION = 1;
-    public static final int VERSION_MINOR = 2;
+    public static final int VERSION_MINOR = 3;
 
     public static final String EVENT_NAME = "event";
 

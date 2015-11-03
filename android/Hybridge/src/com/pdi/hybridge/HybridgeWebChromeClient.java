@@ -56,7 +56,7 @@ public class HybridgeWebChromeClient extends WebChromeClient {
 
     @SuppressLint("DefaultLocale")
     @SuppressWarnings({
-            "unchecked", "rawtypes"
+        "unchecked", "rawtypes"
     })
     private void executeJSONTask(String action, JSONObject json, JsPromptResult result,
             HybridgeBroadcaster hybridge, Activity activity) {
