@@ -12,7 +12,7 @@
     "bridge",
     "hybrid"
   ],
-  "license": "AGPLv3",
+  "license": "MIT License",
   "ignore": [
     "android",
     "ios",
