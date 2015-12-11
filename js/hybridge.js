@@ -1,5 +1,5 @@
 /*!
- * tdigital-hybridge - v1.3.3
+ * tdigital-hybridge - v1.3.4
  * Bridge for mobile hybrid application between Javascript and native environment
  * (iOS & Android)
  *
@@ -40,7 +40,7 @@
   var INIT_ACTION = 'init';
   var CUSTOM_DATA_OBJ = 'customData';
 
-  var version = 1, versionMinor = 3, initialized = false,
+  var version = 1, versionMinor = 3, initialized = false, protocol = 'http',
     method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
     initModuleDef = $.Deferred(), initGlobalDef = $.Deferred(), initCustomDataDef = $.Deferred();
 
@@ -65,6 +65,7 @@
      * Sets up the bridge in iOS environment
      */
     else if (_isIos()) {
+      protocol = window.location.protocol === 'https' ? window.location.protocol : protocol;
       _getLogger().info('Fixing bridge for iOS, XHR method used');
       method = _sendXHR;
     }
@@ -261,7 +262,7 @@
     var ts = new Date().getTime();
     var info = ' (' + action + ': ' + ts + ')';
     $.ajax({
-      url: 'http://hybridge/' + action + '/' + id + '/' + ts,
+      url: protocol + '://hybridge/' + action + '/' + id + '/' + ts,
       type: 'HEAD',
       headers: { 'data': strJSON || '{}' },
       beforeSend: function (xhr) {
