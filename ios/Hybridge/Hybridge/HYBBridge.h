@@ -20,6 +20,7 @@
  */
 @property (weak, nonatomic) NSObject<HYBBridgeDelegate> *delegate;
 
+@property (copy, nonatomic) NSString *protocol;
 /**
  Returns the native bridge major version.
  */
@@ -56,9 +57,10 @@
  This method should be called after the web view has finished loading the HTML contents.
  
  @param webView The `UIWebView` to configure.
+ @param scheme The forwarding requests scheme.
  @return The result of preparing the web view.
  */
-- (NSString *)prepareWebView:(UIWebView *)webView;
+- (NSString *)prepareWebView:(UIWebView *)webView withRequestScheme:(NSString *)scheme;
 
 /**
  This method is called by the URL loading system when a Hybridge request is made.
