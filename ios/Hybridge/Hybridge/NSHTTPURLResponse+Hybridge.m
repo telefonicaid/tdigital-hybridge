@@ -8,6 +8,8 @@
 
 #import "NSHTTPURLResponse+Hybridge.h"
 
+#import "HYBBridge.h"
+
 NSString * const HYBHostName = @"hybridge";
 
 @implementation NSHTTPURLResponse (Hybridge)
@@ -26,9 +28,12 @@ NSString * const HYBHostName = @"hybridge";
 
 + (instancetype)hyb_responseWithAction:(NSString *)action statusCode:(NSInteger)statusCode {
     NSParameterAssert(action);
-    
+    NSString *requestScheme = @"https";
+    if ([[HYBBridge activeBridge] protocol]) {
+        requestScheme = [[HYBBridge activeBridge] protocol];
+    }
     NSString *path = [NSString stringWithFormat:@"/%@", action];
-    NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:HYBHostName path:path];
+    NSURL *url = [[NSURL alloc] initWithScheme:requestScheme host:HYBHostName path:path];
     return [self hyb_responseWithURL:url statusCode:statusCode];
 }
 

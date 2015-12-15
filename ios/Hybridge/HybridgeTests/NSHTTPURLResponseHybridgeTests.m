@@ -44,7 +44,7 @@
 - (void)testResponseWithAction {
     NSHTTPURLResponse *response = [NSHTTPURLResponse hyb_responseWithAction:@"some_action" statusCode:200];
     
-    XCTAssertEqualObjects([NSURL URLWithString:@"http://hybridge/some_action"], response.URL, @"should initialize URL");
+    XCTAssertEqualObjects([NSURL URLWithString:@"https://hybridge/some_action"], response.URL, @"should initialize URL");
 }
 
 @end
