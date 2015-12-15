@@ -1,5 +1,5 @@
 /*!
- * tdigital-hybridge - v1.3.3
+ * tdigital-hybridge - v1.3.4
  * Bridge for mobile hybrid application between Javascript and native environment
  * (iOS & Android)
  *
@@ -261,7 +261,7 @@
     var ts = new Date().getTime();
     var info = ' (' + action + ': ' + ts + ')';
     $.ajax({
-      url: 'http://hybridge/' + action + '/' + id + '/' + ts,
+      url: window.location.protocol + '//hybridge/' + action + '/' + id + '/' + ts,
       type: 'HEAD',
       headers: { 'data': strJSON || '{}' },
       beforeSend: function (xhr) {

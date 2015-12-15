@@ -103,7 +103,7 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [self.bridge prepareWebView:webView];
+    [self.bridge prepareWebView:webView withRequestScheme:self.webView.request.URL.scheme];
     [self webViewDidFinishLoad];
 }
 

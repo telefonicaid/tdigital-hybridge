@@ -122,10 +122,11 @@ static HYBBridge *activeBridge;
     return self;
 }
 
-- (NSString *)prepareWebView:(UIWebView *)webView {
+- (NSString *)prepareWebView:(UIWebView *)webView withRequestScheme:(NSString *)scheme {
     NSParameterAssert(webView);
     
     self.webView = webView;
+    self.protocol = scheme;
     
     static NSString * const kFormat = @"window.HybridgeGlobal || setTimeout(function() {"
                                       @"    window.HybridgeGlobal = {"
