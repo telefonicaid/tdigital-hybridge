@@ -40,7 +40,7 @@
   var INIT_ACTION = 'init';
   var CUSTOM_DATA_OBJ = 'customData';
 
-  var version = 1, versionMinor = 3, initialized = false, protocol = 'http',
+  var version = 1, versionMinor = 3, initialized = false,
     method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
     initModuleDef = $.Deferred(), initGlobalDef = $.Deferred(), initCustomDataDef = $.Deferred();
 
@@ -65,7 +65,6 @@
      * Sets up the bridge in iOS environment
      */
     else if (_isIos()) {
-      protocol = window.location.protocol === 'https' ? window.location.protocol : protocol;
       _getLogger().info('Fixing bridge for iOS, XHR method used');
       method = _sendXHR;
     }
@@ -262,7 +261,7 @@
     var ts = new Date().getTime();
     var info = ' (' + action + ': ' + ts + ')';
     $.ajax({
-      url: protocol + '://hybridge/' + action + '/' + id + '/' + ts,
+      url: window.location.protocol + '//hybridge/' + action + '/' + id + '/' + ts,
       type: 'HEAD',
       headers: { 'data': strJSON || '{}' },
       beforeSend: function (xhr) {
