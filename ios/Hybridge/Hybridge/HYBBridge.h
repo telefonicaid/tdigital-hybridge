@@ -6,7 +6,8 @@
 //  Licensed under MIT, see LICENSE for more details.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+@import WebKit;
 
 @protocol HYBBridgeDelegate;
 
@@ -18,7 +19,7 @@
 /**
  The bridge delegate will receive actions from the visible `UIWebView`.
  */
-@property (weak, nonatomic) NSObject<HYBBridgeDelegate> *delegate;
+@property (weak, nonatomic) NSObject<HYBBridgeDelegate> * _Nullable delegate;
 
 @property (copy, nonatomic) NSString *protocol;
 /**
@@ -60,7 +61,9 @@
  @param scheme The forwarding requests scheme.
  @return The result of preparing the web view.
  */
-- (NSString *)prepareWebView:(UIWebView *)webView withRequestScheme:(NSString *)scheme;
+- (void)prepareWebView:(WKWebView *)webView
+     withRequestScheme:(NSString *)scheme
+     completionHandler:(void (^ _Nullable)(_Nullable id, NSError * _Nullable error))completionHandler;
 
 /**
  This method is called by the URL loading system when a Hybridge request is made.

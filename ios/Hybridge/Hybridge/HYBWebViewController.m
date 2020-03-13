@@ -19,15 +19,15 @@
 
 #pragma mark - Properties
 
-- (UIWebView *)webView {
-    return (UIWebView *)self.view;
+- (WKWebView *)webView {
+    return (WKWebView *)self.view;
 }
 
 #pragma mark - Lifecycle
 
 - (void)dealloc {
     [self.webView stopLoading];
-    self.webView.delegate = nil;
+    self.webView.navigationDelegate = self;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -54,16 +54,27 @@
 - (void)loadView {
     if ([self nibName]) {
         [super loadView];
-        NSAssert([self.view isKindOfClass:[UIWebView class]], @"HYBWebViewController view must be a UIWebView instance.");
+        NSAssert([self.view isKindOfClass:[WKWebView class]], @"HYBWebViewController view must be a UIWebView instance.");
     } else {
-        UIWebView *view = [[UIWebView alloc] init];
-        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        view.scalesPageToFit = YES;
-        view.delegate = self;
+//        WKWebView *view = [[WKWebView alloc] init];
+//        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+////        view.scalesPageToFit = YES;
+//        view.navigationDelegate = self;
         
-        self.view = view;
+        WKUserContentController *userContentController = [WKUserContentController new];
+        [userContentController addScriptMessageHandler:self name:@"hybridge"];
+        
+        WKWebViewConfiguration *configuration = [WKWebViewConfiguration new];
+        configuration.userContentController = userContentController;
+        
+        WKWebView *webView = [[WKWebView alloc] initWithFrame:UIScreen.mainScreen.bounds
+                                                configuration:configuration];
+        webView.navigationDelegate = self;
+        webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.view = webView;
     }
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -96,14 +107,14 @@
 - (void)webViewDidFailLoadWithError:(NSError *)error {
 }
 
-#pragma mark - UIWebViewDelegate
+#pragma mark - WKNavigationDelegate
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
     [self webViewDidStartLoad];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [self.bridge prepareWebView:webView withRequestScheme:self.webView.request.URL.scheme];
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    [self.bridge prepareWebView:webView withRequestScheme:self.webView.URL.scheme completionHandler:nil];
     [self webViewDidFinishLoad];
 }
 
@@ -121,6 +132,23 @@
 
 - (NSDictionary *)bridgeCustomData:(HYBBridge *)bridge {
     return nil;
+}
+
+- (void)userContentController:(nonnull WKUserContentController *)userContentController
+      didReceiveScriptMessage:(nonnull WKScriptMessage *)message
+{
+    NSLog(@"message -> %@", message.body);
+    NSDictionary *data = (NSDictionary *)message.body;
+    if (data) {
+        if (data[@"action"]) {
+            NSString *action = data[@"action"];
+            [HYBBridge.activeBridge dispatchAction:action
+                                              data:data
+                                        completion:^(NSHTTPURLResponse *response, NSData *data) {
+                NSLog(@"RESPONSE: %@", response);
+            }];
+        }
+    }
 }
 
 @end

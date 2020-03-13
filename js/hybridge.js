@@ -255,32 +255,12 @@
    */
   function _sendXHR (data) {
     var strJSON = JSON.stringify(data);
-    var def = $.Deferred();
     var action = data.action;
     var id = data.id;
     var ts = new Date().getTime();
     var info = ' (' + action + ': ' + ts + ')';
-    $.ajax({
-      url: window.location.protocol + '//hybridge/' + action + '/' + id + '/' + ts,
-      type: 'HEAD',
-      headers: { 'data': strJSON || '{}' },
-      beforeSend: function (xhr) {
-        xhr.done(function () {
-          if (xhr.status === 200) {
-            _getLogger().info('Hybridge: ' + xhr.statusText + info);
-            def.resolve(JSON.parse(xhr.responseText || '{}'));
-          }
-          else {
-            _getLogger().error('Hybridge: ' + xhr.statusText + info);
-            def.reject({'error': 'HTTP error: ' + xhr.status});
-          }
-        }).fail(function (xhr, text, textError) {
-          _getLogger().error('Error on bridge to native. Non native environment?',
-              xhr, text, textError, info);
-        });
-      }
-    });
-    return def.promise();
+    webkit.messageHandlers.hybridge.postMessage(data)
+    Promise.resolve({});
   }
 
   /**

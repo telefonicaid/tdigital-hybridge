@@ -17,14 +17,10 @@
 		992DEDCC18ED97FB005CD768 /* Hybridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 992DEDA918ED963A005CD768 /* Hybridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		992DEDCF18ED9BA7005CD768 /* HYBBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 992DEDCD18ED9BA7005CD768 /* HYBBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		992DEDD018ED9BA7005CD768 /* HYBBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 992DEDCE18ED9BA7005CD768 /* HYBBridge.m */; };
-		992DEDD318ED9C5C005CD768 /* HYBEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 992DEDD118ED9C5C005CD768 /* HYBEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		992DEDD418ED9C5C005CD768 /* HYBEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 992DEDD218ED9C5C005CD768 /* HYBEvent.m */; };
-		992DEDD718ED9CF0005CD768 /* HYBURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 992DEDD518ED9CF0005CD768 /* HYBURLProtocol.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		992DEDD818ED9CF0005CD768 /* HYBURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 992DEDD618ED9CF0005CD768 /* HYBURLProtocol.m */; };
 		9947021218EDB672007A6D8E /* HYBWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 9947021018EDB672007A6D8E /* HYBWebViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9947021318EDB672007A6D8E /* HYBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9947021118EDB672007A6D8E /* HYBWebViewController.m */; };
-		9960C8AC18EE914600FEC7DB /* UIWebView+Hybridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 9960C8AA18EE914600FEC7DB /* UIWebView+Hybridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9960C8AD18EE914600FEC7DB /* UIWebView+Hybridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9960C8AB18EE914600FEC7DB /* UIWebView+Hybridge.m */; };
+		9960C8AC18EE914600FEC7DB /* WKWebView+Hybridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 9960C8AA18EE914600FEC7DB /* WKWebView+Hybridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9960C8AD18EE914600FEC7DB /* WKWebView+Hybridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9960C8AB18EE914600FEC7DB /* WKWebView+Hybridge.m */; };
 		9960C8B018EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 9960C8AE18EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9960C8B118EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9960C8AF18EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.m */; };
 		9960C8D118EEC2CE00FEC7DB /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9960C8C918EEC2CE00FEC7DB /* libOCMock.a */; };
@@ -34,6 +30,8 @@
 		9960C8DC18EEDB8000FEC7DB /* NSString+Hybridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9960C8DA18EEDB8000FEC7DB /* NSString+Hybridge.m */; };
 		9960C8DE18EEDC6500FEC7DB /* NSStringHybridgeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9960C8DD18EEDC6500FEC7DB /* NSStringHybridgeTests.m */; };
 		9960C8E018EEE83A00FEC7DB /* HYBBridgeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9960C8DF18EEE83A00FEC7DB /* HYBBridgeTests.m */; };
+		E31BAF1E241B60E0000720D6 /* HYBEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = E31BAF1C241B60E0000720D6 /* HYBEvent.h */; };
+		E31BAF1F241B60E0000720D6 /* HYBEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E31BAF1D241B60E0000720D6 /* HYBEvent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,14 +69,10 @@
 		992DEDBE18ED963A005CD768 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		992DEDCD18ED9BA7005CD768 /* HYBBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBBridge.h; sourceTree = "<group>"; };
 		992DEDCE18ED9BA7005CD768 /* HYBBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBBridge.m; sourceTree = "<group>"; };
-		992DEDD118ED9C5C005CD768 /* HYBEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBEvent.h; sourceTree = "<group>"; };
-		992DEDD218ED9C5C005CD768 /* HYBEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBEvent.m; sourceTree = "<group>"; };
-		992DEDD518ED9CF0005CD768 /* HYBURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBURLProtocol.h; sourceTree = "<group>"; };
-		992DEDD618ED9CF0005CD768 /* HYBURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBURLProtocol.m; sourceTree = "<group>"; };
 		9947021018EDB672007A6D8E /* HYBWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBWebViewController.h; sourceTree = "<group>"; };
 		9947021118EDB672007A6D8E /* HYBWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBWebViewController.m; sourceTree = "<group>"; };
-		9960C8AA18EE914600FEC7DB /* UIWebView+Hybridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+Hybridge.h"; sourceTree = "<group>"; };
-		9960C8AB18EE914600FEC7DB /* UIWebView+Hybridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+Hybridge.m"; sourceTree = "<group>"; };
+		9960C8AA18EE914600FEC7DB /* WKWebView+Hybridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+Hybridge.h"; sourceTree = "<group>"; };
+		9960C8AB18EE914600FEC7DB /* WKWebView+Hybridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+Hybridge.m"; sourceTree = "<group>"; };
 		9960C8AE18EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSHTTPURLResponse+Hybridge.h"; sourceTree = "<group>"; };
 		9960C8AF18EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSHTTPURLResponse+Hybridge.m"; sourceTree = "<group>"; };
 		9960C8C918EEC2CE00FEC7DB /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
@@ -96,6 +90,9 @@
 		9960C8DD18EEDC6500FEC7DB /* NSStringHybridgeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringHybridgeTests.m; sourceTree = "<group>"; };
 		9960C8DF18EEE83A00FEC7DB /* HYBBridgeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBBridgeTests.m; sourceTree = "<group>"; };
 		99801D0F18F28B4E0027FC7A /* HYBAsyncTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HYBAsyncTestHelper.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		E31BAF15241AD889000720D6 /* Hybridge-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hybridge-Bridging-Header.h"; sourceTree = "<group>"; };
+		E31BAF1C241B60E0000720D6 /* HYBEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBEvent.h; sourceTree = "<group>"; };
+		E31BAF1D241B60E0000720D6 /* HYBEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBEvent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,22 +151,21 @@
 		992DEDA618ED963A005CD768 /* Hybridge */ = {
 			isa = PBXGroup;
 			children = (
-				992DEDA918ED963A005CD768 /* Hybridge.h */,
+				E31BAF1C241B60E0000720D6 /* HYBEvent.h */,
+				E31BAF1D241B60E0000720D6 /* HYBEvent.m */,
 				992DEDCD18ED9BA7005CD768 /* HYBBridge.h */,
 				992DEDCE18ED9BA7005CD768 /* HYBBridge.m */,
-				992DEDD118ED9C5C005CD768 /* HYBEvent.h */,
-				992DEDD218ED9C5C005CD768 /* HYBEvent.m */,
-				992DEDD518ED9CF0005CD768 /* HYBURLProtocol.h */,
-				992DEDD618ED9CF0005CD768 /* HYBURLProtocol.m */,
+				E31BAF15241AD889000720D6 /* Hybridge-Bridging-Header.h */,
+				992DEDA918ED963A005CD768 /* Hybridge.h */,
 				9947021018EDB672007A6D8E /* HYBWebViewController.h */,
 				9947021118EDB672007A6D8E /* HYBWebViewController.m */,
-				9960C8AA18EE914600FEC7DB /* UIWebView+Hybridge.h */,
-				9960C8AB18EE914600FEC7DB /* UIWebView+Hybridge.m */,
 				9960C8AE18EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.h */,
 				9960C8AF18EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.m */,
 				9960C8D918EEDB8000FEC7DB /* NSString+Hybridge.h */,
 				9960C8DA18EEDB8000FEC7DB /* NSString+Hybridge.m */,
 				992DEDA718ED963A005CD768 /* Supporting Files */,
+				9960C8AA18EE914600FEC7DB /* WKWebView+Hybridge.h */,
+				9960C8AB18EE914600FEC7DB /* WKWebView+Hybridge.m */,
 			);
 			path = Hybridge;
 			sourceTree = "<group>";
@@ -235,13 +231,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9960C8AC18EE914600FEC7DB /* UIWebView+Hybridge.h in Headers */,
+				E31BAF1E241B60E0000720D6 /* HYBEvent.h in Headers */,
+				9960C8AC18EE914600FEC7DB /* WKWebView+Hybridge.h in Headers */,
 				992DEDCC18ED97FB005CD768 /* Hybridge.h in Headers */,
 				9960C8DB18EEDB8000FEC7DB /* NSString+Hybridge.h in Headers */,
 				9947021218EDB672007A6D8E /* HYBWebViewController.h in Headers */,
-				992DEDD318ED9C5C005CD768 /* HYBEvent.h in Headers */,
 				9960C8B018EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.h in Headers */,
-				992DEDD718ED9CF0005CD768 /* HYBURLProtocol.h in Headers */,
 				992DEDCF18ED9BA7005CD768 /* HYBBridge.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -294,12 +289,18 @@
 				CLASSPREFIX = HYB;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Telefonica I+D";
+				TargetAttributes = {
+					992DEDA018ED963A005CD768 = {
+						LastSwiftMigration = 1130;
+					};
+				};
 			};
 			buildConfigurationList = 992DED9C18ED963A005CD768 /* Build configuration list for PBXProject "Hybridge" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 992DED9818ED963A005CD768;
@@ -329,13 +330,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				992DEDD418ED9C5C005CD768 /* HYBEvent.m in Sources */,
 				9960C8B118EE971E00FEC7DB /* NSHTTPURLResponse+Hybridge.m in Sources */,
 				9947021318EDB672007A6D8E /* HYBWebViewController.m in Sources */,
+				E31BAF1F241B60E0000720D6 /* HYBEvent.m in Sources */,
 				992DEDD018ED9BA7005CD768 /* HYBBridge.m in Sources */,
-				9960C8AD18EE914600FEC7DB /* UIWebView+Hybridge.m in Sources */,
+				9960C8AD18EE914600FEC7DB /* WKWebView+Hybridge.m in Sources */,
 				9960C8DC18EEDB8000FEC7DB /* NSString+Hybridge.m in Sources */,
-				992DEDD818ED9CF0005CD768 /* HYBURLProtocol.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,7 +403,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -434,7 +434,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -443,26 +443,35 @@
 		992DEDC518ED963A005CD768 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DSTROOT = /tmp/Hybridge.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hybridge/Hybridge-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Hybridge/Hybridge-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		992DEDC618ED963A005CD768 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DSTROOT = /tmp/Hybridge.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Hybridge/Hybridge-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Hybridge/Hybridge-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

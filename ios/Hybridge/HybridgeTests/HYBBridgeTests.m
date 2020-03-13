@@ -64,8 +64,10 @@
     HYBBridge *bridge = [HYBBridge new];
     bridge.delegate = self;
 
-    NSString *result = [bridge prepareWebView:webView];
-    XCTAssertEqualObjects(@"true", result, @"should return the value returned by the web view");
+    [bridge prepareWebView:webView withRequestScheme:@"hybridge" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+        XCTAssertEqualObjects(@"true", result, @"should return the value returned by the web view");
+    }];
+    
 }
 
 - (void)testActionDispatch {

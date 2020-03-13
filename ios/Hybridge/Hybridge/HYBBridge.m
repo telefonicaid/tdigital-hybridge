@@ -7,12 +7,11 @@
 //
 
 #import "HYBBridge.h"
-#import "HYBURLProtocol.h"
 #import "HYBEvent.h"
 
 #import "NSString+Hybridge.h"
 #import "NSHTTPURLResponse+Hybridge.h"
-#import "UIWebView+Hybridge.h"
+#import "WKWebView+Hybridge.h"
 
 static SEL HYBSelectorWithAction(NSString *action) {
     static dispatch_once_t onceToken;
@@ -74,16 +73,14 @@ static NSDictionary *HYBSendAction(NSString *action,
 @interface HYBBridge ()
 
 @property (strong, nonatomic) dispatch_queue_t queue;
-@property (weak, nonatomic) UIWebView *webView;
+@property (weak, nonatomic) WKWebView *webView;
 
 @end
 
 @implementation HYBBridge
 
 + (void)initialize {
-    if (self == [HYBBridge class]) {
-        [NSURLProtocol registerClass:[HYBURLProtocol class]];
-    }
+    if (self == [HYBBridge class]) { }
 }
 
 + (NSInteger)majorVersion {
@@ -91,7 +88,7 @@ static NSDictionary *HYBSendAction(NSString *action,
 }
 
 + (NSInteger)minorVersion {
-    return 3;
+    return 4;
 }
 
 static HYBBridge *activeBridge;
@@ -122,7 +119,10 @@ static HYBBridge *activeBridge;
     return self;
 }
 
-- (NSString *)prepareWebView:(UIWebView *)webView withRequestScheme:(NSString *)scheme {
+- (void)prepareWebView:(WKWebView *)webView
+     withRequestScheme:(NSString *)scheme
+     completionHandler:(void (^ _Nullable)(_Nullable id, NSError * _Nullable error))completionHandler
+{
     NSParameterAssert(webView);
     
     self.webView = webView;
@@ -149,7 +149,7 @@ static HYBBridge *activeBridge;
     NSString *customDataString = [NSString hyb_JSONStringWithObject:customData];
 
     NSString *javascript = [NSString stringWithFormat:kFormat, @([[self class] majorVersion]), @([[self class] minorVersion]), customDataString, actionsString, eventsString];
-    return [webView stringByEvaluatingJavaScriptFromString:javascript];
+    [webView evaluateJavaScript:javascript completionHandler:completionHandler];
 }
 
 - (void)dispatchAction:(NSString *)action
@@ -162,10 +162,10 @@ static HYBBridge *activeBridge;
     // Automatically respond to 'init' actions. Dispatch other actions to the delegate.
     
     if ([action isEqualToString:@"init"] && self.webView) {
-        UIWebView *webView = self.webView;
+        WKWebView *webView = self.webView;
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [webView hyb_fireEvent:HYBEventReady data:nil];
+            [webView hyb_fireEvent:HYBEventReady data:nil completionHandler:nil];
         });
         
         NSHTTPURLResponse *response = [NSHTTPURLResponse hyb_responseWithAction:action statusCode:200];

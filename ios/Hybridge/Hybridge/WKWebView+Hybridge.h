@@ -6,9 +6,9 @@
 //  Licensed under MIT, see LICENSE for more details.
 //
 
-#import <UIKit/UIKit.h>
+@import WebKit;
 
-@interface UIWebView (Hybridge)
+@interface WKWebView (Hybridge)
 
 /**
  Fires a Hybridge event in the receiver.
@@ -18,6 +18,8 @@
  
  @return The result of firing the event.
  */
-- (NSString *)hyb_fireEvent:(NSString *)event data:(NSDictionary *)data;
+- (void)hyb_fireEvent:(NSString *_Nonnull)event
+                 data:(NSDictionary *)data
+    completionHandler:(void (^ _Nullable)(_Nullable id, NSError * _Nullable error))completionHandler;
 
 @end
