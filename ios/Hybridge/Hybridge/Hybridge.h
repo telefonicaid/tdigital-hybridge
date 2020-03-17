@@ -13,7 +13,7 @@
 
 #import "HYBEvent.h"
 #import "HYBBridge.h"
-#import "UIWebView+Hybridge.h"
+#import "WKWebView+Hybridge.h"
 #import "NSHTTPURLResponse+Hybridge.h"
 #import "HYBWebViewController.h"
 
