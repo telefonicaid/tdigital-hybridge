@@ -11,6 +11,10 @@
 
 @implementation WKWebView (Hybridge)
 
+- (void)hyb_fireEvent:(NSString *)event data:(NSDictionary *)data {
+    [self hyb_fireEvent:event data:data completionHandler:nil];
+}
+
 - (void)hyb_fireEvent:(NSString *)event
                  data:(NSDictionary *)data
     completionHandler:(void (^ _Nullable)(_Nullable id, NSError * _Nullable error))completionHandler

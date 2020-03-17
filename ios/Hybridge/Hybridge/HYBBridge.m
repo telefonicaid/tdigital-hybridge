@@ -165,7 +165,7 @@ static HYBBridge *activeBridge;
         WKWebView *webView = self.webView;
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [webView hyb_fireEvent:HYBEventReady data:nil completionHandler:nil];
+            [webView hyb_fireEvent:HYBEventReady data:nil];
         });
         
         NSHTTPURLResponse *response = [NSHTTPURLResponse hyb_responseWithAction:action statusCode:200];
