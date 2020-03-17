@@ -260,7 +260,7 @@
     var ts = new Date().getTime();
     var info = ' (' + action + ': ' + ts + ')';
     webkit.messageHandlers.hybridge.postMessage(data)
-    Promise.resolve({});
+    return Promise.resolve({});
   }
 
   /**
