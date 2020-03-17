@@ -56,11 +56,6 @@
         [super loadView];
         NSAssert([self.view isKindOfClass:[WKWebView class]], @"HYBWebViewController view must be a UIWebView instance.");
     } else {
-//        WKWebView *view = [[WKWebView alloc] init];
-//        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-////        view.scalesPageToFit = YES;
-//        view.navigationDelegate = self;
-        
         WKUserContentController *userContentController = [WKUserContentController new];
         [userContentController addScriptMessageHandler:self name:@"hybridge"];
         
@@ -137,16 +132,13 @@
 - (void)userContentController:(nonnull WKUserContentController *)userContentController
       didReceiveScriptMessage:(nonnull WKScriptMessage *)message
 {
-    NSLog(@"message -> %@", message.body);
     NSDictionary *data = (NSDictionary *)message.body;
     if (data) {
         if (data[@"action"]) {
             NSString *action = data[@"action"];
             [HYBBridge.activeBridge dispatchAction:action
                                               data:data
-                                        completion:^(NSHTTPURLResponse *response, NSData *data) {
-                NSLog(@"RESPONSE: %@", response);
-            }];
+                                        completion:nil];
         }
     }
 }
