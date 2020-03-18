@@ -33,7 +33,12 @@ NSString * const HYBHostName = @"hybridge";
         requestScheme = [[HYBBridge activeBridge] protocol];
     }
     NSString *path = [NSString stringWithFormat:@"/%@", action];
-    NSURL *url = [[NSURL alloc] initWithScheme:requestScheme host:HYBHostName path:path];
+    NSURLComponents *components = [[NSURLComponents alloc] init];
+    components.scheme = requestScheme;
+    components.host = HYBHostName;
+    components.path = path;
+    
+    NSURL *url = components.URL;
     return [self hyb_responseWithURL:url statusCode:statusCode];
 }
 

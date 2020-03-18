@@ -138,7 +138,7 @@
             NSString *action = data[@"action"];
             [HYBBridge.activeBridge dispatchAction:action
                                               data:data
-                                        completion:nil];
+                                        completion:^(NSHTTPURLResponse *response, NSData *data) { }];
         }
     }
 }
