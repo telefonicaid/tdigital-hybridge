@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
                    Out there are plenty of bridge solutions. Hybridge tries to make easy communication and data
                    exchanging between native (iOS & Android) and Javascript worlds, avoiding too much overhead.
                    DESC
-  s.homepage     = "https://github.com/telefonicaid/tdigital-hybridge"
+  s.homepage     = "https://github.com/sortegamartinez/tdigital-hybridge"
 
   s.license      = { :type => "MIT", :file => "LICENSE.txt" }
 
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios
   s.ios.deployment_target = "10.0"
-  s.source       = { :git => "https://github.com/telefonicaid/tdigital-hybridge.git", :tag => "s.version" }
+  s.source       = { :git => "https://github.com/sortegamartinez/tdigital-hybridge.git", :tag => "s.version" }
 
   s.source_files = "ios/Hybridge/Hybridge/*.{h,m}"
   s.private_header_files = "ios/Hybridge/Hybridge/HYBURLProtocol.h", "ios/Hybridge/Hybridge/NSString+Hybridge.h"
