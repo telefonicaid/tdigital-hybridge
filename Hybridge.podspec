@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios
   s.ios.deployment_target = "10.0"
-  s.source       = { :git => "https://github.com/telefonicaid/tdigital-hybridge.git", :tag => "s.version" }
+  s.source       = { :git => "https://github.com/telefonicaid/tdigital-hybridge.git", :tag => s.version.to_s }
 
   s.source_files = "ios/Hybridge/Hybridge/*.{h,m}"
   s.private_header_files = "ios/Hybridge/Hybridge/HYBURLProtocol.h", "ios/Hybridge/Hybridge/NSString+Hybridge.h"
