@@ -1,5 +1,5 @@
 /*!
- * tdigital-hybridge - v1.3.4
+ * tdigital-hybridge - v1.4.0
  * Bridge for mobile hybrid application between Javascript and native environment
  * (iOS & Android)
  *
@@ -40,7 +40,7 @@
   var INIT_ACTION = 'init';
   var CUSTOM_DATA_OBJ = 'customData';
 
-  var version = 1, versionMinor = 3, initialized = false,
+  var version = 1, versionMinor = 4, initialized = false,
     method, logger, environment, debug, mockResponses, _events = {}, _actions = [], _errors,
     initModuleDef = $.Deferred(), initGlobalDef = $.Deferred(), initCustomDataDef = $.Deferred();
 
@@ -65,8 +65,8 @@
      * Sets up the bridge in iOS environment
      */
     else if (_isIos()) {
-      _getLogger().info('Fixing bridge for iOS, XHR method used');
-      method = _sendXHR;
+      _getLogger().info('Fixing bridge for iOS, promp method used');
+      method = _sendPrompt;
     }
     /**
     * Sets up the bridge in Android environment
@@ -255,12 +255,32 @@
    */
   function _sendXHR (data) {
     var strJSON = JSON.stringify(data);
+    var def = $.Deferred();
     var action = data.action;
     var id = data.id;
     var ts = new Date().getTime();
     var info = ' (' + action + ': ' + ts + ')';
-    webkit.messageHandlers.hybridge.postMessage(data)
-    return Promise.resolve({});
+    $.ajax({
+      url: window.location.protocol + '//hybridge/' + action + '/' + id + '/' + ts,
+      type: 'HEAD',
+      headers: { 'data': strJSON || '{}' },
+      beforeSend: function (xhr) {
+        xhr.done(function () {
+          if (xhr.status === 200) {
+            _getLogger().info('Hybridge: ' + xhr.statusText + info);
+            def.resolve(JSON.parse(xhr.responseText || '{}'));
+          }
+          else {
+            _getLogger().error('Hybridge: ' + xhr.statusText + info);
+            def.reject({'error': 'HTTP error: ' + xhr.status});
+          }
+        }).fail(function (xhr, text, textError) {
+          _getLogger().error('Error on bridge to native. Non native environment?',
+              xhr, text, textError, info);
+        });
+      }
+    });
+    return def.promise();
   }
 
   /**

@@ -64,6 +64,7 @@
         
         WKWebView *webView = [[WKWebView alloc] initWithFrame:UIScreen.mainScreen.bounds
                                                 configuration:configuration];
+        webView.UIDelegate = self;
         webView.navigationDelegate = self;
         webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.view = webView;
@@ -123,24 +124,33 @@
     return nil;
 }
 
-#pragma mark - HYBBridgeDelegate
+#pragma mark - WKUIDelegate
 
-- (NSDictionary *)bridgeCustomData:(HYBBridge *)bridge {
-    return nil;
-}
-
-- (void)userContentController:(nonnull WKUserContentController *)userContentController
-      didReceiveScriptMessage:(nonnull WKScriptMessage *)message
+- (void)                        webView:(WKWebView *)webView
+  runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt
+                            defaultText:(NSString *)defaultText
+                       initiatedByFrame:(WKFrameInfo *)frame
+                      completionHandler:(void (^)(NSString * _Nullable))completionHandler
 {
-    NSDictionary *data = (NSDictionary *)message.body;
+    NSString *action = prompt;
+    NSData *promptData = [defaultText dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *data = [NSJSONSerialization JSONObjectWithData:promptData options:0 error:NULL];
     if (data) {
         if (data[@"action"]) {
-            NSString *action = data[@"action"];
             [HYBBridge.activeBridge dispatchAction:action
                                               data:data
-                                        completion:^(NSHTTPURLResponse *response, NSData *data) { }];
+                                        completion:^(NSHTTPURLResponse *response, NSData *data) {
+                if (response.statusCode == 200) {
+                    NSString *responseData = @"";
+                    if (data) {
+                        responseData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    }
+                    completionHandler(responseData);
+                } else {
+                    completionHandler(nil);
+                }
+            }];
         }
     }
 }
-
 @end

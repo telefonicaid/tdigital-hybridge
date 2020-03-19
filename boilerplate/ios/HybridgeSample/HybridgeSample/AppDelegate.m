@@ -19,7 +19,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSURL *url = [NSURL URLWithString:@"http://sortegamartinez.github.io/tdigital-hybridge//hybridge.html"];
+    NSURL *url = [NSURL URLWithString:@"http://telefonicaid.github.io/tdigital-hybridge/hybridge.html"];
     WebViewController *webViewController = [[WebViewController alloc] initWithURL:url];
     
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
