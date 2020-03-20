@@ -54,13 +54,9 @@
 - (void)loadView {
     if ([self nibName]) {
         [super loadView];
-        NSAssert([self.view isKindOfClass:[WKWebView class]], @"HYBWebViewController view must be a UIWebView instance.");
+        NSAssert([self.view isKindOfClass:[WKWebView class]], @"HYBWebViewController view must be a WKWebView instance.");
     } else {
-        WKUserContentController *userContentController = [WKUserContentController new];
-        [userContentController addScriptMessageHandler:self name:@"hybridge"];
-        
         WKWebViewConfiguration *configuration = [WKWebViewConfiguration new];
-        configuration.userContentController = userContentController;
         
         WKWebView *webView = [[WKWebView alloc] initWithFrame:UIScreen.mainScreen.bounds
                                                 configuration:configuration];
@@ -105,7 +101,9 @@
 
 #pragma mark - WKNavigationDelegate
 
-- (void)webViewDidStartLoad:(UIWebView *)webView {
+- (void)    webView:(WKWebView *)webView
+didCommitNavigation:(null_unspecified WKNavigation *)navigation
+{
     [self webViewDidStartLoad];
 }
 
@@ -114,7 +112,10 @@
     [self webViewDidFinishLoad];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+- (void)    webView:(WKWebView *)webView
+  didFailNavigation:(WKNavigation *)navigation
+          withError:(NSError *)error
+{
     [self webViewDidFailLoadWithError:error];
 }
 

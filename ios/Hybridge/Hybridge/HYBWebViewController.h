@@ -14,7 +14,7 @@
 /**
  A view controller that manages a web view and the bridge to communicate with it.
  */
-@interface HYBWebViewController : UIViewController <WKUIDelegate, WKScriptMessageHandler, HYBBridgeDelegate>
+@interface HYBWebViewController : UIViewController <WKUIDelegate, WKNavigationDelegate, HYBBridgeDelegate>
 
 @property (strong, nonatomic, readonly) WKWebView *webView;
 @property (strong, nonatomic, readonly) HYBBridge *bridge;

@@ -12,12 +12,12 @@
 @protocol HYBBridgeDelegate;
 
 /**
- A communication bridge between the Javascript running in a `UIWebView` and the application.
+ A communication bridge between the Javascript running in a `WKWebView` and the application.
  */
 @interface HYBBridge : NSObject
 
 /**
- The bridge delegate will receive actions from the visible `UIWebView`.
+ The bridge delegate will receive actions from the visible `WKWebView`.
  */
 @property (weak, nonatomic) NSObject<HYBBridgeDelegate> * _Nullable delegate;
 
@@ -35,7 +35,7 @@
 /**
  Sets the active bridge.
  
- @param bridge The bridge that will receive actions for the visible `UIWebView`.
+ @param bridge The bridge that will receive actions for the visible `WKWebView`.
  */
 + (void)setActiveBridge:(HYBBridge *)bridge;
 
@@ -54,10 +54,10 @@
 - (id)initWithQueue:(dispatch_queue_t)queue;
 
 /**
- Configures a `UIWebView` to be able to communicate with this bridge.
+ Configures a `WKWebView` to be able to communicate with this bridge.
  This method should be called after the web view has finished loading the HTML contents.
  
- @param webView The `UIWebView` to configure.
+ @param webView The `WKWebView` to configure.
  @param scheme The forwarding requests scheme.
  @return The result of preparing the web view.
  */

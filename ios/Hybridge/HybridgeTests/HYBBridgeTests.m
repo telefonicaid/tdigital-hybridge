@@ -46,7 +46,7 @@
 }
 
 - (void)testPrepareWebView {
-    id webView = [self autoVerifiedMockForClass:[UIWebView class]];
+    id webView = [self autoVerifiedMockForClass:[WKWebView class]];
     
     NSString *javascript = @"window.HybridgeGlobal || setTimeout(function() {"
                            @"    window.HybridgeGlobal = {"

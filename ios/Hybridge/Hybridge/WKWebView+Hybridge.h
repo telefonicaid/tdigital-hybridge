@@ -1,5 +1,5 @@
 //
-//  UIWebView+Hybridge.h
+//  WKWebView+Hybridge.h
 //  Hybridge
 //
 //  Copyright (c) 2014 Telefonica I+D. All rights reserved.
