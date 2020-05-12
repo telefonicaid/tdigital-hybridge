@@ -27,7 +27,7 @@
 
 - (void)dealloc {
     [self.webView stopLoading];
-    self.webView.navigationDelegate = self;
+    self.webView.navigationDelegate = nil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
