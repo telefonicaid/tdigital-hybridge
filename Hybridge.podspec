@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Hybridge"
-  s.version      = "1.4.1"
+  s.version      = "2.0.0"
   s.summary      = "Yet another javascript / mobile native simple bridge for hybrid apps, back and forth..."
 
   s.description  = <<-DESC
@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/telefonicaid/tdigital-hybridge.git", :tag => s.version.to_s }
 
   s.source_files = "ios/Hybridge/Hybridge/*.{h,m}"
-  s.private_header_files = "ios/Hybridge/Hybridge/HYBURLProtocol.h", "ios/Hybridge/Hybridge/NSString+Hybridge.h"
+  s.private_header_files = "ios/Hybridge/Hybridge/NSString+Hybridge.h"
 
   s.frameworks = "Foundation", "UIKit"
   s.requires_arc = true
