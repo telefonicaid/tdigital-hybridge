@@ -66,7 +66,13 @@
      */
     else if (_isIos()) {
       _getLogger().info('Fixing bridge for iOS, promp method used');
-      method = _sendPrompt;
+      var regex = /HYBBridge\/[2-9]\.\d/
+      var matches = navigator.userAgent.match(regex)
+      if (matches) {
+        method = _sendPrompt
+      } else {
+        method = _sendXHR;
+      }
     }
     /**
     * Sets up the bridge in Android environment

@@ -84,11 +84,11 @@ static NSDictionary *HYBSendAction(NSString *action,
 }
 
 + (NSInteger)majorVersion {
-    return 1;
+    return 2;
 }
 
 + (NSInteger)minorVersion {
-    return 4;
+    return 0;
 }
 
 static HYBBridge *activeBridge;

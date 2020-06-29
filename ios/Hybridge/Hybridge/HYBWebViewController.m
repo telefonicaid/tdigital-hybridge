@@ -9,6 +9,10 @@
 #import "HYBWebViewController.h"
 #import "HYBBridge.h"
 
+@interface WKWebView(SynchronousEvaluateJavaScript)
+- (NSString *)stringByEvaluatingJavaScriptFromString:(NSString *)script;
+@end
+
 @interface HYBWebViewController ()
 
 @property (strong, nonatomic) NSURL *URL;
@@ -67,11 +71,18 @@
     }
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     if (self.URL) {
+        NSString *userAgent = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+        
+        self.webView.customUserAgent = [NSString stringWithFormat:@"%@/%@.%@ %@",
+                                    @"HYBBridge",
+                                    @([HYBBridge majorVersion]),
+                                    @([HYBBridge minorVersion]),
+                                    userAgent];
+        
         [self.webView loadRequest:[NSURLRequest requestWithURL:self.URL]];
     }
 }
@@ -153,5 +164,32 @@ didCommitNavigation:(null_unspecified WKNavigation *)navigation
             }];
         }
     }
+}
+@end
+
+@implementation WKWebView(SynchronousEvaluateJavaScript)
+
+- (NSString *)stringByEvaluatingJavaScriptFromString:(NSString *)script
+{
+    __block NSString *resultString = nil;
+    __block BOOL finished = NO;
+
+    [self evaluateJavaScript:script completionHandler:^(id result, NSError *error) {
+        if (error == nil) {
+            if (result != nil) {
+                resultString = [NSString stringWithFormat:@"%@", result];
+            }
+        } else {
+            NSLog(@"evaluateJavaScript error : %@", error.localizedDescription);
+        }
+        finished = YES;
+    }];
+
+    while (!finished)
+    {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+    }
+
+    return resultString;
 }
 @end
