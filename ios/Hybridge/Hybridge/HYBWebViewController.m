@@ -73,17 +73,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     if (self.URL) {
         NSString *userAgentFromJavascript = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-
-        self.webView.customUserAgent = [NSString stringWithFormat:@"%@/%@.%@ %@ %@",
-                                        @"HYBBridge",
-                                        @([HYBBridge majorVersion]),
-                                        @([HYBBridge minorVersion]),
-                                        userAgentFromJavascript,
-                                        [self userAgentSuffix]];
-
+        NSString *customUserAgent = [NSString stringWithFormat:@"%@/%@.%@ %@",
+                                     @"HYBBridge",
+                                     @([HYBBridge majorVersion]),
+                                     @([HYBBridge minorVersion]),
+                                     userAgentFromJavascript];
+        if ([self userAgentSuffix]) {
+            customUserAgent = [NSString stringWithFormat:@"%@ %@", customUserAgent, [self userAgentSuffix]];
+        }
+        self.webView.customUserAgent = customUserAgent;
+        
         [self.webView loadRequest:[NSURLRequest requestWithURL:self.URL]];
     }
 }
