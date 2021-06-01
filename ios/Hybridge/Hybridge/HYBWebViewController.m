@@ -75,7 +75,7 @@
     [super viewDidLoad];
 
     if (self.URL) {
-        NSString *userAgent = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+        NSString *userAgentFromJavascript = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
 
         self.webView.customUserAgent = [NSString stringWithFormat:@"%@/%@.%@ %@ %@",
                                         @"HYBBridge",
