@@ -36,22 +36,22 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
+
     if (self) {
         _bridge = [[HYBBridge alloc] init];
         _bridge.delegate = self;
     }
-    
+
     return self;
 }
 
 - (id)initWithURL:(NSURL *)url {
     self = [self initWithNibName:nil bundle:nil];
-    
+
     if (self) {
         _URL = url;
     }
-    
+
     return self;
 }
 
@@ -61,7 +61,7 @@
         NSAssert([self.view isKindOfClass:[WKWebView class]], @"HYBWebViewController view must be a WKWebView instance.");
     } else {
         WKWebViewConfiguration *configuration = [WKWebViewConfiguration new];
-        
+
         WKWebView *webView = [[WKWebView alloc] initWithFrame:UIScreen.mainScreen.bounds
                                                 configuration:configuration];
         webView.UIDelegate = self;
@@ -75,13 +75,16 @@
     [super viewDidLoad];
     
     if (self.URL) {
-        NSString *userAgent = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-        
-        self.webView.customUserAgent = [NSString stringWithFormat:@"%@/%@.%@ %@",
-                                    @"HYBBridge",
-                                    @([HYBBridge majorVersion]),
-                                    @([HYBBridge minorVersion]),
-                                    userAgent];
+        NSString *userAgentFromJavascript = [self.webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+        NSString *customUserAgent = [NSString stringWithFormat:@"%@/%@.%@ %@",
+                                     @"HYBBridge",
+                                     @([HYBBridge majorVersion]),
+                                     @([HYBBridge minorVersion]),
+                                     userAgentFromJavascript];
+        if ([self userAgentSuffix]) {
+            customUserAgent = [NSString stringWithFormat:@"%@ %@", customUserAgent, [self userAgentSuffix]];
+        }
+        self.webView.customUserAgent = customUserAgent;
         
         [self.webView loadRequest:[NSURLRequest requestWithURL:self.URL]];
     }
@@ -89,13 +92,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
     [HYBBridge setActiveBridge:self.bridge];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
+
     if (self.bridge == [HYBBridge activeBridge]) {
         [HYBBridge setActiveBridge:nil];
     }
@@ -133,6 +136,10 @@ didCommitNavigation:(null_unspecified WKNavigation *)navigation
 #pragma mark - HYBBridgeDelegate
 
 - (NSArray *)bridgeActions:(HYBBridge *)bridge {
+    return nil;
+}
+
+- (NSString *)userAgentSuffix {
     return nil;
 }
 
