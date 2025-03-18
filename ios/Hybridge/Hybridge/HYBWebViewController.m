@@ -8,6 +8,7 @@
 
 #import "HYBWebViewController.h"
 #import "HYBBridge.h"
+#import "WKNavigationAction+ExternalLink.h"
 
 @interface WKWebView(SynchronousEvaluateJavaScript)
 - (NSString *)stringByEvaluatingJavaScriptFromString:(NSString *)script;
@@ -114,6 +115,15 @@
 }
 
 #pragma mark - WKNavigationDelegate
+- (void)    webView:(WKWebView *)webView
+decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction
+decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    if ([navigationAction openExternalLinkIfNeeded]) {
+        decisionHandler(WKNavigationActionPolicyCancel);
+    } else {
+        decisionHandler(WKNavigationActionPolicyAllow);
+    }
+}
 
 - (void)    webView:(WKWebView *)webView
 didCommitNavigation:(null_unspecified WKNavigation *)navigation
@@ -121,7 +131,7 @@ didCommitNavigation:(null_unspecified WKNavigation *)navigation
     [self webViewDidStartLoad];
 }
 
-- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+- (void)    webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [self.bridge prepareWebView:webView withRequestScheme:self.webView.URL.scheme completionHandler:nil];
     [self webViewDidFinishLoad];
 }
