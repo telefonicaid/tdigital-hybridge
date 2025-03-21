@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		517E3E422D896B6B0076C2AD /* WKNavigationAction+ExternalLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 517E3E412D896B560076C2AD /* WKNavigationAction+ExternalLink.h */; };
+		517E3E442D896BC40076C2AD /* WKNavigationAction+ExternalLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 517E3E432D896BBB0076C2AD /* WKNavigationAction+ExternalLink.m */; };
 		992DEDA518ED963A005CD768 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 992DEDA418ED963A005CD768 /* Foundation.framework */; };
 		992DEDAA18ED963A005CD768 /* Hybridge.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 992DEDA918ED963A005CD768 /* Hybridge.h */; };
 		992DEDB318ED963A005CD768 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 992DEDB218ED963A005CD768 /* XCTest.framework */; };
@@ -58,6 +60,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		517E3E412D896B560076C2AD /* WKNavigationAction+ExternalLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WKNavigationAction+ExternalLink.h"; sourceTree = "<group>"; };
+		517E3E432D896BBB0076C2AD /* WKNavigationAction+ExternalLink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WKNavigationAction+ExternalLink.m"; sourceTree = "<group>"; };
 		992DEDA118ED963A005CD768 /* libHybridge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHybridge.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		992DEDA418ED963A005CD768 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		992DEDA818ED963A005CD768 /* Hybridge-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hybridge-Prefix.pch"; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 		992DEDA618ED963A005CD768 /* Hybridge */ = {
 			isa = PBXGroup;
 			children = (
+				517E3E432D896BBB0076C2AD /* WKNavigationAction+ExternalLink.m */,
+				517E3E412D896B560076C2AD /* WKNavigationAction+ExternalLink.h */,
 				E31BAF1C241B60E0000720D6 /* HYBEvent.h */,
 				E31BAF1D241B60E0000720D6 /* HYBEvent.m */,
 				992DEDCD18ED9BA7005CD768 /* HYBBridge.h */,
@@ -232,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E31BAF1E241B60E0000720D6 /* HYBEvent.h in Headers */,
+				517E3E422D896B6B0076C2AD /* WKNavigationAction+ExternalLink.h in Headers */,
 				9960C8AC18EE914600FEC7DB /* WKWebView+Hybridge.h in Headers */,
 				992DEDCC18ED97FB005CD768 /* Hybridge.h in Headers */,
 				9960C8DB18EEDB8000FEC7DB /* NSString+Hybridge.h in Headers */,
@@ -336,6 +343,7 @@
 				992DEDD018ED9BA7005CD768 /* HYBBridge.m in Sources */,
 				9960C8AD18EE914600FEC7DB /* WKWebView+Hybridge.m in Sources */,
 				9960C8DC18EEDB8000FEC7DB /* NSString+Hybridge.m in Sources */,
+				517E3E442D896BC40076C2AD /* WKNavigationAction+ExternalLink.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
