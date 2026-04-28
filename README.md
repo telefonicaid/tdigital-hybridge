@@ -59,6 +59,27 @@ You can build your own Hybridge, but you can start with the latest version inclu
 
 ### <a name='installation_ios'>iOS</a>
 
+#### Swift Package Manager
+
+Add the package dependency in Xcode via **File > Add Package Dependencies…** and enter the repository URL:
+
+```
+https://github.com/telefonicaid/tdigital-hybridge
+```
+
+Or add it to your `Package.swift` dependencies:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/telefonicaid/tdigital-hybridge.git", from: "2.0.2")
+],
+targets: [
+    .target(name: "YourTarget", dependencies: ["Hybridge"])
+]
+```
+
+#### CocoaPods
+
 Add the following to your `Podfile` and run `$ pod install`.
 
 ``` ruby
