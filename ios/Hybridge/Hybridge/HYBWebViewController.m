@@ -166,9 +166,10 @@ didCommitNavigation:(null_unspecified WKNavigation *)navigation
     NSDictionary *data = [NSJSONSerialization JSONObjectWithData:promptData options:0 error:NULL];
     if (data) {
         if (data[@"action"]) {
-            [HYBBridge.activeBridge dispatchAction:action
-                                              data:data
-                                        completion:^(NSHTTPURLResponse *response, NSData *data) {
+            // Own bridge, not the global one: that is nil after viewWillDisappear and WebKit throws if a prompt never completes.
+            [self.bridge dispatchAction:action
+                                   data:data
+                             completion:^(NSHTTPURLResponse *response, NSData *data) {
                 if (response.statusCode == 200) {
                     NSString *responseData = @"";
                     if (data) {
